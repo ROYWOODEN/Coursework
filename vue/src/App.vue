@@ -1,6 +1,10 @@
 <template>
   <div>
     <Header />
+<<<<<<< HEAD
+=======
+    <sidebar />
+>>>>>>> menu
     <router-view />
   </div>
  
@@ -8,8 +12,12 @@
 
 <script>
 import Header from './components/Header.vue'
+<<<<<<< HEAD
+=======
+import Sidebar from './components/Sidebar.vue'
+>>>>>>> menu
 export default {
-  components: { HeaderTop},
+  components: { Header, Sidebar },
 
 }
 </script>
