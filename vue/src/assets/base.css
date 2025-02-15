@@ -1,7 +1,15 @@
-
+@import "tailwindcss";
 
 :root {
   --color-purple: #A100ED;
   --color-purple-hover: #7500ab;
+  --color-purple-transparent-hover: #a200ed2f;
   --color-grey-text: #b7b7b7;
+
+  --color-red-exit: #EC3343;
+  --color-red-exit-hover: #ec334234;
+}
+
+.content {
+  padding: 80px 0 0 20%;
 }
