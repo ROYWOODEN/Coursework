@@ -1,13 +1,13 @@
 <template>
   <div>
-    <HeaderTop />
+    <Header />
     <router-view />
   </div>
  
 </template>
 
 <script>
-import HeaderTop from './components/HeaderTop.vue'
+import Header from './components/Header.vue'
 export default {
   components: { HeaderTop},
 
