@@ -14,13 +14,30 @@
         />
       </div>
       <div class="header__auth">
-        <button class="header__auth-button text-white">Войти</button>
+        
+          <button 
+          class="header__auth-button text-white"
+          @click="gameStore.loginDialog = !gameStore.loginDialog"
+          >Войти</button>
+          <login-form v-if="!gameStore.loginDialog" />
+        
       </div>
     </header>
   </template>
   
   <script>
-  export default {};
+
+import { useGameStore } from '@/stores/GameStore';
+import LoginForm from './LoginForm.vue';
+
+  export default {
+  components: { LoginForm },
+    data() {
+      return {
+        gameStore: useGameStore(),
+      }
+    }
+  };
   </script>
   
   <style>
@@ -33,6 +50,7 @@
     top: 0;
     right: 0;
     background-color: #242424;
+    z-index: 1;
   }
   
   .header__nav-link {

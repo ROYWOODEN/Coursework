@@ -63,6 +63,11 @@ export default {
 <style>
 .game-card {
     background-color: var(--color-grey-card-fon);
+    box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 25%);
+    transition: 0.5s;
+}
+.game-card:hover {
+    box-shadow: 4px 4px 6px 0px rgba(218, 0, 254, 50%);
 }
 
 .game-card__title {
