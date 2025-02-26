@@ -48,6 +48,8 @@ export default {
     mounted() {
         this.toggleBodyScroll(); // Учитываем, если окно уже было открыто при монтировании
     },
+
+    
     // beforeUnmount() {
     //     document.body.style.overflow = ''; // Возвращаем скролл при удалении компонента
     // }
