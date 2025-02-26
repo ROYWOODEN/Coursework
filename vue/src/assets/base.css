@@ -8,8 +8,33 @@
 
   --color-red-exit: #EC3343;
   --color-red-exit-hover: #ec334234;
+
+  --color-grey-card-fon: #323232;
+  --color-grey-card-text: #8A8A8A;
 }
 
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #242424;
+}
+
+@font-face {
+  font-family: "Inter-Medium";
+  src: url(../assets/fonts/Inter/Inter-Medium.otf);
+}
+@font-face {
+  font-family: "Inter-Regular";
+  src: url(../assets/fonts/Inter/Inter-Regular.otf);
+}
+@font-face {
+  font-family: "Inter-MediumItalic";
+  src: url(../assets/fonts/Inter/Inter-ExtraLight.otf);
+}
 .content {
   padding: 80px 0 0 20%;
 }

@@ -25,12 +25,14 @@
   
   <style>
   .header {
-    padding-top: 29px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     position: fixed;
     width: 80%;
     height: 80px;
     top: 0;
     right: 0;
+    background-color: #242424;
   }
   
   .header__nav-link {

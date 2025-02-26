@@ -10,7 +10,10 @@
         <svg class="sitebar__nav-svg" xmlns="http://www.w3.org/2000/svg" width="31" height="29" viewBox="0 0 31 29" fill="none">
             <path d="M13.5967 0.6524C14.1052 0.257334 14.7243 0.0302891 15.3679 0.00282334C16.0115 -0.0246424 16.6477 0.148836 17.188 0.499145L17.4035 0.653948L30.3984 10.7471C31.516 11.6156 30.9719 13.3664 29.625 13.5104L29.4452 13.5197H27.8999V25.9039C27.9001 26.685 27.6048 27.4374 27.073 28.0101C26.5412 28.5829 25.8123 28.9337 25.0324 28.9923L24.7999 29H6.20027C5.41845 28.9999 4.66557 28.7047 4.09244 28.1736C3.5193 27.6425 3.16826 26.9148 3.10962 26.1361L3.10032 25.9039V13.5197H1.555C0.139873 13.5197 -0.509565 11.8044 0.465367 10.8648L0.601765 10.7471L13.5967 0.6524ZM15.5001 3.09675L5.61903 10.7719C5.97397 11.0583 6.20027 11.4964 6.20027 11.9871V25.9039H10.8502V18.1638C10.8502 16.9321 11.3401 15.7508 12.2121 14.8799C13.0841 14.0089 14.2669 13.5197 15.5001 13.5197C16.7333 13.5197 17.9161 14.0089 18.7881 14.8799C19.6601 15.7508 20.15 16.9321 20.15 18.1638V25.9039H24.7999V11.9871C24.7999 11.4964 25.0262 11.0583 25.3812 10.7719L15.5001 3.09675ZM15.5001 16.6157C15.089 16.6157 14.6948 16.7788 14.4041 17.0691C14.1134 17.3594 13.9501 17.7532 13.9501 18.1638V25.9039H17.0501V18.1638C17.0501 17.7532 16.8868 17.3594 16.5961 17.0691C16.3054 16.7788 15.9112 16.6157 15.5001 16.6157Z" fill="currentColor"/>
       </svg>
-        <router-link class="sitebar__nav-link !ms-4">Главная</router-link>
+        <router-link 
+        to="/" 
+        class="sitebar__nav-link !ms-4"
+        >Главная</router-link>
       </div>
       <div class="flex flex-row items-center sitebar__nav-item !ps-5">
         <svg xmlns="http://www.w3.org/2000/svg" width="31" height="29" fill="currentColor" class="bi bi-fire sitebar__nav-svg" viewBox="0 0 16 16">
@@ -64,22 +67,31 @@
 
 <script>
 export default {
-
+    data() {
+      return {
+        activeLink: 'home',
+      }
+    },
+    methods: {
+      setActiveLink(link) {
+        this.activeLink = link;
+      }
+    }
 }
 </script>
 
 <style>
   aside {
-    padding-top: 29px;
+    padding-top: 10px;
     top: 0;
     left: 0;
     width: 20%;
     background-color: rgba(138, 138, 138, 8%);
     height: 100%;
   }
-  .aside__logo-img {
-    /* margin-left: 75px; */
-  }
+  /* .aside__logo-img {
+    
+  } */
 
   .sitebar__nav-item {
     color: var(--color-grey-text);
@@ -99,10 +111,10 @@ export default {
     color: inherit;
   }
 
-  . {
+  /* . {
     fill: currentColor;
     cursor: pointer;
-  }
+  } */
 
   .sitebar__nav-item .sitebar__nav-svg:hover {
     fill: inherit;
