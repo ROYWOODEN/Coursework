@@ -35,6 +35,10 @@ body {
   font-family: "Inter-MediumItalic";
   src: url(../assets/fonts/Inter/Inter-ExtraLight.otf);
 }
+@font-face {
+  font-family: "Inter-Bold";
+  src: url(../assets/fonts/Inter/Inter-Bold.otf);
+}
 .content {
   padding: 80px 0 0 20%;
 }
