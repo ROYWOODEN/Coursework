@@ -1,4 +1,5 @@
 import HomeView from '@/views/HomeView.vue'
+import RegView from '@/views/RegView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 
@@ -9,6 +10,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+    },
+    {
+      path: '/reg',
+      name: 'RegForm',
+      component: RegView,
     },
     
   ],

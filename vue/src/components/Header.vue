@@ -1,8 +1,8 @@
 <template>
     <header class="header flex flex-row justify-around items-center text-xl">
       <nav class="header__nav">
-        <router-link class="header__nav-link" to="/">Каталог</router-link>
-        <router-link class="header__nav-link" to="">Популярное</router-link>
+        <router-link class="header__nav-link" to="/" active-class="active-header">Каталог</router-link>
+        <router-link class="header__nav-link" to="/reg" active-class="active-header">Популярное</router-link>
         <router-link class="header__nav-link" to="">Новинки</router-link>
       </nav>
       <div class="header__search text-base text-white">
@@ -11,7 +11,14 @@
           type="search"
           id="search"
           placeholder="Введите что-то для поиска..."
+          list="Search"
         />
+        <!-- <datalist id="Search">
+          <option value="GTA V" label="Новинки"></option>
+          <option value="CS:GO 2" label="Новинки"></option>
+          <option value="Valorant" label="Новинки"></option>
+          <option value="Minecraft" label="Новинки"></option>
+        </datalist> -->
       </div>
       <div class="header__auth">
         
@@ -61,7 +68,9 @@ import LoginForm from './LoginForm.vue';
     transition: 0.5s;
   }
   .header__nav-link:hover {
-    text-decoration: none;
+    color: var(--color-purple);
+  }
+  .active-header {
     color: var(--color-purple);
   }
   
@@ -90,7 +99,6 @@ import LoginForm from './LoginForm.vue';
   
   .header__auth-button {
     background-color: var(--color-purple);
-    /* font-size: 18px; */
     padding: 15px 30px;
     border: none;
     border-radius: 8px;
