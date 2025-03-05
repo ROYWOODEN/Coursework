@@ -19,9 +19,10 @@
                 
             </div>
             <div class="!px-6 !pt-2 !pb-10">
-                <span class="inline-block game-card__tag rounded-lg !px-3 !py-1 text-sm font-semibold !mr-2"># {{ game.price }}</span>
-                <span class="inline-block game-card__tag rounded-lg !px-3 !py-1 text-sm font-semibold  !mr-2"># {{ game.price }}</span>
-                <span class="inline-block game-card__tag rounded-lg !px-3 !py-1 text-sm font-semibold"># {{ game.price }}</span>
+
+                <span 
+                v-for="(tag, idx) in game.tags" :key="idx"
+                class="inline-block game-card__tag rounded-lg !px-3 !py-1 text-sm font-semibold !mr-2"># {{ tag.name }}</span>
             </div>
             <div class="flex justify-between items-center !px-10 !py-5">
                 <div class="game-card__price text-2xl font-medium">${{ game.price }}</div>

@@ -24,16 +24,37 @@ console.log("Подключение к MySQL настроено!");
 
 // Получение списка игр
 app.get("/gamestore/games", (req, res) => {
-    const limit = parseInt(req.query._limit) || 10;
-    db.query("SELECT * FROM test", (err, results) => {
+    db.query("SELECT * FROM games", (err, results) => {
         if (err) {
             console.error("Ошибка при получении игр:", err);
             return res.status(500).json({ error: "Ошибка сервера" });
         }
-        const games = results.slice(0, limit);
-        res.json(games);
+        res.json(results);
         
     });
 });
+
+// Получение тегов для игр
+app.get('/gamestore/games/:id/tags', (req, res) => {
+    const gameID = req.params.id;
+
+    const query = `
+        SELECT tags.*
+        FROM tags
+        JOIN game_tags ON tags.id_tags = game_tags.id_tags
+        JOIN games ON game_tags.id_game = games.id_game
+        WHERE games.id_game = ?;
+    `;
+
+    db.query(query, [gameID], (err, results) => {
+        if (err) {
+            console.error("Ошибка при получении тегов:", err);
+            return res.status(500).json({ error: "Ошибка сервера" });
+        }
+        res.json(results);
+    });
+});
+
+
 
 app.listen(PORT, () => console.log(`Сервер запущен на порту ${PORT}`));

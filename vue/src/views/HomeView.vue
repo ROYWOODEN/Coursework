@@ -7,7 +7,7 @@
         <div v-if="gameStore.loader">
         <div class="loader"></div>
       </div>
-      <main v-else-if="Array.isArray(gameStore.games)"
+      <main v-else-if="gameStore.games.length > 0"
       class="flex flex-wrap justify-around"
       >
         <GamesItem

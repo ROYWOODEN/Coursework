@@ -16,8 +16,13 @@ export const useGameStore = defineStore('GameStore', {
             await new Promise(resolve => setTimeout(resolve, 1000)); // Ждём 1 секунду
             
             try {
-                const response = await fetch("/gamestore/games?_limit=10");
+                const response = await fetch("/gamestore/games");
                 this.games = await response.json();
+
+                for(let game of this.games) {
+                    const gameTagsResponse = await fetch(`/gamestore/games/${game.id_game}/tags`);
+                    game.tags = await gameTagsResponse.json();
+                }
             } catch (error) {
                 console.error("Ошибка при получении игр:", error);
             } finally {
