@@ -24,7 +24,7 @@ console.log("Подключение к MySQL настроено!");
 
 // Получение списка игр
 app.get("/gamestore/games", (req, res) => {
-    db.query("SELECT * FROM test", (err, results) => {
+    db.query("SELECT * FROM games", (err, results) => {
         if (err) {
             console.error("Ошибка при получении игр:", err);
             return res.status(500).json({ error: "Ошибка сервера" });
