@@ -58,9 +58,9 @@ app.get('/gamestore/games/:id/tags', (req, res) => {
 app.post('/gamestore/log', (req, res) => {
     const { name, login, password, avatar } = req.body;
 
+    const query = "INSERT INTO users (name, login, password, avatar) VALUES (?, ?, ?, ?)";
 
-    db.query(
-        "INSERT INTO users (name, login, password, avatar) VALUES (?, ?, ?, ?)", [name, login, password, avatar], (err, result) => {
+    db.query(query, [name, login, password, avatar], (err, result) => {
             if (err) {
                 console.error("Ошибка при добавлении данных:", err);
                 return res.status(500).json({ error: "Ошибка сервера" });
