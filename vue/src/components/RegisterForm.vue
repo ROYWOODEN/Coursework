@@ -11,7 +11,7 @@
           type="text" id="username" 
           class="form__input"
           placeholder="Придумайте имя пользователя" 
-          v-model="username" required>
+          v-model="UserName" required>
         </div>
         <div class="flex flex-col w-150 !mb-6">
           <label for="login" class="!mb-2">Логин:</label>
@@ -20,19 +20,32 @@
           id="login" 
           class="form__input"
           placeholder="Придумайте логин" 
-          v-model="login" required>
+          v-model="UserLogin" required>
         </div>
-        <div class="flex flex-col w-150 !mb-10">
+        <div class="flex flex-col w-150 !mb-6">
           <label for="password" class="!mb-2">Пароль:</label>
           <input 
           type="password" 
           id="password" 
           class="form__input"
           placeholder="Придумайте пароль" 
-          v-model="password" required>
+          v-model="UserPass" required>
         </div>
-        <div class="flex flex-row justify-center">
-            <button type="submit" class="text-xl form__button text-white">Зарегистрироваться</button>
+        <div class="flex flex-col w-150">
+          <label for="ava" class="!mb-2">Аватар:</label>
+          <input 
+          type="text" 
+          id="ava" 
+          class="form__input"
+          placeholder="Укажите путь для фото" 
+          v-model="UserAva" required>
+        </div>
+        <div class="flex flex-row justify-center !mt-10 !mb-10">
+            <button 
+            type="button" 
+            class="text-xl form__button text-white"
+            @click="addRegForm"
+            >Зарегистрироваться</button>
         </div>
         
       </form>
@@ -43,7 +56,43 @@
 
 <script>
 export default {
+    data() {
+      return {
+        UserName: '',
+        UserLogin: '',
+        UserPass: '',
+        UserAva: '',
+      }
+    },
 
+    methods: {
+      async addRegForm() {
+        const response = await fetch('/gamestore/log', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body: JSON.stringify({
+            name: this.UserName,
+            login: this.UserLogin,
+            password: this.UserPass,
+            avatar: this.UserAva,
+          }),
+        }); 
+        if(response.ok) {
+          const result = await response.json();
+          console.log(result.message);
+          this.UserName = ''
+          this.UserLogin = ''
+          this.UserPass = ''
+          this.UserAva = ''
+
+        } else {
+        console.error("Ошибка при регистрации");
+    }
+          
+      }
+    }
 }
 </script>
 
