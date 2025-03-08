@@ -6,6 +6,8 @@ export const useGameStore = defineStore('GameStore', {
         loginDialog: true,
         settingDialog: true,
         loader: false,
+        message: '',
+        messageError: '',
     }),
     actions: {
         async fetchGames() {

@@ -16,7 +16,13 @@
 
     /* Для избранных  */
     --color-purple-favirute-icon: #D100FF;
-  --color-purple-favorite-fon: #d100ff3b;
+    --color-purple-favorite-fon: #d100ff3b;
+
+
+    /* Для админ панели  */
+    --color-grey-text-panel: #B7B7B7;
+    --color-black-fon-panel: #1C1C1C;
+    --color-grey-input: #2C2C2C;
 }
 
 
@@ -44,6 +50,10 @@ body {
 @font-face {
   font-family: "Inter-Bold";
   src: url(../assets/fonts/Inter/Inter-Bold.otf);
+}
+@font-face {
+  font-family: "Inter-SemiBold";
+  src: url(../assets/fonts/Inter/Inter-SemiBold.otf);
 }
 .content {
   padding: 80px 0 0 20%;

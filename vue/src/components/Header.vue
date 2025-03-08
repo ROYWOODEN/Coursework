@@ -3,7 +3,7 @@
       <nav class="header__nav">
         <router-link class="header__nav-link" to="/" active-class="active-header">Каталог</router-link>
         <router-link class="header__nav-link" to="/reg" active-class="active-header">Популярное</router-link>
-        <router-link class="header__nav-link" to="">Новинки</router-link>
+        <router-link class="header__nav-link" to="/admin" active-class="active-header">Новинки</router-link>
       </nav>
       <div class="header__search text-base text-white">
         <input

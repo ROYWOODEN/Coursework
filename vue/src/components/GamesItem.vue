@@ -6,15 +6,15 @@
                 <div class="text-xl mb-2 game-card__title">{{ game.title }} </div>
 
                 <p class="game-card__info text-base"
-                :class="{ 'game-card__info-active': btn[index]}">
+                :class="{ 'game-card__info-active': expanded}">
                     {{ game.description }}
                 </p>
                 <button 
                 type="button" 
-                @click="btn[index] = !btn[index]"
+                @click="toggleExpand"
                 class="game-card__button-active"
                 >
-                    {{btn[index] ? 'Скрыть' : 'Показать ещё'  }}
+                    {{expanded ? 'Скрыть' : 'Показать ещё'  }}
                 </button>
                 
             </div>
@@ -34,12 +34,7 @@
                 </div>
                     
                     <button type="button" class="game-card__button"
-                    @click="fofan = !fofan"
-                    v-if="!fofan"
                     >В корзину</button>
-                    <p v-else
-                    @click="fofan = !fofan"
-                    >хуй тебе друже</p>
                 </div>
             </div>
         </div>
@@ -68,14 +63,19 @@ export default {
     data() {
         return {
             gameStore: useGameStore(),
-            btn: [],
-            fofan: false,
+            expanded: false,
         }
     },
-    async created() {
-
-        this.btn = new Array(this.gameStore.games.length).fill(false);
+    computed: {
+        isExpanded() {
+            return this.expanded;
+        }
     },
+    methods: {
+        toggleExpand() {
+            this.expanded = !this.expanded;
+        }
+    }
 
     
 

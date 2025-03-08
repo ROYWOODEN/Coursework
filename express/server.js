@@ -70,6 +70,20 @@ app.post('/gamestore/log', (req, res) => {
     );
 });
 
+app.post('/gamestore/addGame', (req, res) => {
+    const { title, description, price, image } = req.body;
+
+    const query = "INSERT INTO games (title, description, price, image) VALUES (?, ?, ?, ?)";
+
+    db.query(query, [title, description, price, image], (err, result) => {
+        if (err) {
+            console.error("Ошибка при добавлении Игр:", err);
+            return res.status(500).json({ error: "Ошибка сервера" });
+        }
+        res.status(201).json({ message: "Данные успешно добавлены" });
+    });
+});
+
 
 
 app.listen(PORT, () => console.log(`Сервер запущен на порту ${PORT}`));
