@@ -25,11 +25,19 @@
 import Header from '@/components/Header.vue';
 import Sidebar from '@/components/Sidebar.vue';
 
+import { useGameStore } from '@/stores/GameStore';
+
 export default {
+
     components: {
         Header,
         Sidebar,
-    }
+    },
+    data() {
+        return {
+            gameSrore: useGameStore(),
+        }
+    },
 }
 </script>
 
@@ -41,6 +49,10 @@ export default {
 .admin-panel__title-text {
     font-family: Inter-SemiBold;
     color: var(--color-grey-text-panel);
+    transition: 0.3s;
+}
+.admin-panel__title-text:hover {
+    color: var(--color-purple);
 }
 .admin-panel__title-text.active {
     color: var(--color-purple);

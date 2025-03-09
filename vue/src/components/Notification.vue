@@ -1,6 +1,7 @@
 <template>
     <transition name="notification-fade" appear>
       <section
+      @click="DelMessege"
         v-if="gameStore.message"
         class="notification flex flex-row">
         <div class="notification__bar"></div>
@@ -11,6 +12,7 @@
         </div>
       </section>
       <section
+      @click="DelMessege"
         v-else-if="gameStore.messageError"
         class="notification flex flex-row">
         <div class="notification__bar-error"></div>
@@ -34,6 +36,12 @@ import { useGameStore } from '@/stores/GameStore';
             gameStore: useGameStore(),
         }
     },
+    methods: {
+      DelMessege() {
+        this.gameStore.message = '';
+        this.gameStore.messageError = '';
+      }
+    }
   };
   </script>
   
@@ -46,6 +54,7 @@ import { useGameStore } from '@/stores/GameStore';
     display: flex;
     flex-direction: row;
     align-items: center;
+    cursor: pointer;
   }
   
   .notification__bar {
