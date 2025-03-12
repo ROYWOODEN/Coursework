@@ -40,11 +40,15 @@
           </div>
   
           <div class="flex flex-col justify-evenly game-panel-btns items-center">
-            <button class="game-panel-btn-1">
+            <button 
+            @click="EditGames(game.id_game)"
+            class="game-panel-btn-1">
                 Изменить
             </button>
             
-            <button class="game-panel-btn-2">
+            <button 
+            @click="DelGames(game.id_game)"
+            class="game-panel-btn-2">
                 Удалить
             </button>
           </div>
@@ -53,20 +57,25 @@
   </template>
   
   <script>
+
+import { useGameStore } from '@/stores/GameStore';
+
+
   export default {
       props: {
           game: {
               type: Object,
-              requred: true,
+              required: true,
           },
-          imdex: {
+          index: {
               type: Number,
-              requred: true,
-          }
+              required: true,
+          },
       },
       data() {
           return {
               expanded: false,
+              gameStore: useGameStore(),
           }
       },
   
@@ -75,10 +84,58 @@
               return this.expanded;
           }
       },
+//       created() {
+//     console.log("Полученная игра:", this.game);
+// },
       methods: {
           toggleExpand() {
               this.expanded = !this.expanded;
-          }
+          },
+          EditGames(id) {
+            this.gameStore.EditGameModal = !this.gameStore.EditGameModal;
+            this.gameStore.EditID = id;
+
+          },
+          async DelGames(id) {
+            try {
+                const response = await fetch(`/gamestore/admin/del/${id}`, {
+                    method: 'DELETE',
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    this.gameStore.message = result.message;
+
+                    // Локально делаем удаление либо можно просто делать запрос апи по новой
+                    // this.gameStore.fetchGames();
+
+                    this.gameStore.games = this.gameStore.games.filter(game => game.id_game !== id); 
+
+
+                    
+                    setTimeout(() => {
+                        this.gameStore.message = "";
+                    }, 3000);
+                } else {
+                    const result = await response.json();
+                    this.gameStore.messageError = result.error || "Ошибка при удалении игры";
+
+                    setTimeout(() => {
+                        this.gameStore.messageError = "";
+                    }, 3000);
+                }
+            } catch (error) {
+                console.log("Ошибка при удалении игры:", error.message);
+                this.gameStore.messageError = "Не удалось подключиться к серверу";
+
+                setTimeout(() => {
+                    this.gameStore.messageError = "";
+                }, 3000);
+            }
+}
+
+
+
       }
   
   }

@@ -13,21 +13,26 @@
         </button>
 
         <h2 class="text-white lg:text-3xl md:text-base text-sm text-center lg:!-mt-18 !-mt-10 !mb-10">Авторизация</h2>
-            <form class="form flex flex-col w-full text-xl">
+            <form class="form flex flex-col w-full text-xl" @submit.prevent="submitForm">
                 <label class="!mb-2" for="">Логин:</label>
                 <input 
                 type="text"
                 placeholder="Введите логин"
+                v-model="loginUser"
                 required
                 class="form__input form__input--text !mb-10">
                 <label class="!mb-2" for="">Пароль:</label>
                 <input 
                 type="password" 
                 placeholder="Введите пароль"
+                v-model="passUser"
                 required
                 class="form__input form__input--password">
                 <div class="flex justify-center">
-                    <button type="submit" class="form__button !mt-10 !--mb-15 text-white">
+                    <button 
+                    type="submit" 
+                    class="form__button !mt-10 !--mb-15 text-white"
+                    @click="addRegUser">
                     Войти
                 </button>
                 </div>
@@ -50,6 +55,8 @@ export default {
     data() {
         return {
             gameStore: useGameStore(),
+            loginUser: '',
+            passUser: '',
         }
     },
     methods: {
@@ -59,7 +66,16 @@ export default {
         },
         toggleBodyScroll() {
             document.body.style.overflow = this.gameStore.loginDialog ? '' : 'hidden';
-        }
+        },
+        addRegUser() {
+            if(!this.loginUser || !this.passUser) {
+                this.gameStore.messageError = 'Заполните все поля!';
+                setTimeout(() => {
+                    this.gameStore.messageError = '';
+                }, 3000);
+                return;
+            }
+        },
     },
     mounted() {
         this.toggleBodyScroll(); // Учитываем, если окно уже было открыто при монтировании

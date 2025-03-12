@@ -21,7 +21,7 @@
       
       
         <router-link
-        to="/reg" 
+        to="/active" 
         class="flex flex-row items-center sitebar__nav-item !ps-5"
         active-class="active-sitebar"
         > 

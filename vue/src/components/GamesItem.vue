@@ -83,7 +83,7 @@ export default {
 }
 </script>
 
-<style>
+<style> 
 .game-card {
     background-color: var(--color-grey-card-fon);
     box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 25%);
@@ -95,6 +95,7 @@ export default {
 
 .game-card__title {
     font-family: Inter-Medium;
+    
 }
 .game-card__info {
     color: var(--color-grey-card-text);

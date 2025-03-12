@@ -55,6 +55,7 @@ import { useGameStore } from '@/stores/GameStore';
     flex-direction: row;
     align-items: center;
     cursor: pointer;
+    z-index: 10;
   }
   
   .notification__bar {

@@ -1,11 +1,14 @@
 <template>
     <div>
+        <transition-group name="list">
         <DeleteGames
-        v-for="(game, index) in gameSrore.games"
+        v-for="(game, index) in gameStore.games"
         :key="game.id"
         :game="game"
         :index="index"
+        
         />
+    </transition-group>
     </div>
   
 </template>
@@ -22,16 +25,30 @@ export default {
     
     data() {
         return {
-            gameSrore: useGameStore(),
+            gameStore: useGameStore(),
         }
     },
     async mounted() {
-        await this.gameSrore.fetchGames();
+        await this.gameStore.fetchGames();
     },
     
 }
 </script>
 
 <style>
+
+.list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
 
 </style>

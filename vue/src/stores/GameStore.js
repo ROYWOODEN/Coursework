@@ -1,10 +1,14 @@
+import EditGameModal from '@/components/EditGameModal.vue';
 import { defineStore } from 'pinia';
 
 export const useGameStore = defineStore('GameStore', {
     state: () => ({
         games: [],
+        EditID: [],
+        editGames: [],
         loginDialog: true,
         settingDialog: true,
+        EditGameModal: true,
         loader: false,
         message: '',
         messageError: '',
@@ -15,8 +19,7 @@ export const useGameStore = defineStore('GameStore', {
     
             this.loader = true; // Показываем лоадер сразу, до задержки
             
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Ждём 1 секунду
-            
+            // await new Promise(resolve => setTimeout(resolve, 1000));
             try {
                 const response = await fetch("/gamestore/games");
                 this.games = await response.json();
@@ -30,6 +33,17 @@ export const useGameStore = defineStore('GameStore', {
             } finally {
                 this.loader = false; // Скрываем лоадер после загрузки
             }
-        }
+        },
+        async fetchGameEdit(id) {
+            try {
+                const response = await fetch(`/gamestore/admin/edit/${id}`);
+                if (!response.ok) throw new Error("Ошибка загрузки данных");
+        
+                this.editGames = await response.json(); // Заполняем массив с данными игры
+            } catch (error) {
+                console.error("Ошибка при загрузке данных игры:", error.message);
+            }
+        },
+        
     }
 });

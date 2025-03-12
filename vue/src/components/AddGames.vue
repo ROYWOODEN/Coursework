@@ -59,114 +59,126 @@
                 </form>
             </main>
         </div>
-
-        
       </section>
-    </template>
+</template>
     
-    <script>
-
-
+<script>
 import Notification from '@/components/Notification.vue'
 import { useGameStore } from '@/stores/GameStore';
 
-    export default {
+export default {
 
-        components: {
-            Notification,
+    components: {
+        Notification,
     },
 
-        data() {
-            return {
-                gameTitle: '',
-                gameDescription: '',
-                gameImage: '',
-                gamePrice: '',
-                gameStore: useGameStore(),
+    data() {
+        return {
+            gameTitle: '',
+            gameDescription: '',
+            gameImage: '',
+            gamePrice: '',
+            gameStore: useGameStore(),
+        }
+    },
+    methods: {
+        async fetchAddGame() {
+            if (
+            !this.gameTitle || !this.gameDescription || !this.gameImage || !this.gamePrice) {
+            this.gameStore.messageError = "Пожалуйста, заполните все поля!";
+            setTimeout(() => {
+                this.gameStore.messageError = "";
+            }, 3000);
+            return;
+            }
+
+        // Отправка данных на сервер
+            const response = await fetch("/gamestore/addGame", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+            },
+            body: JSON.stringify({
+                title: this.gameTitle,
+                description: this.gameDescription,
+                image: this.gameImage,
+                price: this.gamePrice,
+            }),
+            });
+
+            if (response.ok) {
+            const result = await response.json();
+            console.log(result.message);
+        this.gameStore.message = result.message;
+        this.gameTitle = "";
+        this.gameDescription = "";
+        this.gameImage = "";
+        this.gamePrice = "";
+
+            setTimeout(() => {
+                this.gameStore.message = "";
+            }, 3000);
+            } else {
+            сonsole.error("Ошибка при добавлении игры");
+            this.gameStore.messageError = "Кажется, что-то пошло не так :(";
+
+            setTimeout(() => {
+                this.gameStore.messageError = "";
+            }, 3000);
             }
         },
-        methods: {
-            async fetchAddGame() {
-                const response = await fetch('/gamestore/addGame', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json;charset=utf-8'
-                    },
-                    body: JSON.stringify({
-                        title: this.gameTitle,
-                        description: this.gameDescription,
-                        image: this.gameImage,
-                        price: this.gamePrice,
-                    })
-                });
-
-                if(response.ok) {
-                    const result = await response.json();
-                    console.log(result.message);
-                    this.gameStore.message = result.message;
-                    this.gameTitle = '';
-                    this.gameDescription = '';
-                    this.gameImage = '';
-                    this.gamePrice = ''
-
-                    setTimeout(() => {
-                        this.gameStore.message = '';
-                    }, 3000);
-                } else {
-                console.error("Ошибка при добавлении игр");
-                this.gameStore.messageError = 'Кажется - что-то пошло не так :(';
-
-                setTimeout(() => {
-                        this.gameStore.messageError = '';
-                    }, 3000);
-                }
-            }
-        }
-    }
-    </script>
+    },
+}
+</script>
     
-    <style>
-    .add-game-panel__background {
-        background-color: var(--color-black-fon-panel);
-        width: 70%;
-        border-radius: 30px;
-    }
-    .add-game-panel__title {
-        color: var(--color-grey-text-panel);
-        font-family: Inter-SemiBold;
-    }
-    .add-game-panel__form-group {
-        margin: 5% auto;
-        display: flex;
-        flex-direction: column;
-    }
-    .add-game-panel__input {
-        background-color: var(--color-grey-input);
-        padding: 5%;
-        margin-top: 20px;
-        border-radius: 40px;
-        outline: none;
-        width: 100%;
-        min-width: 500px;
-        transition: all 0.5s ease, border 0s ease;
-    }
-    .add-game-panel__input:focus {
-        border: 3px solid var(--color-purple);
-        box-shadow: 0px 0px 16px 1px var(--color-purple);
-    }
-    .add-game-panel__input:hover {
-        box-shadow: 0px 0px 16px 1px var(--color-purple);
-    }
-    .add-game-panel__button {
-        background-color: var(--color-purple);
-        padding: 3%;
-        border-radius: 15px;
-        font-family: Inter-Bold;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-    .add-game-panel__button:hover {
-        background-color: var(--color-purple-hover);
-    }
-    </style>
-    
+<style>
+.add-game-panel__background {
+    background-color: var(--color-black-fon-panel);
+    width: 70%;
+    border-radius: 30px;
+}
+
+.add-game-panel__title {
+    color: var(--color-grey-text-panel);
+    font-family: Inter-SemiBold;
+}
+
+.add-game-panel__form-group {
+    margin: 5% auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.add-game-panel__input {
+    background-color: var(--color-grey-input);
+    padding: 5%;
+    margin-top: 20px;
+    border-radius: 40px;
+    outline: none;
+    width: 100%;
+    min-width: 500px;
+    transition: all 0.5s ease, border 0s ease;
+}
+
+.add-game-panel__input:focus {
+    border: 3px solid var(--color-purple);
+    box-shadow: 0px 0px 16px 1px var(--color-purple);
+}
+
+.add-game-panel__input:hover {
+    box-shadow: 0px 0px 16px 1px var(--color-purple);
+}
+
+.add-game-panel__button {
+    background-color: var(--color-purple);
+    padding: 20px 40px;
+    border-radius: 40px;
+    font-family: Inter-Bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.add-game-panel__button:hover {
+    background-color: var(--color-purple-hover);
+}
+</style>

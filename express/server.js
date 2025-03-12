@@ -55,6 +55,8 @@ app.get('/gamestore/games/:id/tags', (req, res) => {
     });
 });
 
+
+// Добавление юзеров
 app.post('/gamestore/log', (req, res) => {
     const { name, login, password, avatar } = req.body;
 
@@ -65,11 +67,13 @@ app.post('/gamestore/log', (req, res) => {
                 console.error("Ошибка при добавлении данных:", err);
                 return res.status(500).json({ error: "Ошибка сервера" });
             }
-            res.status(201).json({ message: "Данные успешно добавлены" });
+            res.status(201).json({ message: "Вы успешно прошли регистрацию" });
         }
     );
 });
 
+
+// Запрос на добавление игр
 app.post('/gamestore/addGame', (req, res) => {
     const { title, description, price, image } = req.body;
 
@@ -83,6 +87,42 @@ app.post('/gamestore/addGame', (req, res) => {
         res.status(201).json({ message: "Данные успешно добавлены" });
     });
 });
+
+
+app.delete('/gamestore/admin/del/:id_game', (req, res) => {
+    const { id_game } = req.params;
+
+    // console.log("Получен id_game:", id_game);
+
+    db.query("DELETE FROM games WHERE id_game = ?", [id_game], (err, result) => {
+        if(err) {
+            res.status(500).json({ error: 'Не удалось удалить игру' });
+            return;
+        }
+
+        // console.log("Результат удаления:", result);
+        res.json({ message: 'Игра удалена' });
+    });
+});
+
+app.get('/gamestore/admin/edit/:id_game', (req, res) => {
+    const { id_game } = req.params;
+
+    db.query('SELECT * FROM games WHERE id_game = ?', [id_game], (err, results) => {
+        if (err) {
+            console.error("Ошибка при получении игры:", err);
+            return res.status(500).json({ error: "Ошибка сервера" });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ error: "Игра не найдена" });
+        }
+
+        res.json(results[0]); // Отправляем первую (и единственную) найденную игру
+    });
+});
+
+
 
 
 

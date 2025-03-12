@@ -4,7 +4,7 @@
         <h2 class="lg:text-3xl md:text-base text-sm text-center text-white !mt-6 !mb-12">Регистрация</h2>
 
 
-      <form class="form flex flex-col w-full text-lg">
+      <form class="form flex flex-col w-full text-lg" @submit.prevent="submitForm">
         <div class="flex flex-col w-150 !mb-6">
           <label for="username" class="!mb-2">Имя пользователя:</label>
           <input 
@@ -42,7 +42,7 @@
         </div>
         <div class="flex flex-row justify-center !mt-10 !mb-10">
             <button 
-            type="button" 
+            type="submit" 
             class="text-xl form__button text-white"
             @click="addRegForm"
             >Зарегистрироваться</button>
@@ -55,9 +55,13 @@
 </template>
 
 <script>
+
+import { useGameStore } from '@/stores/GameStore';
+
 export default {
     data() {
       return {
+        gameStore: useGameStore(),
         UserName: '',
         UserLogin: '',
         UserPass: '',
@@ -66,7 +70,17 @@ export default {
     },
 
     methods: {
-      async addRegForm() {
+    async addRegForm() {
+      
+      if (!this.UserName || !this.UserLogin || !this.UserPass || !this.UserAva) {
+        this.gameStore.messageError = 'Заполните все поля!';
+        setTimeout(() => {
+          this.gameStore.messageError = '';
+        }, 3000);
+        return;
+      }
+
+      try {
         const response = await fetch('/gamestore/log', {
           method: 'POST',
           headers: {
@@ -78,21 +92,40 @@ export default {
             password: this.UserPass,
             avatar: this.UserAva,
           }),
-        }); 
-        if(response.ok) {
+        });
+
+        if (response.ok) {
           const result = await response.json();
           console.log(result.message);
-          this.UserName = ''
-          this.UserLogin = ''
-          this.UserPass = ''
-          this.UserAva = ''
+          this.gameStore.message = result.message;
 
+          // Очищаем форму
+          this.UserName = '';
+          this.UserLogin = '';
+          this.UserPass = '';
+          this.UserAva = '';
+
+          setTimeout(() => {
+            this.gameStore.message = '';
+          }, 3000);
         } else {
-        console.error("Ошибка при регистрации");
-    }
-          
+          console.error("Ошибка при регистрации");
+          this.gameStore.messageError = 'Кажется - что-то пошло не так :(';
+
+          setTimeout(() => {
+            this.gameStore.messageError = '';
+          }, 3000);
+        }
+      } catch (error) {
+        console.error("Ошибка сети:", error);
+        this.gameStore.messageError = 'Ошибка сети, попробуйте позже';
+        setTimeout(() => {
+          this.gameStore.messageError = '';
+        }, 3000);
       }
     }
+  }
+
 }
 </script>
 
@@ -123,7 +156,7 @@ h2 {
 }
 .form__button {
     background-color: var(--color-purple);
-    padding: 3%;
+    padding: 20px 40px;
     border: none;
     border-radius: 40px;
     cursor: pointer;

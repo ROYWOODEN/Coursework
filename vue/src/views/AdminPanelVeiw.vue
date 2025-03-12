@@ -15,7 +15,7 @@
             
 
          </main>
-
+         <EditGameModal v-if="!gameStore.EditGameModal" />
     </section>
    
   
@@ -24,6 +24,7 @@
 <script>
 import Header from '@/components/Header.vue';
 import Sidebar from '@/components/Sidebar.vue';
+import EditGameModal from '@/components/EditGameModal.vue';
 
 import { useGameStore } from '@/stores/GameStore';
 
@@ -32,10 +33,11 @@ export default {
     components: {
         Header,
         Sidebar,
+        EditGameModal,
     },
     data() {
         return {
-            gameSrore: useGameStore(),
+            gameStore: useGameStore(),
         }
     },
 }

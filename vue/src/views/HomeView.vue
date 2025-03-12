@@ -60,7 +60,7 @@ export default {
     },
     methods: {
         async fetchGamesOnce() {
-            if (!this.gameStore.loader && this.gameStore.games.length === 0) {
+            if (this.gameStore.games.length === 0) {
                 await this.gameStore.fetchGames();
             }
         }
