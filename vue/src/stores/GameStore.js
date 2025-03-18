@@ -1,11 +1,10 @@
-import EditGameModal from '@/components/EditGameModal.vue';
 import { defineStore } from 'pinia';
 
 export const useGameStore = defineStore('GameStore', {
     state: () => ({
         games: [],
         EditID: [],
-        editGames: [],
+        editGames: {},
         loginDialog: true,
         settingDialog: true,
         EditGameModal: true,

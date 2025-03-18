@@ -16,16 +16,48 @@
         <h4 class="setting__title text-white text-xl font-semibold">Изменение игры:</h4>
         </div>
             
-        <main v-if="gameStore.editGames">
-                <img :src="gameStore.editGames.image" alt="Game Image" class="w-100 rounded-3xl" />
-                <p>{{ gameStore.editGames.title }}</p>
-               
-                <!-- Тут можно добавить другие поля игры -->
+        <main v-if="gameStore.editGames.length != 0">
+            <div class="flex flex-row" >
+                <img :src="gameStore.editGames.image" alt="Game Image" class="w-100 rounded-3xl !me-3" />
+                <textarea
+                class="text-white" 
+                name="" 
+                id=""
+                v-model="description"
+                ></textarea>
+                
+            </div>
+                
+                <input 
+                type="text"
+                v-model="title"
+                class="text-white !mt-6 font-bold text-xl w-100 !mb-10">
+
+                <input
+                class="w-100 text-white" 
+                type="text"
+                v-model="price"
+                >
+                <h1 class="text-white text-2xl">{{ description }}</h1>
+
+                
+                <div class="flex flex-row items-center justify-end gap-10 !mt-10">
+                    <button 
+                        @click="DelDialog"
+                        class="game-panel-btns-2">
+                        Отмена
+                    </button>
+                    <button 
+                        @click="fetchGameUpdate(gameStore.editGames.id_game)"
+                        class="game-panel-btns text-white font-medium">
+                        Сохранить
+                    </button>
+                </div>
+                
             </main>
 
-            <!-- Можно добавить сообщение, если игра ещё не загружена -->
             <main v-else>
-                <p>Загрузка игры...</p>
+                <div class="loader"></div>
             </main>
         </div>
     </div>
@@ -42,24 +74,89 @@ export default {
         return {
             gameStore: useGameStore(),
             game: {},
+            title: '',
+            description: '',
+            price: '',
+            OrigTitle: '',
+            OrigDescription: '',
+            OrigPrice: '',
         }
     },
     methods: {
+        toggleBodyScroll() {
+            document.body.style.overflow = this.gameStore.EditGameModal ? '' : 'hidden';
+        },
+
+
         DelDialog() {
             console.log("Закрытие модального окна!");
             this.gameStore.EditGameModal = !this.gameStore.EditGameModal;
+            this.toggleBodyScroll();
         },
+        async fetchEdit() {
+            // this.fetchGameEdit(this.gameStore.EditID);
+            if (this.gameStore.EditID) {
+            await this.gameStore.fetchGameEdit(this.gameStore.EditID);
+
+            this.OrigTitle = this.gameStore.editGames.title;
+            this.OrigDescription = this.gameStore.editGames.description;
+            this.OrigPrice = this.gameStore.editGames.price;
+
+                if(this.gameStore.editGames) {
+                    this.title = this.gameStore.editGames.title;
+                    this.description = this.gameStore.editGames.description;
+                    this.price = this.gameStore.editGames.price;
+                }
+            }
+        },
+        async fetchGameUpdate(id) {
+
+            if (this.title === this.OrigTitle && this.description === this.OrigDescription & this.price === this.OrigPrice) {
+                console.log("Данные не изменены, запрос не отправляется!");
+                this.gameStore.messageError = 'Вы не внесли изменений.';
+                setTimeout(() => {
+                this.gameStore.messageError = '';
+                }, 3000);
+                return;
+            }
+
+
+            const response = await fetch(`/gamestore/admin/edit/${id}`,{
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify({
+                    title: this.title,
+                    description: this.description,
+                    price: this.price,
+                }),
+            });
+            if (response.ok) {
+            const result = await response.json();
+                console.log(result.message);
+                this.gameStore.message = result.message;
+                this.DelDialog();
+                this.gameStore.fetchGames();
+            } else {
+                this.gameStore.messageError = 'Кажется - что-то пошло не так :(';
+            };
+            setTimeout(() => {
+            this.gameStore.message = '';
+          }, 3000);
+          setTimeout(() => {
+            this.gameStore.messageError = '';
+          }, 3000);
+        }
     },
-    async mounted() {
-        // this.fetchGameEdit(this.gameStore.EditID);
-        if (this.gameStore.EditID) {
-        await this.gameStore.fetchGameEdit(this.gameStore.EditID);
-    }
+    mounted() {
+        this.fetchEdit();
+        this.toggleBodyScroll();
     },
 }
 </script>
 
-<style scored>
+<style scoped>
 
 .dialog {
     background-color: rgba(0, 0, 0, 0.8);
@@ -74,9 +171,11 @@ export default {
 .dialog__content {
     position: relative;
     margin: auto;
+    max-height: 90vh;
+    overflow-y: auto;
     background-color: #242424;
     border-radius: 12px;
-    padding: 10% 6%;
+    padding: 100px;
     width: 50%;
 }
 
@@ -94,5 +193,39 @@ export default {
     top: 10px;
     left: 20px;
 }
+
+
+
+
+.game-panel-btns  {
+    font-family: Inter-Medium;
+    width: 30%;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: var(--color-purple);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.game-panel-btns-2 {
+    font-family: Inter-Medium;
+    width: 30%;
+    padding: 8px 20px;
+    border-radius: 10px;
+    border: 2px solid var(--color-grey-card-text);
+    color: var(--color-grey-text);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.game-panel-btns-2:hover {
+    border: 2px solid white;
+    color: white;
+}
+.game-panel-btns:hover {
+    background-color: var(--color-purple-hover);   
+}
+
+
 
 </style>

@@ -8,7 +8,8 @@
         <div class="flex flex-col w-150 !mb-6">
           <label for="username" class="!mb-2">Имя пользователя:</label>
           <input 
-          type="text" id="username" 
+          type="text" 
+          id="username"
           class="form__input"
           placeholder="Придумайте имя пользователя" 
           v-model="UserName" required>
@@ -81,7 +82,7 @@ export default {
       }
 
       try {
-        const response = await fetch('/gamestore/log', {
+        const response = await fetch('/gamestore/reg', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json;charset=utf-8'

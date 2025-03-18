@@ -57,7 +57,7 @@ app.get('/gamestore/games/:id/tags', (req, res) => {
 
 
 // Добавление юзеров
-app.post('/gamestore/log', (req, res) => {
+app.post('/gamestore/reg', (req, res) => {
     const { name, login, password, avatar } = req.body;
 
     const query = "INSERT INTO users (name, login, password, avatar) VALUES (?, ?, ?, ?)";
@@ -88,13 +88,15 @@ app.post('/gamestore/addGame', (req, res) => {
     });
 });
 
-
+// Запрос на удаление игр
 app.delete('/gamestore/admin/del/:id_game', (req, res) => {
     const { id_game } = req.params;
 
     // console.log("Получен id_game:", id_game);
 
-    db.query("DELETE FROM games WHERE id_game = ?", [id_game], (err, result) => {
+    const query = "DELETE FROM games WHERE id_game = ?";
+
+    db.query(query, [id_game], (err, result) => {
         if(err) {
             res.status(500).json({ error: 'Не удалось удалить игру' });
             return;
@@ -105,10 +107,16 @@ app.delete('/gamestore/admin/del/:id_game', (req, res) => {
     });
 });
 
+
+// Запрос на получения конкретной игры для редактирования
 app.get('/gamestore/admin/edit/:id_game', (req, res) => {
     const { id_game } = req.params;
 
-    db.query('SELECT * FROM games WHERE id_game = ?', [id_game], (err, results) => {
+
+    const query = 'SELECT * FROM games WHERE id_game = ?'; 
+
+
+    db.query(query, [id_game], (err, results) => {
         if (err) {
             console.error("Ошибка при получении игры:", err);
             return res.status(500).json({ error: "Ошибка сервера" });
@@ -120,6 +128,31 @@ app.get('/gamestore/admin/edit/:id_game', (req, res) => {
 
         res.json(results[0]); // Отправляем первую (и единственную) найденную игру
     });
+});
+
+
+
+app.put('/gamestore/admin/edit/:id_game', (req, res) => {
+    const { id_game } = req.params;
+
+    const { title, description, price } = req.body;
+
+    const query = "UPDATE games SET title = ?, description = ?, price = ? WHERE id_game = ?";
+
+    db.query(query, [title, description, price, id_game], (err, result) => {
+        if (err) {
+            console.error('Ошибка при обновлении игры:', err);
+            return res.status(500).json({ message: 'Ошибка сервера при обновлении данных' });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Игра с таким ID не найдена' });
+        }
+
+        res.status(200).json({ message: 'Данные об игре успешно обновлены' });
+    });
+
+
 });
 
 

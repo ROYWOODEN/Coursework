@@ -33,6 +33,28 @@
   padding: 0;
   box-sizing: border-box;
 }
+/* Стилизация для WebKit-браузеров (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 12px; /* Ширина вертикальной полосы прокрутки */
+  height: 12px; /* Высота горизонтальной полосы прокрутки */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-grey-card-fon); /* Цвет фона трека */
+  border-radius: 6px; /* Закругление углов трека */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-purple-hover); /* Цвет ползунка */
+  border-radius: 6px; /* Закругление углов ползунка */
+  border: none; /* Отступ вокруг ползунка */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-purple); /* Цвет ползунка при наведении */
+}
+
+
 body {
   background-color: #242424;
 }

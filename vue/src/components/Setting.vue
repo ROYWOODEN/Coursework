@@ -42,7 +42,7 @@ export default {
 }
 </script>
 
-<style>
+<style scored>
 
 .dialog {
     background-color: rgba(0, 0, 0, 0.8);

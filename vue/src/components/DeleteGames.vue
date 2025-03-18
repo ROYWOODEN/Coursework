@@ -104,7 +104,7 @@ import { useGameStore } from '@/stores/GameStore';
 
                 if (response.ok) {
                     const result = await response.json();
-                    this.gameStore.message = result.message;
+                    this.gameStore.messageError = result.message;
 
                     // Локально делаем удаление либо можно просто делать запрос апи по новой
                     // this.gameStore.fetchGames();
@@ -114,7 +114,7 @@ import { useGameStore } from '@/stores/GameStore';
 
                     
                     setTimeout(() => {
-                        this.gameStore.message = "";
+                        this.gameStore.messageError = "";
                     }, 3000);
                 } else {
                     const result = await response.json();
