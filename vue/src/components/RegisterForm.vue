@@ -74,10 +74,7 @@ export default {
     async addRegForm() {
       
       if (!this.UserName || !this.UserLogin || !this.UserPass || !this.UserAva) {
-        this.gameStore.messageError = 'Заполните все поля!';
-        setTimeout(() => {
-          this.gameStore.messageError = '';
-        }, 3000);
+        this.gameStore.showError('Заполните все поля!');
         return;
       }
 
@@ -98,7 +95,7 @@ export default {
         if (response.ok) {
           const result = await response.json();
           console.log(result.message);
-          this.gameStore.message = result.message;
+          this.gameStore.showMessage(result.message);
 
           // Очищаем форму
           this.UserName = '';
@@ -106,23 +103,13 @@ export default {
           this.UserPass = '';
           this.UserAva = '';
 
-          setTimeout(() => {
-            this.gameStore.message = '';
-          }, 3000);
         } else {
           console.error("Ошибка при регистрации");
-          this.gameStore.messageError = 'Кажется - что-то пошло не так :(';
-
-          setTimeout(() => {
-            this.gameStore.messageError = '';
-          }, 3000);
+          this.gameStore.showError('Кажется - что-то пошло не так :(');
         }
       } catch (error) {
         console.error("Ошибка сети:", error);
-        this.gameStore.messageError = 'Ошибка сети, попробуйте позже';
-        setTimeout(() => {
-          this.gameStore.messageError = '';
-        }, 3000);
+        this.gameStore.showError('Ошибка сети, попробуйте позже');
       }
     }
   }

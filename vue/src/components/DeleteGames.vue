@@ -47,7 +47,7 @@
             </button>
             
             <button 
-            @click="DelGames(game.id_game)"
+            @click="gameStore.DelGames(game.id_game)"
             class="game-panel-btn-2">
                 Удалить
             </button>
@@ -96,43 +96,6 @@ import { useGameStore } from '@/stores/GameStore';
             this.gameStore.EditID = id;
 
           },
-          async DelGames(id) {
-            try {
-                const response = await fetch(`/gamestore/admin/del/${id}`, {
-                    method: 'DELETE',
-                });
-
-                if (response.ok) {
-                    const result = await response.json();
-                    this.gameStore.messageError = result.message;
-
-                    // Локально делаем удаление либо можно просто делать запрос апи по новой
-                    // this.gameStore.fetchGames();
-
-                    this.gameStore.games = this.gameStore.games.filter(game => game.id_game !== id); 
-
-
-                    
-                    setTimeout(() => {
-                        this.gameStore.messageError = "";
-                    }, 3000);
-                } else {
-                    const result = await response.json();
-                    this.gameStore.messageError = result.error || "Ошибка при удалении игры";
-
-                    setTimeout(() => {
-                        this.gameStore.messageError = "";
-                    }, 3000);
-                }
-            } catch (error) {
-                console.log("Ошибка при удалении игры:", error.message);
-                this.gameStore.messageError = "Не удалось подключиться к серверу";
-
-                setTimeout(() => {
-                    this.gameStore.messageError = "";
-                }, 3000);
-            }
-}
 
 
 

@@ -56,6 +56,21 @@ app.get('/gamestore/games/:id/tags', (req, res) => {
 });
 
 
+app.get('/gamestore/tags', (req, res) => {
+
+    const query = "SELECT * FROM tags";
+
+    db.query(query, (err, results) => {
+            if (err) {
+                console.error("Ошибка при получении тегов:", err);
+                return res.status(500).json({ error: "Ошибка сервера" });
+            }
+            res.json(results);
+    });
+
+});
+
+
 // Добавление юзеров
 app.post('/gamestore/reg', (req, res) => {
     const { name, login, password, avatar } = req.body;
@@ -75,7 +90,7 @@ app.post('/gamestore/reg', (req, res) => {
 
 // Запрос на добавление игр
 app.post('/gamestore/addGame', (req, res) => {
-    const { title, description, price, image } = req.body;
+    const { title, description, price, image, tags } = req.body;
 
     const query = "INSERT INTO games (title, description, price, image) VALUES (?, ?, ?, ?)";
 
@@ -84,7 +99,24 @@ app.post('/gamestore/addGame', (req, res) => {
             console.error("Ошибка при добавлении Игр:", err);
             return res.status(500).json({ error: "Ошибка сервера" });
         }
-        res.status(201).json({ message: "Данные успешно добавлены" });
+
+        const newGameID = result.insertId;
+
+        if(Array.isArray(tags) && tags.length > 0) {
+            const tagValue = tags.map(tagId => [newGameID, tagId]);
+
+            const query = "INSERT INTO game_tags (id_game, id_tags) VALUES  ?";
+
+            db.query(query, [tagValue], (err2) => {
+                if (err2) {
+                    console.error("Ошибка при добавлении тегов:", err2);
+                    return res.status(500).json({ error: "Ошибка сервера при связывании тегов" });
+                  }
+                  res.json({ message: "Игра и теги успешно добавлены!" });
+            });
+        }
+
+        // res.status(201).json({ message: "Данные успешно добавлены" });
     });
 });
 

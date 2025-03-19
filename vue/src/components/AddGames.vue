@@ -49,6 +49,45 @@
                         placeholder="Укажите цену"
                         class="add-game-panel__input">
                     </div>
+
+                    <div class="flex flex-col">
+                        <label for="" class="add-game-panel__label text-lg">Выберите тег #</label>
+                        <select
+                        v-model="gameTags[0]" 
+                        class="add-game-panel__select"
+                        name="" id="">
+                        <option value="">-- # Тег 1 --</option>
+                            <option 
+                            v-for="tag in gameStore.tagsSelect"
+                            :key="tag.id_tags"
+                            :value="tag.id_tags"
+                            >{{ tag.name }}</option>
+                        </select>
+
+                        <select
+                        v-model="gameTags[1]" 
+                        class="add-game-panel__select"
+                        name="" id="">
+                        <option value="">-- # Тег 2 --</option>
+                            <option 
+                            v-for="tag in gameStore.tagsSelect"
+                            :key="tag.id_tags"
+                            :value="tag.id_tags"
+                            >{{ tag.name }}</option>
+                        </select>
+
+                        <select
+                        v-model="gameTags[2]" 
+                        class="add-game-panel__select"
+                        name="" id="">
+                        <option value="">-- # Тег 3 --</option>
+                            <option 
+                            v-for="tag in gameStore.tagsSelect"
+                            :key="tag.id_tags"
+                            :value="tag.id_tags"
+                            >{{ tag.name }}</option>
+                        </select>
+                    </div>
                     <div class="add-game-panel__button-wrapper flex justify-center !mt-17 !mb-20">
                         <button 
                         type="submit" 
@@ -63,14 +102,10 @@
 </template>
     
 <script>
-import Notification from '@/components/Notification.vue'
 import { useGameStore } from '@/stores/GameStore';
 
 export default {
 
-    components: {
-        Notification,
-    },
 
     data() {
         return {
@@ -78,17 +113,15 @@ export default {
             gameDescription: '',
             gameImage: '',
             gamePrice: '',
+            gameTags: ['','', ''],
             gameStore: useGameStore(),
         }
     },
     methods: {
         async fetchAddGame() {
             if (
-            !this.gameTitle || !this.gameDescription || !this.gameImage || !this.gamePrice) {
-            this.gameStore.messageError = "Пожалуйста, заполните все поля!";
-            setTimeout(() => {
-                this.gameStore.messageError = "";
-            }, 3000);
+            !this.gameTitle || !this.gameDescription || !this.gameImage || !this.gamePrice || !this.gameTags[0] || !this.gameTags[1] || !this.gameTags[2]) {
+            this.gameStore.showError("Пожалуйста, заполните все поля!");
             return;
             }
 
@@ -103,31 +136,30 @@ export default {
                 description: this.gameDescription,
                 image: this.gameImage,
                 price: this.gamePrice,
+                tags: this.gameTags,
             }),
             });
 
             if (response.ok) {
             const result = await response.json();
             console.log(result.message);
-        this.gameStore.message = result.message;
+        this.gameStore.showMessage(result.message);
         this.gameTitle = "";
         this.gameDescription = "";
         this.gameImage = "";
         this.gamePrice = "";
+        this.gameTags = ['', '', ''];
 
-            setTimeout(() => {
-                this.gameStore.message = "";
-            }, 3000);
             } else {
             сonsole.error("Ошибка при добавлении игры");
-            this.gameStore.messageError = "Кажется, что-то пошло не так :(";
+            this.gameStore.showError("Кажется, что-то пошло не так :(");
 
-            setTimeout(() => {
-                this.gameStore.messageError = "";
-            }, 3000);
             }
         },
     },
+    async mounted() {
+        this.gameStore.fetchTags();
+    }
 }
 </script>
     
@@ -151,6 +183,7 @@ export default {
 
 .add-game-panel__input {
     background-color: var(--color-grey-input);
+    font-family: Inter-Medium;
     padding: 5%;
     margin-top: 20px;
     border-radius: 40px;
@@ -180,5 +213,12 @@ export default {
 
 .add-game-panel__button:hover {
     background-color: var(--color-purple-hover);
+}
+.add-game-panel__select {
+    background-color: var(--color-grey-input);
+    font-family: Inter-Medium;
+    padding: 4%;
+    margin-top: 20px;
+    border-radius: 40px;
 }
 </style>

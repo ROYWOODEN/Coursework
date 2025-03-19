@@ -3,7 +3,7 @@
         <transition-group name="list">
         <DeleteGames
         v-for="(game, index) in gameStore.games"
-        :key="game.id"
+        :key="game.id_game"
         :game="game"
         :index="index"
         
@@ -40,6 +40,7 @@ export default {
 .list-item {
   display: inline-block;
   margin-right: 10px;
+  /* position: relative; */
 }
 .list-enter-active,
 .list-leave-active {

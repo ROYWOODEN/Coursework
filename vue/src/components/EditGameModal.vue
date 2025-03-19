@@ -38,7 +38,6 @@
                 type="text"
                 v-model="price"
                 >
-                <h1 class="text-white text-2xl">{{ description }}</h1>
 
                 
                 <div class="flex flex-row items-center justify-end gap-10 !mt-10">
@@ -113,10 +112,11 @@ export default {
 
             if (this.title === this.OrigTitle && this.description === this.OrigDescription & this.price === this.OrigPrice) {
                 console.log("Данные не изменены, запрос не отправляется!");
-                this.gameStore.messageError = 'Вы не внесли изменений.';
-                setTimeout(() => {
-                this.gameStore.messageError = '';
-                }, 3000);
+                this.gameStore.showError('Вы не внесли изменений!');
+                return;
+            } else if (this.title == '' || this.description == '' || this.price == '') {
+                console.log("Данные не изменены, запрос не отправляется!");
+                this.gameStore.showError('У вас есть не заполненные поля!');
                 return;
             }
 
@@ -135,18 +135,12 @@ export default {
             if (response.ok) {
             const result = await response.json();
                 console.log(result.message);
-                this.gameStore.message = result.message;
+                this.gameStore.showMessage(result.message);
                 this.DelDialog();
                 this.gameStore.fetchGames();
             } else {
-                this.gameStore.messageError = 'Кажется - что-то пошло не так :(';
+                this.gameStore.showError('Кажется - что-то пошло не так :(');
             };
-            setTimeout(() => {
-            this.gameStore.message = '';
-          }, 3000);
-          setTimeout(() => {
-            this.gameStore.messageError = '';
-          }, 3000);
         }
     },
     mounted() {

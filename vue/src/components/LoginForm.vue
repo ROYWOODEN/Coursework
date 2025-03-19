@@ -69,10 +69,7 @@ export default {
         },
         addRegUser() {
             if(!this.loginUser || !this.passUser) {
-                this.gameStore.messageError = 'Заполните все поля!';
-                setTimeout(() => {
-                    this.gameStore.messageError = '';
-                }, 3000);
+                this.gameStore.showError('Заполните все поля!');
                 return;
             }
         },
