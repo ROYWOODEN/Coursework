@@ -120,6 +120,23 @@ app.post('/gamestore/addGame', (req, res) => {
     });
 });
 
+
+app.post('/gamestore/addTag', (req, res) => {
+
+    const { tag } = req.body;
+
+    const query = "INSERT INTO tags (name) VALUES (?)";
+
+    db.query(query, [tag], (err) => {
+        if(err) {
+            console.error('Ошибка добавления тега');
+            return res.status(500).json({ error: 'Ошибка добавления тега' });
+        }
+        res.json({ message: "Теги были успешно добавлены!" });
+    });
+
+});
+
 // Запрос на удаление игр
 app.delete('/gamestore/admin/del/:id_game', (req, res) => {
     const { id_game } = req.params;

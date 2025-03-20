@@ -32,7 +32,7 @@
                 type="text"
                 v-model="title"
                 class="text-white !mt-6 font-bold text-xl w-100 !mb-10">
-
+                
                 <input
                 class="w-100 text-white" 
                 type="text"

@@ -87,6 +87,23 @@
                             :value="tag.id_tags"
                             >{{ tag.name }}</option>
                         </select>
+
+                        <div class="add-game-panel__form-group">
+                        <label for="game-price" class="add-game-panel__label text-lg">Создать новый тег</label>
+                        <div class="">
+                            <input 
+                        id="game-price"
+                        v-model="NewTag"
+                        type="text"
+                        placeholder="Задайте новый тег"
+                        class="add-game-panel__input-tag">
+                        <button 
+                        @click="fetchAddTags"
+                        type="button" 
+                        class="add-game-panel__button-tag">Создать</button>
+                        </div>
+                        
+                    </div>
                     </div>
                     <div class="add-game-panel__button-wrapper flex justify-center !mt-17 !mb-20">
                         <button 
@@ -114,6 +131,7 @@ export default {
             gameImage: '',
             gamePrice: '',
             gameTags: ['','', ''],
+            NewTag: '',
             gameStore: useGameStore(),
         }
     },
@@ -155,6 +173,37 @@ export default {
             this.gameStore.showError("Кажется, что-то пошло не так :(");
 
             }
+        },
+        async fetchAddTags() {
+            try {
+                if(this.NewTag === ''){
+                this.gameStore.showError('Прошу введите название тега!');
+                return;
+            }
+            const response = await fetch('/gamestore/addTag', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8",
+                },
+                body: JSON.stringify({
+                    tag: this.NewTag,
+                }),
+            });
+
+            const result = await response.json();
+
+            if(response.ok) {
+                console.log(result.message);
+                this.gameStore.showMessage(result.message);
+                this.NewTag = '';
+            } else {
+                сonsole.error("Ошибка при добавлении игры");
+                this.gameStore.showError("Кажется, что-то пошло не так :(");
+            }
+            } catch {
+                this.gameStore.showError("Ошибка подключения к интернету");
+            }
+            
         },
     },
     async mounted() {
@@ -201,6 +250,25 @@ export default {
 .add-game-panel__input:hover {
     box-shadow: 0px 0px 16px 1px var(--color-purple);
 }
+.add-game-panel__input-tag {
+    background-color: var(--color-grey-input);
+    font-family: Inter-Medium;
+    padding: 3%;
+    margin-top: 20px;
+    border-radius: 40px;
+    outline: none;
+    width: 50%;
+    min-width: 350px;
+    transition: all 0.5s ease, border 0s ease;
+}
+.add-game-panel__input-tag:focus {
+    border: 3px solid var(--color-purple);
+    box-shadow: 0px 0px 16px 1px var(--color-purple);
+}
+
+.add-game-panel__input-tag:hover {
+    box-shadow: 0px 0px 16px 1px var(--color-purple);
+}
 
 .add-game-panel__button {
     background-color: var(--color-purple);
@@ -220,5 +288,17 @@ export default {
     padding: 4%;
     margin-top: 20px;
     border-radius: 40px;
+}
+
+.add-game-panel__button-tag {
+    background-color: var(--color-purple);
+    padding: 3% 40px;
+    border-radius: 40px;
+    font-family: Inter-Bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.add-game-panel__button-tag:hover {
+    background-color: var(--color-purple-hover);
 }
 </style>
