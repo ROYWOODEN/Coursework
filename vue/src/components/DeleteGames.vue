@@ -33,8 +33,10 @@
                   <span
                   v-for="(tag, idx) in game.tags" :key="idx"
                   class="game-card__tag rounded-lg !px-3 !py-1 text-sm font-semibold"
-                  >{{ tag.name }}</span>
-                  <span>{{ game.price }}</span>
+                  > # {{ tag.name }}</span>
+
+
+                  <span> ${{ game.price }}</span>
               </div>
               
           </div>
@@ -67,10 +69,6 @@ import { useGameStore } from '@/stores/GameStore';
               type: Object,
               required: true,
           },
-          index: {
-              type: Number,
-              required: true,
-          },
       },
       data() {
           return {
@@ -79,11 +77,11 @@ import { useGameStore } from '@/stores/GameStore';
           }
       },
   
-      computed: {
-          isExpanded() {
-              return this.expanded;
-          }
-      },
+    //   computed: {
+    //       isExpanded() {
+    //           return this.expanded;
+    //       }
+    //   },
 //       created() {
 //     console.log("Полученная игра:", this.game);
 // },

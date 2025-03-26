@@ -2,11 +2,9 @@
     <div>
         <transition-group name="list">
         <DeleteGames
-        v-for="(game, index) in gameStore.games"
+        v-for="game in gameStore.games"
         :key="game.id_game"
         :game="game"
-        :index="index"
-        
         />
     </transition-group>
     </div>

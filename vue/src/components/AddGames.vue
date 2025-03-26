@@ -196,6 +196,7 @@ export default {
                 console.log(result.message);
                 this.gameStore.showMessage(result.message);
                 this.NewTag = '';
+                this.gameStore.fetchTags();
             } else {
                 сonsole.error("Ошибка при добавлении игры");
                 this.gameStore.showError("Кажется, что-то пошло не так :(");
@@ -212,7 +213,7 @@ export default {
 }
 </script>
     
-<style>
+<style scored>
 .add-game-panel__background {
     background-color: var(--color-black-fon-panel);
     width: 70%;

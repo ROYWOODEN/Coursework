@@ -16,7 +16,7 @@
         <h4 class="setting__title text-white text-xl font-semibold">Изменение игры:</h4>
         </div>
             
-        <main v-if="gameStore.editGames.length != 0">
+        <main v-if="gameStore.editGames && Object.keys(gameStore.editGames).length > 0">
             <div class="flex flex-row" >
                 <img :src="gameStore.editGames.image" alt="Game Image" class="w-100 rounded-3xl !me-3" />
                 <textarea
@@ -38,6 +38,59 @@
                 type="text"
                 v-model="price"
                 >
+
+
+                <div class="flex flex-col">
+                    <!-- <select name="" id="">
+                        <option value=""></option>
+                        <option value=""></option>
+                    </select> -->
+
+                    <div class="!px-6 !pt-2 !pb-10 text-white">
+                      <span 
+                        v-for="tag in gameStore.editGamesTags"
+                        :key="tag.id_tags"
+                        class="inline-block game-card__tag rounded-lg !px-3 !py-1 text-sm font-semibold !mr-2"># {{ tag.name }}</span>  
+                    </div>
+                    
+
+                    <div class="!px-6 !pt-2">
+                        <select
+                        v-model="selectTag[0]"
+                        class="edit-game-panel__select text-white !my-3"
+                        name="" id="">
+                            <option 
+                            v-for="tag in gameStore.tagsSelect"
+                            :key="tag.id_tags"
+                            :value="tag.id_tags"
+                            >{{ tag.name }}</option>
+                        </select>
+
+                        <select
+                        v-model="selectTag[1]"
+                        class="edit-game-panel__select text-white !my-3"
+                        name="" id="">
+                            <option 
+                            v-for="tag in gameStore.tagsSelect"
+                            :key="tag.id_tags"
+                            :value="tag.id_tags"
+                            >{{ tag.name }}</option>
+                        </select>
+
+                        <select
+                        v-model="selectTag[2]" 
+                        class="edit-game-panel__select text-white !my-3"
+                        name="" id="">
+                            <option
+                            v-for="tag in gameStore.tagsSelect"
+                            :key="tag.id_tags"
+                            :value="tag.id_tags"
+                            >{{ tag.name }}</option>
+                        </select>
+                    </div>
+
+                    
+                </div>
 
                 
                 <div class="flex flex-row items-center justify-end gap-10 !mt-10">
@@ -79,6 +132,8 @@ export default {
             OrigTitle: '',
             OrigDescription: '',
             OrigPrice: '',
+            OrigTag: [],
+            selectTag: ['', '', ''],
         }
     },
     methods: {
@@ -101,6 +156,14 @@ export default {
             this.OrigDescription = this.gameStore.editGames.description;
             this.OrigPrice = this.gameStore.editGames.price;
 
+            this.OrigTag = this.gameStore.editGamesTags.map(tag => tag.id_tags);
+
+            this.selectTag = [
+                this.OrigTag[0],
+                this.OrigTag[1],
+                this.OrigTag[2],
+            ]
+
                 if(this.gameStore.editGames) {
                     this.title = this.gameStore.editGames.title;
                     this.description = this.gameStore.editGames.description;
@@ -110,15 +173,19 @@ export default {
         },
         async fetchGameUpdate(id) {
 
-            if (this.title === this.OrigTitle && this.description === this.OrigDescription & this.price === this.OrigPrice) {
+            if (this.title === this.OrigTitle && this.description === this.OrigDescription && this.price === this.OrigPrice) {
                 console.log("Данные не изменены, запрос не отправляется!");
                 this.gameStore.showError('Вы не внесли изменений!');
+                return;
+            } else if (this.selectTag[0] == this.selectTag[1] || this.selectTag[0] == this.selectTag[2] || this.selectTag[1] == this.selectTag[2]) {
+                console.log('Теги одинаковые, запрос не отправляется!');
+                this.gameStore.showError('Вы выбрали одинаковые теги, выберите разные');
                 return;
             } else if (this.title == '' || this.description == '' || this.price == '') {
                 console.log("Данные не изменены, запрос не отправляется!");
                 this.gameStore.showError('У вас есть не заполненные поля!');
                 return;
-            }
+            } 
 
 
             const response = await fetch(`/gamestore/admin/edit/${id}`,{
@@ -141,11 +208,55 @@ export default {
             } else {
                 this.gameStore.showError('Кажется - что-то пошло не так :(');
             };
+            
+
+            if(this.selectTag[0] != this.OrigTag[0] || this.selectTag[1] != this.OrigTag[1] || this.selectTag[2] != this.OrigTag[2]) {
+
+                this.fetchTagsEdit(id);
+            }
+        },
+        async fetchTagsEdit(id_game) {
+            try {
+                console.log('Удаляем старые теги для игры с id:', id_game);
+                // Удаляем старые теги
+                const deleteResponse = await fetch(`/gamestore/admin/edit/tags/${id_game}`, {
+                    method: 'DELETE'
+                });
+
+                if (!deleteResponse.ok) {
+                    throw new Error('Ошибка при удалении тегов');
+                }
+
+                console.log('Добавляем новые теги для игры с id:', id_game);
+                // Добавляем новые теги
+                const addResponse = await fetch('/gamestore/admin/edit/tags', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify({
+                        id_game: id_game,
+                        id_tags: this.selectTag,
+                    })
+                });
+
+                if (!addResponse.ok) {
+                    throw new Error('Ошибка при добавлении тегов');
+                }
+
+                console.log('Теги успешно обновлены');
+                this.gameStore.fetchGames(); // Обновление списка игр после изменений
+            } catch (err) {
+                this.gameStore.showError('Ошибка при обновлении тегов');
+                console.error('Ошибка при обновлении тегов:', err);
+            }
         }
+
     },
     mounted() {
         this.fetchEdit();
         this.toggleBodyScroll();
+        this.gameStore.fetchTags();
     },
 }
 </script>
@@ -218,6 +329,15 @@ export default {
 }
 .game-panel-btns:hover {
     background-color: var(--color-purple-hover);   
+}
+
+.edit-game-panel__select {
+    background-color: var(--color-grey-input);
+    width: 100%;
+    font-family: Inter-Medium;
+    padding: 2%;
+    /* margin-top: 20px; */
+    border-radius: 30px;
 }
 
 

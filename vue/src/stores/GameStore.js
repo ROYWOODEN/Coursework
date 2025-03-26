@@ -5,7 +5,8 @@ export const useGameStore = defineStore('GameStore', {
         games: [],
         EditID: [],
         editGames: {},
-        tagsSelect: [],
+        editGamesTags: {},
+        tagsSelect: {},
         loginDialog: true,
         settingDialog: true,
         EditGameModal: true,
@@ -24,10 +25,17 @@ export const useGameStore = defineStore('GameStore', {
                 const response = await fetch("/gamestore/games");
                 this.games = await response.json();
 
-                for(let game of this.games) {
-                    const gameTagsResponse = await fetch(`/gamestore/games/${game.id_game}/tags`);
-                    game.tags = await gameTagsResponse.json();
-                }
+                  // Параллельно загружаем теги для всех игр
+                const tagPromises = this.games.map(game => 
+                    fetch(`/gamestore/games/${game.id_game}/tags`)
+                        .then(response => response.json())
+                        .then(tags => {
+                            game.tags = tags; // Без .slice(0, 3), так как БД уже возвращает ровно 3 тега
+                        })
+                );
+                
+                await Promise.allSettled(tagPromises);
+                
             } catch (error) {
                 console.error("Ошибка при получении игр:", error);
             } finally {
@@ -70,8 +78,11 @@ export const useGameStore = defineStore('GameStore', {
             try {
                 const response = await fetch(`/gamestore/admin/edit/${id}`);
                 if (!response.ok) throw new Error("Ошибка загрузки данных");
-        
-                this.editGames = await response.json(); // Заполняем массив с данными игры
+
+                const data = await response.json();
+                
+                this.editGames = data.game; // Заполняем массив с данными игры
+                this.editGamesTags = data.tags;
             } catch (error) {
                 console.error("Ошибка при загрузке данных игры:", error.message);
             }
