@@ -24,4 +24,4 @@ exports.addTag = (req, res) => {
         }
         res.json({ message: "Тег были успешно добавлены!" });
     });
-};
+}

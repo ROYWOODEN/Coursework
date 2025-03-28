@@ -78,4 +78,4 @@ exports.delGames = (req, res) => {
         // console.log("Результат удаления:", result);
         res.json({ message: 'Игра удалена' });
     });
-};
+}

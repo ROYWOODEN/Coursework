@@ -18,11 +18,8 @@ const adminRoutes = require('./routes/admin');
 
 
 app.use('/gamestore', gameRoutes);
-
 app.use('/gamestore', tagRoutes);
-
 app.use('/gamestore', adminRoutes);
-
 app.use('/gamestore', userRoutes);
 
 

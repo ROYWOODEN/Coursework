@@ -1,6 +1,7 @@
 const db = require('../config/db');
 
 
+// Добавление юзеров
 exports.registerUser = (req, res) => {
     const { name, login, password, avatar } = req.body;
 
