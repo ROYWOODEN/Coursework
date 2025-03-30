@@ -13,4 +13,4 @@ const db = mysql.createPool({
     queueLimit: 0, // 0 — отключает лимит очереди
 });
 
-module.exports = db;    
+module.exports = db;

@@ -1,4 +1,4 @@
-const db = require('../config/db')
+const db = require('../config/db');
 
 
 // Запрос на получения конкретной игры для редактирования

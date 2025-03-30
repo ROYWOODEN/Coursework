@@ -29,10 +29,10 @@
               </div>
               
   
-              <div class="flex flex-row justify-between">
+              <div class="flex flex-wrap justify-between">
                   <span
                   v-for="(tag, idx) in game.tags" :key="idx"
-                  class="game-card__tag rounded-lg !px-3 !py-1 text-sm font-semibold"
+                  class="game-card__tag rounded-lg !px-3 !py-1 !my-2 text-sm font-semibold"
                   > # {{ tag.name }}</span>
 
 
