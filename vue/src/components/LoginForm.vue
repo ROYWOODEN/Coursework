@@ -32,7 +32,7 @@
                     <button 
                     type="submit" 
                     class="form__button !mt-10 !--mb-15 text-white"
-                    @click="addRegUser">
+                    @click="addLogUser">
                     Войти
                 </button>
                 </div>
@@ -67,11 +67,53 @@ export default {
         toggleBodyScroll() {
             document.body.style.overflow = this.gameStore.loginDialog ? '' : 'hidden';
         },
-        addRegUser() {
+        addLogUser() {
             if(!this.loginUser || !this.passUser) {
                 this.gameStore.showError('Заполните все поля!');
                 return;
             }
+            this.login();
+        },
+        async login() {
+
+            try {
+                const response = await fetch('/gamestore/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify({
+                        login: this.loginUser,
+                        password: this.passUser,
+                    }),
+                });
+
+                const result = await response.json();
+
+                if(response.ok) {
+                    console.log(result.message);
+                    this.gameStore.showMessage(result.message);
+
+                    // this.loginUser = '';
+                    // this.passUser = '';
+                    this.DelDialog();
+
+                    localStorage.setItem('token', result.token);
+
+                } else {
+                    console.error("Ошибка при регистрации");
+                    this.gameStore.showError(result.error);
+                }
+
+                
+                
+            } catch(error) {
+                console.error("Ошибка сети:", error);
+                this.gameStore.showError('Ошибка сети, попробуйте позже');
+            }
+            
+
+
         },
     },
     mounted() {
@@ -79,9 +121,9 @@ export default {
     },
 
     
-    // beforeUnmount() {
-    //     document.body.style.overflow = ''; // Возвращаем скролл при удалении компонента
-    // }
+    beforeUnmount() {
+        document.body.style.overflow = ''; // Возвращаем скролл при удалении компонента
+    }
     
 }
 </script>

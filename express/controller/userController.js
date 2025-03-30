@@ -78,6 +78,6 @@ exports.loginUser = (req, res) => {
             id: user.id_user,
         }, SECRET_KEY, {expiresIn: '1h'});
 
-        res.json({ token });
+        res.json({ token, message: 'Авторизация прошла успешно', });
     });
 }
