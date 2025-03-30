@@ -91,9 +91,9 @@ export default {
             avatar: this.UserAva,
           }),
         });
+        const result = await response.json();
 
         if (response.ok) {
-          const result = await response.json();
           console.log(result.message);
           this.gameStore.showMessage(result.message);
 
@@ -105,7 +105,7 @@ export default {
 
         } else {
           console.error("Ошибка при регистрации");
-          this.gameStore.showError('Кажется - что-то пошло не так :(');
+          this.gameStore.showError(result.error);
         }
       } catch (error) {
         console.error("Ошибка сети:", error);

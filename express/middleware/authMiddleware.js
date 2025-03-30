@@ -1,0 +1,29 @@
+require('dotenv').config();
+const db = require('../config/db');
+const jwt = require('jsonwebtoken');
+
+const SECRET_KEY = require('../SECRET_KEY');
+
+exports.authMiddleware = (req, res, next) => {
+
+    const token = req.header.authorization?.split(' ')[1];
+
+    if(!token) {
+        return res.status(401).json({
+            error: 'Нет доступа'
+        });
+    }
+
+
+    jwt.verify(token, SECRET_KEY, (err, decoded) => {
+        if (err) {
+            return res.status(403).json({
+                error: 'Неверный токен'
+            });
+        }
+
+        req.user = decoded;
+        next();
+    });
+
+}
