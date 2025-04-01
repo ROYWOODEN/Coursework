@@ -24,7 +24,7 @@
         <!-- <p v-if="gameStore.user">
           {{ gameStore.user.role }}
         </p>  -->
-
+        
         <img 
         v-if="gameStore.user"
         :src="gameStore.user.avatar" alt=""
