@@ -58,7 +58,7 @@
                         <select
                         v-model="selectTag[0]"
                         class="edit-game-panel__select text-white !my-3"
-                        name="" id="">
+                        name="">
                             <option 
                             v-for="tag in gameStore.tagsSelect"
                             :key="tag.id_tags"
@@ -69,7 +69,7 @@
                         <select
                         v-model="selectTag[1]"
                         class="edit-game-panel__select text-white !my-3"
-                        name="" id="">
+                        name="">
                             <option 
                             v-for="tag in gameStore.tagsSelect"
                             :key="tag.id_tags"
@@ -80,7 +80,7 @@
                         <select
                         v-model="selectTag[2]" 
                         class="edit-game-panel__select text-white !my-3"
-                        name="" id="">
+                        name="">
                             <option
                             v-for="tag in gameStore.tagsSelect"
                             :key="tag.id_tags"

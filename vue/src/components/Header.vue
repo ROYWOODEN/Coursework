@@ -21,8 +21,16 @@
         </datalist> -->
       </div>
       <div class="header__auth">
-        
-          <button 
+        <!-- <p v-if="gameStore.user">
+          {{ gameStore.user.role }}
+        </p>  -->
+
+        <img 
+        v-if="gameStore.user"
+        :src="gameStore.user.avatar" alt=""
+        class="w-20 rounded-2xl">
+          
+          <button v-else
           class="header__auth-button text-white"
           @click="gameStore.loginDialog = !gameStore.loginDialog"
           >Войти</button>

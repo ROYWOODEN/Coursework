@@ -3,6 +3,8 @@ import { defineStore } from 'pinia';
 export const useGameStore = defineStore('GameStore', {
     state: () => ({
         games: [],
+        user: null,
+        token: localStorage.getItem('token') || null,
         EditID: [],
         editGames: {},
         editGamesTags: {},
@@ -87,6 +89,37 @@ export const useGameStore = defineStore('GameStore', {
                 console.error("Ошибка при загрузке данных игры:", error.message);
             }
         },
+
+        async fetchUser() {
+            if(!this.token) {
+                return;
+            }
+            console.log(this.token);
+
+
+            try {
+                const response = await fetch('/gamestore/user', {
+                    headers: {
+                        'Authorization': `Bearer ${this.token}`
+                    }
+                });
+
+                if (response.ok) {
+                    this.user = await response.json();
+                } else {
+                    this.logout();
+                }
+            } catch(error) {
+                console.error('Ошибка при получении данных пользователя:', error);
+            }
+        },
+
+        logout() {
+            this.user = null;
+            this.token = null;
+            localStorage.removeItem('token');
+        },
+
         showMessage(mess) {
             this.message = mess; // Устанавливаем сообщение об ошибке
             setTimeout(() => {

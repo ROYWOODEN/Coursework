@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const SECRET_KEY = require('../SECRET_KEY');
+// const { use } = require('../routes/user');
 
 
 // Добавление юзеров
@@ -78,6 +79,26 @@ exports.loginUser = (req, res) => {
             id: user.id_user,
         }, SECRET_KEY, {expiresIn: '1h'});
 
-        res.json({ token, message: 'Авторизация прошла успешно', });
+        res.json({ token, message: 'Авторизация прошла успешно'});
     });
+},
+
+
+exports.getUserData = (req, res) => {
+    const id_user = req.user.id;
+
+    const query = "SELECT * FROM users WHERE id_user = ?";
+
+    db.query(query, [id_user], (err, result) => {
+        if(err) {
+            return res.json({
+                error: 'Ошибка сервера при получении данных пользователя'
+            });
+        }
+
+        const user = result[0];
+        res.json(user);
+    });
+
+    
 }

@@ -93,15 +93,21 @@ export default {
                 if(response.ok) {
                     console.log(result.message);
                     this.gameStore.showMessage(result.message);
+                    
+
+                    localStorage.setItem('token', result.token);
+
+                    // Для того чтобы сразу после того как залогинились произошел рендер из-за имзенения состояния пиния
+                    this.gameStore.token = result.token; 
+
+                    await this.gameStore.fetchUser();
 
                     // this.loginUser = '';
                     // this.passUser = '';
                     this.DelDialog();
-
-                    localStorage.setItem('token', result.token);
-
+                    
                 } else {
-                    console.error("Ошибка при регистрации");
+                    console.error("Ошибка при авторизации");
                     this.gameStore.showError(result.error);
                 }
 

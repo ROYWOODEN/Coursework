@@ -84,7 +84,8 @@
         class="sitebar__nav-link !ps-4 "
         >Настройки</div>
       </div>
-      <div class="flex flex-row items-center sitebar__link-exit !ps-5">
+      <div v-if="gameStore.user" class="flex flex-row items-center sitebar__link-exit !ps-5"
+      @click="gameStore.logout">
         <svg xmlns="http://www.w3.org/2000/svg" width="31" height="29" viewBox="0 0 26 26" fill="none">
             <path d="M8.56744 4.98295L8.56744 3.26822C8.56744 2.81345 8.7481 2.3773 9.06968 2.05573C9.39125 1.73415 9.8274 1.55349 10.2822 1.55349L22.2853 1.5535C22.74 1.5535 23.1762 1.73415 23.4978 2.05573C23.8193 2.3773 24 2.81345 24 3.26822L24 22.1302C24 22.585 23.8193 23.0212 23.4978 23.3427C23.1762 23.6643 22.74 23.845 22.2853 23.845L10.2822 23.845C9.82739 23.845 9.39125 23.6643 9.06967 23.3427C8.7481 23.0212 8.56744 22.585 8.56744 22.1302L8.56744 20.4155M13.7116 12.6992L1.70853 12.6992M1.70853 12.6992L5.13798 16.1287M1.70853 12.6992L5.13798 9.26978" stroke="#EC3343" stroke-width="2.38837" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
