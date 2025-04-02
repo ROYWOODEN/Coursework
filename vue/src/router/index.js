@@ -4,6 +4,8 @@ import DeleteGameView from '@/views/DeleteGameView.vue'
 import HomeView from '@/views/HomeView.vue'
 import RegView from '@/views/RegView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { useGameStore } from '@/stores/GameStore'
+
 
 
 const router = createRouter({
@@ -24,10 +26,11 @@ const router = createRouter({
       name: 'admin',
       component: AdminPanelVeiw,
       redirect: '/admin/add',
+      meta: { isAdmin: true },
       children: [
         {
           path: 'add',
-          name: 'addGames',
+          name: 'addGame',
           component: AddGameView,
         },
         {
@@ -39,6 +42,63 @@ const router = createRouter({
     },
     
   ],
+})
+
+router.beforeEach( async (to, from, next) => {
+  // console.log(from.name);
+  // console.log(to.name);
+
+
+  const gameStore = useGameStore();
+  const token = localStorage.getItem('token');
+
+  if (to.meta.isAdmin) {
+
+    if ((to.name === 'addGame' || to.name === 'DeleteGame') && !token) {
+      gameStore.loginDialog = !gameStore.loginDialog;
+      gameStore.showError('Пройдите авторизацию или же регистрацию');
+      return next({
+        name: 'home'
+      });
+    }
+    if (!gameStore.user) {
+        await gameStore.fetchUser();
+    }
+
+    if (gameStore.user.role !== 'admin') {
+      gameStore.showError('Вы не являетесь админом');
+      return next({
+        name: 'home'
+      });
+      
+    }
+
+    return next();
+    
+
+
+    // if (!token) {
+    //   gameStore.loginDialog = !gameStore.loginDialog;
+    //   gameStore.showError('Пройдите авторизацию или же регистрацию');
+    //   return next('/');
+    // }
+    
+    // if (!gameStore.user) {
+    //   await gameStore.fetchUser();
+    // }
+    
+    // if (gameStore.user.role !== 'admin') {
+    //   gameStore.showError('Вы не являетесь админом');
+    //   return next('/'); 
+    // }
+    
+    // return next(); 
+  }
+  else {
+    return next();
+  }
+  
+
 })
 
 export default router

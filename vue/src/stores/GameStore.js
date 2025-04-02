@@ -94,7 +94,7 @@ export const useGameStore = defineStore('GameStore', {
             if(!this.token) {
                 return;
             }
-            console.log(this.token);
+            // console.log(this.token);
 
 
             try {

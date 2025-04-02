@@ -55,7 +55,7 @@
                         <select
                         v-model="gameTags[0]" 
                         class="add-game-panel__select"
-                        name="" id="">
+                        >
                         <option value="">-- # Тег 1 --</option>
                             <option 
                             v-for="tag in gameStore.tagsSelect"
@@ -67,7 +67,7 @@
                         <select
                         v-model="gameTags[1]" 
                         class="add-game-panel__select"
-                        name="" id="">
+                        >
                         <option value="">-- # Тег 2 --</option>
                             <option 
                             v-for="tag in gameStore.tagsSelect"
@@ -79,7 +79,7 @@
                         <select
                         v-model="gameTags[2]" 
                         class="add-game-panel__select"
-                        name="" id="">
+                        >
                         <option value="">-- # Тег 3 --</option>
                             <option 
                             v-for="tag in gameStore.tagsSelect"

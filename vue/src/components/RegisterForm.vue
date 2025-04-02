@@ -92,6 +92,30 @@ export default {
           }),
         });
         const result = await response.json();
+        
+        const autoLogin = await fetch('/gamestore/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body: JSON.stringify({
+            login: this.UserLogin,
+            password: this.UserPass,
+          }),
+        });
+        const data = await autoLogin.json();
+        setTimeout(async () => {
+          
+        
+
+        localStorage.setItem('token', data.token);
+        this.gameStore.token = data.token;
+        console.log(data.token);
+        
+        await this.gameStore.fetchUser();
+        }, 500);
+
+        
 
         if (response.ok) {
           console.log(result.message);
