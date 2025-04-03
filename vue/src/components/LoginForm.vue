@@ -134,7 +134,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 .dialog {
     background-color: rgba(0, 0, 0, 0.8);
     top: 0;
@@ -144,66 +144,76 @@ export default {
     position: fixed;
     display: flex;
     z-index: 2;
-}
-.dialog__content {
-    position: relative;
-    margin: auto;
-    background-color: #242424;
-    border-radius: 12px;
-    padding: 10% 6%;
-    width: 50%;
-}
 
-.dialog__close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
+
+        &__content {
+            position: relative;
+            margin: auto;
+            background-color: #242424;
+            border-radius: 12px;
+            padding: 10% 6%;
+            width: 50%;
+        }
+
+        &__close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
 }
 .form {
     color: var(--color-grey-card-text);
+
+    &__input {
+        background-color: #1c1c1c;
+        font-family: Inter-Regular;
+        outline: none;
+        padding: 3%;
+        padding-left: 30px;
+        border-radius: 40px;
+        width: 100%;
+        transition: all 0.5s ease, border 0s ease;
+
+            &:focus {
+                border: 3px solid var(--color-purple);
+                box-shadow: 0px 0px 16px 1px var(--color-purple);
+            }
+            &:hover {
+                box-shadow: 0px 0px 16px 1px var(--color-purple);
+            }
+    }
+
+
+    &__button {
+        background-color: var(--color-purple);
+        padding: 3%;
+        border: none;
+        border-radius: 40px;
+        cursor: pointer;
+        transition: 0.3s;
+        /* width: 100px; */
+        width: 50%;
+
+        &:hover {
+            background-color: var(--color-purple-hover);
+        }
+    }
+    
+
+    &__register-link {
+        font-family: Inter-Regular;
+    }
 }
 h2 {
     font-family: Inter-Bold;
 }
-.form__input {
-    background-color: #1c1c1c;
-    font-family: Inter-Regular;
-    outline: none;
-    padding: 3%;
-    padding-left: 30px;
-    border-radius: 40px;
-    width: 100%;
-    transition: all 0.5s ease, border 0s ease;
-}
-.form__input:focus {
-    border: 3px solid var(--color-purple);
-    box-shadow: 0px 0px 16px 1px var(--color-purple);
-}
-.form__input:hover {
-    box-shadow: 0px 0px 16px 1px var(--color-purple);
-}
-.form__button {
-    background-color: var(--color-purple);
-    padding: 3%;
-    border: none;
-    border-radius: 40px;
-    cursor: pointer;
-    transition: 0.3s;
-    /* width: 100px; */
-    width: 50%;
-}
-.form__button:hover {
-    background-color: var(--color-purple-hover);
-}
+
 u {
     color: var(--color-purple);
     cursor: pointer;
-}
-.form__register-link {
-    font-family: Inter-Regular;
 }
 
 </style>
