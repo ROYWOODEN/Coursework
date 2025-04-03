@@ -10,6 +10,7 @@
           <input 
           type="text" 
           id="username"
+          maxlength="20"
           class="form__input"
           placeholder="Придумайте имя пользователя" 
           v-model="UserName" required>
@@ -18,7 +19,8 @@
           <label for="login" class="!mb-2">Логин:</label>
           <input 
           type="login" 
-          id="login" 
+          id="login"
+          maxlength="30"
           class="form__input"
           placeholder="Придумайте логин" 
           v-model="UserLogin" required>

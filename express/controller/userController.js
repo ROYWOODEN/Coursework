@@ -77,7 +77,7 @@ exports.loginUser = (req, res) => {
 
         const token = jwt.sign({
             id: user.id_user,
-        }, SECRET_KEY, {expiresIn: '1h'});
+        }, SECRET_KEY, {expiresIn: '24h'});
 
         res.json({ token, message: 'Авторизация прошла успешно'});
     });

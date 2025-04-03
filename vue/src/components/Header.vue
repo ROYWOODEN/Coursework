@@ -30,12 +30,14 @@
       </div>
       
         <div class="flex flex-row items-center">
-          <div class="w-13 !me-2">
+          <div class="w-13">
             <img
             :src="gameStore.user.avatar" alt=""
             class="w-full rounded-full">
           </div>
-          <p>{{ gameStore.user.role }}</p>
+          <p
+          class="text-white !ps-5"
+          >{{ gameStore.user.name }}</p>
         </div>
         
       </div>

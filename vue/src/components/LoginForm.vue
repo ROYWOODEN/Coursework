@@ -20,14 +20,14 @@
                 placeholder="Введите логин"
                 v-model="loginUser"
                 required
-                class="form__input form__input--text !mb-10">
+                class="form__input !mb-10">
                 <label class="!mb-2" for="">Пароль:</label>
                 <input 
                 type="password" 
                 placeholder="Введите пароль"
                 v-model="passUser"
                 required
-                class="form__input form__input--password">
+                class="form__input">
                 <div class="flex justify-center">
                     <button 
                     type="submit" 
