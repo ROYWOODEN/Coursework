@@ -261,7 +261,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
+@use '../assets/scss/main.scss' as*;
 
 .dialog {
     background-color: rgba(0, 0, 0, 0.8);
@@ -272,25 +274,26 @@ export default {
     position: fixed;
     display: flex;
     z-index: 2;
-}
-.dialog__content {
-    position: relative;
-    margin: auto;
-    max-height: 90vh;
-    overflow-y: auto;
-    background-color: #242424;
-    border-radius: 12px;
-    padding: 100px;
-    width: 50%;
-}
 
-.dialog__close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
+        &__content {
+            position: relative;
+            margin: auto;
+            max-height: 90vh;
+            overflow-y: auto;
+            background-color: #242424;
+            border-radius: 12px;
+            padding: 100px;
+            width: 50%;
+        }
+
+        &__close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
 }
 
 .setting__title {
@@ -307,9 +310,13 @@ export default {
     width: 30%;
     padding: 10px 20px;
     border-radius: 10px;
-    background-color: var(--color-purple);
+    background-color: $color-purple;
     cursor: pointer;
     transition: 0.3s;
+
+        &:hover {
+            background-color: $color-purple-hover;
+        }
 }
 
 .game-panel-btns-2 {
@@ -317,22 +324,20 @@ export default {
     width: 30%;
     padding: 8px 20px;
     border-radius: 10px;
-    border: 2px solid var(--color-grey-card-text);
-    color: var(--color-grey-text);
+    border: 2px solid $color-grey-card-text;
+    color: $color-grey-text;
     cursor: pointer;
     transition: 0.3s;
+
+        &:hover {
+            border: 2px solid white;
+            color: white;
+        }
 }
 
-.game-panel-btns-2:hover {
-    border: 2px solid white;
-    color: white;
-}
-.game-panel-btns:hover {
-    background-color: var(--color-purple-hover);   
-}
 
 .edit-game-panel__select {
-    background-color: var(--color-grey-input);
+    background-color: $color-grey-input;
     width: 100%;
     font-family: Inter-Medium;
     padding: 2%;

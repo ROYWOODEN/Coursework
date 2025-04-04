@@ -83,62 +83,68 @@ export default {
 }
 </script>
 
-<style> 
+<style lang="scss"> 
+
+@use '../assets/scss/main.scss' as*;
+
 .game-card {
-    background-color: var(--color-grey-card-fon);
+    background-color: $color-grey-card-fon;
     box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 25%);
     transition: 0.5s;
-}
-.game-card:hover {
-    box-shadow: 4px 4px 6px 0px rgba(218, 0, 254, 50%);
+
+    &:hover {
+        box-shadow: 4px 4px 6px 0px rgba(218, 0, 254, 50%);
+    }
+    &__title {
+        font-family: Inter-Medium;   
+    }
+    &__info {
+        color: $color-grey-card-text;
+        font-family: Inter-Regular;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    &__info-active {
+        white-space: pre-wrap;
+    }
+    &__tag {
+        border: 2px solid $color-purple;
+        font-family: Inter-MediumItalic;
+    }
+    &__price {
+        color: $color-purple;
+    }
+    &__button {
+        background-color: $color-purple;
+        padding: 10px 12px 10px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:  0.5s;
+
+            &:hover {
+                background-color: $color-purple-hover;
+            }
+            &-active {
+                cursor: pointer;
+                transition:  0.5s;
+
+                &:hover {
+                    color: $color-purple;
+                }
+
+            }
+    }
+
 }
 
-.game-card__title {
-    font-family: Inter-Medium;
-    
-}
-.game-card__info {
-    color: var(--color-grey-card-text);
-    font-family: Inter-Regular;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-.game-card__info-active {
-    white-space: pre-wrap;
-}
-.game-card__tag {
-    border: 2px solid var(--color-purple);
-    font-family: Inter-MediumItalic;
-}
-.game-card__price {
-    color: var(--color-purple);
-}
-.game-card__button {
-    background-color: var(--color-purple);
-    padding: 10px 12px 10px 12px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition:  0.5s;
-}
-.game-card__button:hover {
-    background-color: var(--color-purple-hover);
-}
-.game-card__button-active {
-    cursor: pointer;
-    transition:  0.5s;
-}
-
-.game-card__button-active:hover {
-    color: var(--color-purple);
-}
 .svg__fon {
-    fill: var(--color-purple-favirute-icon);
+    fill: $color-purple-favirute-icon;
     cursor: pointer;
 }
 .svg__padding {
-    background-color: var(--color-purple-favorite-fon);
+    background-color: $color-purple-favorite-fon;
     padding: 10px 10px 10px 10px;
     border-radius: 10px;
 }

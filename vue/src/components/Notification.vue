@@ -45,7 +45,10 @@ import { useGameStore } from '@/stores/GameStore';
   };
   </script>
   
-  <style>
+  <style lang="scss">
+
+@use '../assets/scss/main.scss' as*;
+
   /* БЭМ стили */
   .notification {
     position: fixed;
@@ -56,31 +59,35 @@ import { useGameStore } from '@/stores/GameStore';
     align-items: center;
     cursor: pointer;
     z-index: 10;
+
+      &__bar {
+        background-color: blueviolet;
+        width: 5px;
+        height: 100px;
+      }
+
+      &__bar-error {
+        background-color: $color-red-exit;
+        width: 5px;
+        height: 100px;
+      }
+
+      &__content {
+        background-color: $color-purple-transparent-hover;
+        height: 100px;
+        display: flex;
+        align-items: center;
+      }
+
+      &__content-errors {
+        background-color: $color-red-exit-hover;
+        height: 100px;
+        display: flex;
+        align-items: center;
+      }
   }
   
-  .notification__bar {
-    background-color: blueviolet;
-    width: 5px;
-    height: 100px;
-  }
-  .notification__bar-error {
-    background-color: var(--color-red-exit);
-    width: 5px;
-    height: 100px;
-  }
-  
-  .notification__content {
-    background-color: var(--color-purple-transparent-hover);
-    height: 100px;
-    display: flex;
-    align-items: center;
-  }
-  .notification__content-errors {
-    background-color: var(--color-red-exit-hover);
-    height: 100px;
-    display: flex;
-    align-items: center;
-  }
+
   
   /* Анимация появления/исчезания */
   .notification-fade-enter-active,

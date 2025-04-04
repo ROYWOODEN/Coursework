@@ -213,93 +213,102 @@ export default {
 }
 </script>
     
-<style scored>
-.add-game-panel__background {
-    background-color: var(--color-black-fon-panel);
-    width: 70%;
-    border-radius: 30px;
+<style scored lang="scss">
+
+@use '../assets/scss/main.scss' as*;
+
+
+.add-game-panel {
+
+
+    &__background {
+        background-color: $color-black-fon-panel;
+        width: 70%;
+        border-radius: 30px;
+    }
+
+    &__title {
+        color: $color-grey-text-panel;
+        font-family: Inter-SemiBold;
+    }
+
+    &__form-group {
+        margin: 5% auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__input {
+        background-color: $color-grey-input;
+        font-family: Inter-Medium;
+        padding: 5%;
+        margin-top: 20px;
+        border-radius: 40px;
+        outline: none;
+        width: 100%;
+        min-width: 500px;
+        transition: all 0.5s ease, border 0s ease;
+
+            &:focus {
+                border: 3px solid $color-purple;
+                box-shadow: 0px 0px 16px 1px $color-purple;
+            }
+            &:hover {
+                box-shadow: 0px 0px 16px 1px $color-purple;
+            }
+            &-tag {
+                background-color: $color-grey-input;
+                font-family: Inter-Medium;
+                padding: 3%;
+                margin-top: 20px;
+                border-radius: 40px;
+                outline: none;
+                width: 50%;
+                min-width: 350px;
+                transition: all 0.5s ease, border 0s ease;
+
+                    &:focus {
+                        border: 3px solid $color-purple;
+                        box-shadow: 0px 0px 16px 1px $color-purple;
+                    }
+                    &:hover {
+                        box-shadow: 0px 0px 16px 1px $color-purple;
+                    }
+            }
+    }
+
+    &__button {
+        background-color: $color-purple;
+        padding: 20px 40px;
+        border-radius: 40px;
+        font-family: Inter-Bold;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+            background-color: $color-purple-hover;
+        }
+        &-tag {
+            background-color: $color-purple;
+            padding: 3% 40px;
+            border-radius: 40px;
+            font-family: Inter-Bold;
+            cursor: pointer;
+            transition: 0.3s;
+
+                &:hover {
+                    background-color: $color-purple-hover;
+                }
+        }
+    }
+
+    &__select {
+        background-color: $color-grey-input;
+        font-family: Inter-Medium;
+        padding: 4%;
+        margin-top: 20px;
+        border-radius: 40px;
+    }
 }
 
-.add-game-panel__title {
-    color: var(--color-grey-text-panel);
-    font-family: Inter-SemiBold;
-}
-
-.add-game-panel__form-group {
-    margin: 5% auto;
-    display: flex;
-    flex-direction: column;
-}
-
-.add-game-panel__input {
-    background-color: var(--color-grey-input);
-    font-family: Inter-Medium;
-    padding: 5%;
-    margin-top: 20px;
-    border-radius: 40px;
-    outline: none;
-    width: 100%;
-    min-width: 500px;
-    transition: all 0.5s ease, border 0s ease;
-}
-
-.add-game-panel__input:focus {
-    border: 3px solid var(--color-purple);
-    box-shadow: 0px 0px 16px 1px var(--color-purple);
-}
-
-.add-game-panel__input:hover {
-    box-shadow: 0px 0px 16px 1px var(--color-purple);
-}
-.add-game-panel__input-tag {
-    background-color: var(--color-grey-input);
-    font-family: Inter-Medium;
-    padding: 3%;
-    margin-top: 20px;
-    border-radius: 40px;
-    outline: none;
-    width: 50%;
-    min-width: 350px;
-    transition: all 0.5s ease, border 0s ease;
-}
-.add-game-panel__input-tag:focus {
-    border: 3px solid var(--color-purple);
-    box-shadow: 0px 0px 16px 1px var(--color-purple);
-}
-
-.add-game-panel__input-tag:hover {
-    box-shadow: 0px 0px 16px 1px var(--color-purple);
-}
-
-.add-game-panel__button {
-    background-color: var(--color-purple);
-    padding: 20px 40px;
-    border-radius: 40px;
-    font-family: Inter-Bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.add-game-panel__button:hover {
-    background-color: var(--color-purple-hover);
-}
-.add-game-panel__select {
-    background-color: var(--color-grey-input);
-    font-family: Inter-Medium;
-    padding: 4%;
-    margin-top: 20px;
-    border-radius: 40px;
-}
-
-.add-game-panel__button-tag {
-    background-color: var(--color-purple);
-    padding: 3% 40px;
-    border-radius: 40px;
-    font-family: Inter-Bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.add-game-panel__button-tag:hover {
-    background-color: var(--color-purple-hover);
-}
 </style>

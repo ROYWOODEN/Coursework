@@ -43,21 +43,23 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+
+@use '../assets/scss/main.scss' as*;
 
 .admin-panel__title {
     font-family: Inter-Bold;
 }
 .admin-panel__title-text {
     font-family: Inter-SemiBold;
-    color: var(--color-grey-text-panel);
+    color: $color-grey-text-panel;
     transition: 0.3s;
 }
 .admin-panel__title-text:hover {
-    color: var(--color-purple);
+    color: $color-purple;
 }
 .admin-panel__title-text.active {
-    color: var(--color-purple);
+    color: $color-purple;
 }
 
 </style>

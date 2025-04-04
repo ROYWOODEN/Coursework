@@ -102,59 +102,70 @@ import { useGameStore } from '@/stores/GameStore';
   }
   </script>
   
-  <style>
+  <style lang="scss">
+
+  @use '../assets/scss/main.scss' as*;
   
-  .game-panel-del__fon {
-      background-color: var(--color-black-fon-panel);
-      width: 92%;
-      min-height: 280px;
-      border-radius: 35px;
-  }
-  .game-panel-img {
-      width: 38%;
-  }
-  .game-panel-img img {
-      border-radius: 35px 0 0 35px;
-      height: 100%;
-      background-size: cover;
-      background-repeat: no-repeat;
-  }
-  
-  
-  .game-panel__info {
-      color: var(--color-grey-card-text);
-      font-family: Inter-Regular;
-  
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-  }
-  .game-panel__info-active {
-      white-space: pre-wrap;
-  }
-  .game-panel-btns {
-    width: 30%;
-  }
-  .game-panel-btns button {
-    width: 40%;
-    padding: 10px 20px;
-    border-radius: 10px;
-  }
-  .game-panel-btn-1 {
-    background-color: var(--color-purple);
-  }
-  .game-panel-btn-1:hover {
-    background-color: var(--color-purple-hover);
-    transition: 0.3s;
-    cursor: pointer;
-  }
-  .game-panel-btn-2 {
-    background-color: var(--color-red-exit);
-    transition: 0.3s;
-    cursor: pointer;
-  }
-  .game-panel-btn-2:hover {
-    background-color: var(--color-red-btn-hover);
+  .game-panel {
+
+      &-del__fon {
+          background-color: $color-black-fon-panel;
+          width: 92%;
+          min-height: 280px;
+          border-radius: 35px;
+      }
+
+      &-img {
+          width: 38%;
+          & img {
+            border-radius: 35px 0 0 35px;
+            height: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+      }
+      &__info {
+          color: $color-grey-card-text;
+          font-family: Inter-Regular;
+      
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+            &-active {
+                white-space: pre-wrap;
+            }
+      }
+      &-btns {
+        width: 30%;
+          
+          & button {
+            width: 40%;
+            padding: 10px 20px;
+            border-radius: 10px;
+          }
+      }
+
+      &-btn-1 {
+        background-color: $color-purple;
+
+          &:hover {
+            background-color: $color-purple-hover;
+            transition: 0.3s;
+            cursor: pointer;
+          }
+      }
+
+      &-btn-2 {
+        background-color: $color-red-exit;
+        transition: 0.3s;
+        cursor: pointer;
+
+          &:hover {
+            background-color: $color-red-btn-hover;
+          }
+      }
+
   }
   
   

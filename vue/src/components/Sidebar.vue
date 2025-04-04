@@ -118,7 +118,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+  @use '../assets/scss/main.scss' as*;
+
+
   aside {
     padding-top: 10px;
     top: 0;
@@ -127,56 +130,56 @@ export default {
     background-color: rgba(138, 138, 138, 8%);
     height: 100%;
   }
-  /* .aside__logo-img {
+
+  .sitebar__nav {
+
+    &-item {
+      color: $color-grey-text;
+      transition: color 0.3s;
+      cursor: pointer;
+      width: 100%;
+
+      &:hover {
+        color: $color-purple;
+        background-color: $color-purple-transparent-hover;
+      }
+
+      &-svg:hover {
+        fill: inherit;
+      }
+    }
     
-  } */
+    &-link {
+      display: block;
+      margin: 15px 0;
+      color: inherit;
+    }
 
-  .sitebar__nav-item {
-    color: var(--color-grey-text);
-    transition: color 0.3s;
-    cursor: pointer;
-    width: 100%;
+    
   }
 
-  .sitebar__nav-item:hover {
-    color: var(--color-purple);
-    background-color: var(--color-purple-transparent-hover);
-  }
 
-  .sitebar__nav-link {
-    display: block;
-    margin: 15px 0;
-    color: inherit;
-  }
 
-  /* . {
-    fill: currentColor;
-    cursor: pointer;
-  } */
-
-  .sitebar__nav-item .sitebar__nav-svg:hover {
-    fill: inherit;
-  }
   .active-sitebar {
-    color: var(--color-purple);
-    background-color: var(--color-purple-transparent-hover);
+    color: $color-purple;
+    background-color: $color-purple-transparent-hover;
 }
   .sidebar__actions {
-    color: var(--color-grey-text);
+    color: $color-grey-text;
   }
   .sidebar__link {
     display: block;
     margin: 15px 0;
   }
   .sitebar__link-exit {
-    color: var(--color-red-exit);
-    /* color: var(--color-grey-text); */
+    color: $color-red-exit;
     transition: color 0.3s;
     cursor: pointer;
     width: 100%;
-  }
-  .sitebar__link-exit:hover {
-    background-color: var(--color-red-exit-hover);
+
+      &:hover {
+        background-color: $color-red-exit-hover;
+      }
   }
 
 </style>

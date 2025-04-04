@@ -135,6 +135,9 @@ export default {
 </script>
 
 <style lang="scss">
+
+@use '../assets/scss/main.scss' as*;
+
 .dialog {
     background-color: rgba(0, 0, 0, 0.8);
     top: 0;
@@ -165,7 +168,7 @@ export default {
         }
 }
 .form {
-    color: var(--color-grey-card-text);
+    color: $color-grey-card-text;
 
     &__input {
         background-color: #1c1c1c;
@@ -178,17 +181,17 @@ export default {
         transition: all 0.5s ease, border 0s ease;
 
             &:focus {
-                border: 3px solid var(--color-purple);
+                border: 3px solid $color-purple;
                 box-shadow: 0px 0px 16px 1px var(--color-purple);
             }
             &:hover {
-                box-shadow: 0px 0px 16px 1px var(--color-purple);
+                box-shadow: 0px 0px 16px 1px $color-purple;
             }
     }
 
 
     &__button {
-        background-color: var(--color-purple);
+        background-color: $color-purple;
         padding: 3%;
         border: none;
         border-radius: 40px;
@@ -198,7 +201,7 @@ export default {
         width: 50%;
 
         &:hover {
-            background-color: var(--color-purple-hover);
+            background-color: $color-purple-hover;
         }
     }
     
@@ -212,7 +215,7 @@ h2 {
 }
 
 u {
-    color: var(--color-purple);
+    color: $color-purple;
     cursor: pointer;
 }
 

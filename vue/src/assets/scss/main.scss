@@ -1,0 +1,101 @@
+  /* Для сайта цвета текста и кнопок */
+  $color-purple: #A100ED;
+  $color-purple-hover: #7500ab;
+  $color-purple-transparent-hover: #a200ed2f;
+  $color-grey-text: #b7b7b7;
+
+  $color-red-exit: #EC3343;
+  $color-red-exit-hover: #ec334234;
+
+  $color-red-btn-hover: #971b25;
+
+  /* Для карточек игр */
+  $color-grey-card-fon: #323232;
+  $color-grey-card-text: #8A8A8A;
+
+    /* Для избранных  */
+    $color-purple-favirute-icon: #D100FF;
+    $color-purple-favorite-fon: #d100ff3b;
+
+
+    /* Для админ панели  */
+    $color-grey-text-panel: #B7B7B7;
+    $color-black-fon-panel: #1C1C1C;
+    $color-grey-input: #2C2C2C;
+
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* Стилизация для WebKit-браузеров (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 12px; /* Ширина вертикальной полосы прокрутки */
+  height: 12px; /* Высота горизонтальной полосы прокрутки */
+
+    &-track {
+      background: $color-grey-card-fon; /* Цвет фона трека */
+      border-radius: 6px; /* Закругление углов трека */
+    }
+
+    &-thumb {
+      background: $color-purple-hover; /* Цвет ползунка */
+      border-radius: 6px; /* Закругление углов ползунка */
+      border: none; /* Отступ вокруг ползунка */
+
+        &:hover {
+          background: $color-purple; /* Цвет ползунка при наведении */
+        }
+    }
+}
+
+
+body {
+  background-color: #242424;
+}
+
+@font-face {
+  font-family: "Inter-Medium";
+  src: url(../assets/fonts/Inter/Inter-Medium.otf);
+}
+@font-face {
+  font-family: "Inter-Regular";
+  src: url(../assets/fonts/Inter/Inter-Regular.otf);
+}
+@font-face {
+  font-family: "Inter-MediumItalic";
+  src: url(../assets/fonts/Inter/Inter-ExtraLight.otf);
+}
+@font-face {
+  font-family: "Inter-Bold";
+  src: url(../assets/fonts/Inter/Inter-Bold.otf);
+}
+@font-face {
+  font-family: "Inter-SemiBold";
+  src: url(../assets/fonts/Inter/Inter-SemiBold.otf);
+}
+.content {
+  padding: 80px 0 0 20%;
+}
+
+
+.loader {
+  margin: auto;
+  margin-top: 10%;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 8px solid #d100ff3b;
+  border-top: 8px solid $color-purple;
+  animation: rotation 1.7s ease-in-out infinite;
+}
+@keyframes rotation {
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
