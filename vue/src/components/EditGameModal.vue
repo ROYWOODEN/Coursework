@@ -246,9 +246,9 @@ export default {
 
                 console.log('Теги успешно обновлены');
                 this.gameStore.fetchGames(); // Обновление списка игр после изменений
-            } catch (err) {
+            } catch (error) {
                 this.gameStore.showError('Ошибка при обновлении тегов');
-                console.error('Ошибка при обновлении тегов:', err);
+                console.error('Ошибка при обновлении тегов:', error);
             }
         }
 

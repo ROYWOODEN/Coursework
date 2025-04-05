@@ -158,8 +158,9 @@ export default {
             }),
             });
 
-            if (response.ok) {
             const result = await response.json();
+            if (response.ok) {
+            
             console.log(result.message);
         this.gameStore.showMessage(result.message);
         this.gameTitle = "";
@@ -169,8 +170,8 @@ export default {
         this.gameTags = ['', '', ''];
 
             } else {
-            сonsole.error("Ошибка при добавлении игры");
-            this.gameStore.showError("Кажется, что-то пошло не так :(");
+            console.error("Ошибка при добавлении игры");
+            this.gameStore.showError(result.error);
 
             }
         },
@@ -198,7 +199,7 @@ export default {
                 this.NewTag = '';
                 this.gameStore.fetchTags();
             } else {
-                сonsole.error("Ошибка при добавлении игры");
+                console.error("Ошибка при добавлении игры");
                 this.gameStore.showError("Кажется, что-то пошло не так :(");
             }
             } catch {
