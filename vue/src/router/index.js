@@ -20,6 +20,9 @@ const router = createRouter({
       path: '/reg',
       name: 'RegForm',
       component: RegView,
+      meta: {
+        isAuth: true
+      },
     },
     {
       path: '/admin',
@@ -40,6 +43,11 @@ const router = createRouter({
         }
       ]
     },
+
+    {
+      path: '/:pathMatch(.*)*',
+      // redirect: '/',
+    }
     
   ],
 })
@@ -94,10 +102,24 @@ router.beforeEach( async (to, from, next) => {
     
     // return next(); 
   }
+  
+  if(to.meta.isAuth) {
+    if(token) {
+      gameStore.showError('Вы уже авторизованы');
+      return next('/');
+    } else {
+      return next();
+    }
+  }
+
+  if(to.matched.length === 0) {
+    gameStore.showError('Страница не найдена');
+    return next('/');
+  }
+
   else {
     return next();
   }
-  
 
 })
 

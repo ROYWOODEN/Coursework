@@ -42,7 +42,7 @@ export default {
 }
 </script>
 
-<style scored>
+<style scored lang="scss">
 
 .dialog {
     background-color: rgba(0, 0, 0, 0.8);
@@ -53,23 +53,24 @@ export default {
     position: fixed;
     display: flex;
     z-index: 2;
-}
-.dialog__content {
-    position: relative;
-    margin: auto;
-    background-color: #242424;
-    border-radius: 12px;
-    padding: 10% 6%;
-    width: 50%;
-}
 
-.dialog__close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
+        &__content {
+            position: relative;
+            margin: auto;
+            background-color: #242424;
+            border-radius: 12px;
+            padding: 10% 6%;
+            width: 50%;
+        }
+
+        &__close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
 }
 
 .setting__title {
