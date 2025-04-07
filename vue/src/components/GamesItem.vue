@@ -83,6 +83,11 @@ export default {
             this.expanded = !this.expanded;
         },
         FavouritesGames(id) {
+            if(!this.gameStore.token) {
+                this.gameStore.showError('Пожалуйста авторизуйтесь');
+                this.gameStore.loginDialog = !this.gameStore.loginDialog;
+                return;
+            }
             this.gameStore.showMessage(id);
             this.testFavor = !this.testFavor;
         },
