@@ -5,6 +5,7 @@ import HomeView from '@/views/HomeView.vue'
 import RegView from '@/views/RegView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { useGameStore } from '@/stores/GameStore'
+import FavouritesView from '@/views/FavouritesView.vue'
 
 
 
@@ -15,6 +16,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+    },
+    {
+      path: '/favourites',
+      name: 'favourites',
+      component: FavouritesView,
     },
     {
       path: '/reg',

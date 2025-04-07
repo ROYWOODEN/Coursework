@@ -27,9 +27,14 @@
             <div class="flex justify-between items-center !px-10 !py-5">
                 <div class="game-card__price text-2xl font-medium">${{ game.price }}</div>
                 <div class="flex flex-row items-center">
-                <div class="svg__padding !me-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-bookmark svg__fon" viewBox="0 0 16 16">
+                <div 
+                @click="FavouritesGames(game.id_game)" 
+                class="svg__padding !me-3">
+                    <svg v-if="testFavor" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-bookmark svg__fon" viewBox="0 0 16 16">
                     <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                    </svg>
+                    <svg v-else class="svg__fon" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2z"/>
                     </svg>
                 </div>
                     
@@ -46,6 +51,7 @@
 <script>
 
 import { useGameStore } from '@/stores/GameStore';
+import FavouritesGames from './FavouritesGames.vue';
 
 export default {
 
@@ -64,6 +70,7 @@ export default {
         return {
             gameStore: useGameStore(),
             expanded: false,
+            testFavor: true,
         }
     },
     computed: {
@@ -74,7 +81,11 @@ export default {
     methods: {
         toggleExpand() {
             this.expanded = !this.expanded;
-        }
+        },
+        FavouritesGames(id) {
+            this.gameStore.showMessage(id);
+            this.testFavor = !this.testFavor;
+        },
     }
 
     
@@ -141,12 +152,12 @@ export default {
 
 .svg__fon {
     fill: $color-purple-favirute-icon;
-    cursor: pointer;
 }
 .svg__padding {
     background-color: $color-purple-favorite-fon;
     padding: 10px 10px 10px 10px;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 
