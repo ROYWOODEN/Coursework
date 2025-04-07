@@ -87,10 +87,47 @@ export default {
                 return;
             }
 
-            const respouns = await fetch('');
+            if(this.testFavor == false) {
 
-            this.gameStore.showMessage(id);
-            this.testFavor = !this.testFavor;
+                const res = await fetch(`/gamestore/favourites/del/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${this.gameStore.token}`,
+                    }
+                });
+                const data = await res.json();
+
+                if(res.ok) {
+                    this.gameStore.showError(data.message);
+                    this.testFavor = !this.testFavor;
+                    return;
+                } else {
+                    this.gameStore.showError(data.error);
+                }
+
+                
+            }
+
+            const respounse = await fetch('/gamestore/favourites', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8",
+                    'Authorization': `Bearer ${this.gameStore.token}`,
+                },
+                body: JSON.stringify({
+                    id: id,
+                })
+            });
+            const result = await respounse.json();
+
+            if(respounse.ok) {
+                this.gameStore.showMessage(result.message);
+                this.testFavor = !this.testFavor;
+            } else {
+                this.gameStore.showError(result.error);
+            }
+
+            
         },
     }
 
