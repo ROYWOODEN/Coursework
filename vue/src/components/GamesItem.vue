@@ -51,8 +51,6 @@
 <script>
 
 import { useGameStore } from '@/stores/GameStore';
-import FavouritesGames from './FavouritesGames.vue';
-
 export default {
 
     props: {
@@ -82,12 +80,15 @@ export default {
         toggleExpand() {
             this.expanded = !this.expanded;
         },
-        FavouritesGames(id) {
+        async FavouritesGames(id) {
             if(!this.gameStore.token) {
                 this.gameStore.showError('Пожалуйста авторизуйтесь');
                 this.gameStore.loginDialog = !this.gameStore.loginDialog;
                 return;
             }
+
+            const respouns = await fetch('');
+
             this.gameStore.showMessage(id);
             this.testFavor = !this.testFavor;
         },
