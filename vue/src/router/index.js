@@ -21,6 +21,9 @@ const router = createRouter({
       path: '/favourites',
       name: 'favourites',
       component: FavouritesView,
+      meta: {
+        isLogin: true,
+      },
     },
     {
       path: '/reg',
@@ -115,6 +118,16 @@ router.beforeEach( async (to, from, next) => {
       return next('/');
     } else {
       return next();
+    }
+  }
+
+  if(to.meta.isLogin) {
+    if(!token) {
+      gameStore.showError('Вы не авторизваны');
+      gameStore.loginDialog = !gameStore.loginDialog;
+    }
+    else {
+      next();
     }
   }
 

@@ -30,11 +30,11 @@
                 <div 
                 @click="FavouritesGames(game.id_game)" 
                 class="svg__padding !me-3">
-                    <svg v-if="testFavor" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-bookmark svg__fon" viewBox="0 0 16 16">
-                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
-                    </svg>
-                    <svg v-else class="svg__fon" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16">
+                    <svg v-if="isFavor" class="svg__fon" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16">
                     <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2z"/>
+                    </svg>
+                    <svg v-else xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-bookmark svg__fon" viewBox="0 0 16 16">
+                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
                     </svg>
                 </div>
                     
@@ -56,11 +56,11 @@ export default {
     props: {
         game: {
             type: Object,
-            requred: true,
+            required: true,
         },
         index: {
             type: Number,
-            requred: true,
+            required: true,
         },
     },
 
@@ -68,13 +68,16 @@ export default {
         return {
             gameStore: useGameStore(),
             expanded: false,
-            testFavor: true,
+            isFavor: false,
         }
     },
     computed: {
         isExpanded() {
             return this.expanded;
         }
+    },
+    async mounted() {
+        await this.fetchFavoritCheck();
     },
     methods: {
         toggleExpand() {
@@ -87,7 +90,7 @@ export default {
                 return;
             }
 
-            if(this.testFavor == false) {
+            if(this.isFavor == true) {
 
                 const res = await fetch(`/gamestore/favourites/del/${id}`, {
                     method: 'DELETE',
@@ -99,7 +102,7 @@ export default {
 
                 if(res.ok) {
                     this.gameStore.showError(data.message);
-                    this.testFavor = !this.testFavor;
+                    this.isFavor = !this.isFavor;
                     return;
                 } else {
                     this.gameStore.showError(data.error);
@@ -122,14 +125,47 @@ export default {
 
             if(respounse.ok) {
                 this.gameStore.showMessage(result.message);
-                this.testFavor = !this.testFavor;
+                this.isFavor = !this.isFavor;
             } else {
                 this.gameStore.showError(result.error);
             }
 
             
         },
-    }
+        async fetchFavoritCheck() {
+            if(!this.gameStore.token) {
+                return;
+            }
+
+            try {
+                const respounse = await fetch(`/gamestore/favourites/check/${this.game.id_game}`,{
+                headers: {
+                    'Authorization': `Bearer ${this.gameStore.token}`,
+                }
+                });
+
+                const data = await respounse.json();
+                // console.log(data);
+
+                if(respounse.ok) {
+                    this.isFavor = data.isFavor;
+                }
+
+            } catch(error) {
+
+            }
+        },
+    },
+
+    watch: {
+        'gameStore.token': {
+            immediate: true,
+            handler() {
+            this.fetchFavoritCheck();
+            }
+        }
+    },
+
 
     
 

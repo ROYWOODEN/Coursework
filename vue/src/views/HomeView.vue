@@ -12,7 +12,7 @@
       >
         <GamesItem
         v-for="(game, index) in gameStore.games"
-        :key="game.id"
+        :key="game.id_game"
         :game="game"
         :index="index"
         />

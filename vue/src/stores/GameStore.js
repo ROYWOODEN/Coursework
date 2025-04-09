@@ -115,10 +115,14 @@ export const useGameStore = defineStore('GameStore', {
         },
 
         logout() {
+            localStorage.removeItem('token');
             this.user = null;
             this.token = null;
-            localStorage.removeItem('token');
+            this.fetchGames();
         },
+        updateToken() {
+            this.token = localStorage.getItem('token');
+          },
 
         showMessage(mess) {
             this.message = mess; // Устанавливаем сообщение об ошибке

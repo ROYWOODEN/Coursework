@@ -48,4 +48,65 @@ exports.DelGamesFavorite = (req, res) => {
         });
     });
 
+};
+
+exports.GetGamesFovorite = (req, res) => {
+    const id_user = req.user.id;
+
+    const query = "SELECT * FROM favourites WHERE id_user = ?";
+
+    db.query(query, [id_user], (err, result) => {
+
+        if(err) {
+            console.err('Нет данных в избраных');
+            return res.status(404).json({
+                error: 'Пусто... Скорее добавьте что-нибудь в избранные!!!'
+            });
+        }
+        console.log("Результат запроса избранного:", result);
+
+        if(result.length === 0) {
+            return res.status(200).json([]);
+        }
+
+
+        const gameIds = result.map(item => item.id_games);
+
+        const placeholders = gameIds.map(() => '?').join(',');
+
+
+
+        const queryGame = `SELECT * FROM games WHERE id_game IN (${placeholders})`;
+
+        db.query(queryGame, gameIds, (err, games) => {
+            if(err) {
+                console.error('Ошибка при получении игр');
+                return res.status(500).json({
+                    error: 'Ошибка сервера'
+                });
+            }
+            return res.status(200).json(games);
+        });
+    });
+}
+
+
+exports.CheckGamesFavorite = (req, res) => {
+    const id_user = req.user.id;
+
+    const { id_game } = req.params;
+
+    const query = "SELECT * FROM favourites WHERE id_user = ? AND id_games = ?";
+
+    db.query(query, [id_user, id_game], (err, result) => {
+        if(err) {
+            return res.status(500).json({
+                error: 'Ошибка сервера'
+            });
+        }
+        
+        res.json({
+            isFavor: result.length > 0 // Булево значение
+        });
+    })
 }

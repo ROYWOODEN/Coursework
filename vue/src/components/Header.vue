@@ -2,8 +2,8 @@
     <header class="header flex flex-row justify-around items-center text-xl">
       <nav class="header__nav">
         <router-link class="header__nav-link" to="/" active-class="header-active">Каталог</router-link>
-        <router-link class="header__nav-link" to="#popular" active-class="header-active">Популярное</router-link>
-        <router-link class="header__nav-link" to="#new" active-class="header-active">Новинки</router-link>
+        <router-link class="header__nav-link" to="/popular" active-class="header-active">Популярное</router-link>
+        <router-link class="header__nav-link" to="/new" active-class="header-active">Новинки</router-link>
       </nav>
       <div class="header__search text-base text-white">
         <input

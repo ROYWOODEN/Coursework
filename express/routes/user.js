@@ -16,5 +16,7 @@ router.get('/user', authMiddleware.authMiddleware, userController.getUserData);
 
 router.post('/favourites', authMiddleware.authMiddleware, FavouritesControllet.AddGamesFavorite);
 router.delete('/favourites/del/:id', authMiddleware.authMiddleware, FavouritesControllet.DelGamesFavorite);
+router.get('/favourites/games', authMiddleware.authMiddleware, FavouritesControllet.GetGamesFovorite);
+router.get('/favourites/check/:id_game', authMiddleware.authMiddleware, FavouritesControllet.CheckGamesFavorite);
 
 module.exports = router;
