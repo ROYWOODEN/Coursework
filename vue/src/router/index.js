@@ -125,6 +125,7 @@ router.beforeEach( async (to, from, next) => {
     if(!token) {
       gameStore.showError('Вы не авторизваны');
       gameStore.loginDialog = !gameStore.loginDialog;
+      next(from);
     }
     else {
       next();
@@ -133,7 +134,7 @@ router.beforeEach( async (to, from, next) => {
 
   if(to.matched.length === 0) {
     gameStore.showError('Страница не найдена');
-    return next('/');
+    return next(from);
   }
 
   else {

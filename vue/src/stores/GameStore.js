@@ -9,10 +9,14 @@ export const useGameStore = defineStore('GameStore', {
         editGames: {},
         editGamesTags: {},
         tagsSelect: {},
+
+
         loginDialog: true,
         settingDialog: true,
         EditGameModal: true,
         loader: false,
+
+        
         message: '',
         messageError: '',
     }),
