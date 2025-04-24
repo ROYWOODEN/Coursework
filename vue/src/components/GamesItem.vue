@@ -30,7 +30,7 @@
                 <div 
                 @click="FavouritesGames(game.id_game)" 
                 class="svg__padding !me-3">
-                    <svg v-if="isFavor" class="svg__fon" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16">
+                    <svg v-if="isFavorLocal" class="svg__fon" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16">
                     <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2z"/>
                     </svg>
                     <svg v-else xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-bookmark svg__fon" viewBox="0 0 16 16">
@@ -58,8 +58,8 @@ export default {
             type: Object,
             required: true,
         },
-        index: {
-            type: Number,
+        isFavor: {
+            type: Boolean,
             required: true,
         },
     },
@@ -68,7 +68,7 @@ export default {
         return {
             gameStore: useGameStore(),
             expanded: false,
-            isFavor: false,
+            isFavorLocal: false,
         }
     },
     computed: {
@@ -77,7 +77,12 @@ export default {
         }
     },
     async mounted() {
-        await this.fetchFavoritCheck();
+        if(this.isFavor != null) {
+            this.isFavorLocal = true;
+        }  else {
+            await this.fetchFavoritCheck();
+        }
+        
     },
     methods: {
         toggleExpand() {
@@ -90,7 +95,7 @@ export default {
                 return;
             }
 
-            if(this.isFavor == true) {
+            if(this.isFavorLocal == true) {
 
                 const res = await fetch(`/gamestore/favourites/del/${id}`, {
                     method: 'DELETE',
@@ -102,7 +107,7 @@ export default {
 
                 if(res.ok) {
                     this.gameStore.showError(data.message);
-                    this.isFavor = !this.isFavor;
+                    this.isFavorLocal = !this.isFavorLocal;
                     return;
                 } else {
                     this.gameStore.showError(data.error);
@@ -125,7 +130,7 @@ export default {
 
             if(respounse.ok) {
                 this.gameStore.showMessage(result.message);
-                this.isFavor = !this.isFavor;
+                this.isFavorLocal = !this.isFavorLocal;
             } else {
                 this.gameStore.showError(result.error);
             }
@@ -137,7 +142,7 @@ export default {
                 return;
             }
 
-            try {
+            
                 const respounse = await fetch(`/gamestore/favourites/check/${this.game.id_game}`,{
                 headers: {
                     'Authorization': `Bearer ${this.gameStore.token}`,
@@ -148,13 +153,10 @@ export default {
                 // console.log(data);
 
                 if(respounse.ok) {
-                    this.isFavor = data.isFavor;
+                    this.isFavorLocal = data.isFavor;
                 }
 
-            } catch(error) {
-
             }
-        },
     },
 
     watch: {

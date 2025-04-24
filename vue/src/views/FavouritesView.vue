@@ -12,7 +12,8 @@
                 <games-item 
                     v-for="game in games" 
                     :key="game.id_game" 
-                    :game="game" />
+                    :game="game"
+                    :isFavor="true" />
             </main>
              
         </section>

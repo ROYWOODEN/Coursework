@@ -11,10 +11,10 @@
       class="flex flex-wrap justify-around"
       >
         <GamesItem
-        v-for="(game, index) in gameStore.games"
+        v-for="game in gameStore.games"
         :key="game.id_game"
         :game="game"
-        :index="index"
+        :isFavor="null"
         />
       </main>
       

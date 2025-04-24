@@ -85,7 +85,14 @@ exports.GetGamesFovorite = (req, res) => {
                     error: 'Ошибка сервера'
                 });
             }
-            return res.status(200).json(games);
+
+
+            const updateGames = games.map(game => ({
+                ...game,
+                isFavor: true,
+            }));
+
+            return res.status(200).json(updateGames);
         });
     });
 }
