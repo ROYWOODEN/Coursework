@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <section>
     <router-view />
     <Notification ></Notification>
-  </div>
+  </section>
  
 </template>
 
