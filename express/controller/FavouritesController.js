@@ -58,7 +58,7 @@ exports.GetGamesFovorite = (req, res) => {
     db.query(query, [id_user], (err, result) => {
 
         if(err) {
-            console.err('Нет данных в избраных');
+            console.error('Нет данных в избраных');
             return res.status(404).json({
                 error: 'Пусто... Скорее добавьте что-нибудь в избранные!!!'
             });
