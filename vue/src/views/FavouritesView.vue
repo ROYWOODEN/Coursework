@@ -13,7 +13,7 @@
                     v-for="game in games" 
                     :key="game.id_game" 
                     :game="game"
-                    :isFavor="true" />
+                    isFavor />
             </main>
              
         </section>

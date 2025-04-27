@@ -35,7 +35,8 @@
                 
                 <input
                 class="w-100 text-white" 
-                type="text"
+                min="1"
+                type="number"
                 v-model="price"
                 >
 
