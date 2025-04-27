@@ -22,7 +22,7 @@ export const useGameStore = defineStore('GameStore', {
     }),
     actions: {
         async fetchGames() {
-            if (this.loader) return;
+            // if (this.loader) return;
     
             this.loader = true; // Показываем лоадер сразу, до задержки
             

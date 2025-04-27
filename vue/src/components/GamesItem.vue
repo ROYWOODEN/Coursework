@@ -62,6 +62,10 @@ export default {
             type: Boolean,
             required: true,
         },
+        fetchFavorite: {
+            type: Function,
+            reqiured: true,
+        }
     },
 
     data() {
@@ -108,6 +112,7 @@ export default {
                 if(res.ok) {
                     this.gameStore.showError(data.message);
                     this.isFavorLocal = !this.isFavorLocal;
+                    this.fetchFavorite();
                     return;
                 } else {
                     this.gameStore.showError(data.error);

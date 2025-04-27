@@ -13,6 +13,7 @@
                     v-for="game in games" 
                     :key="game.id_game" 
                     :game="game"
+                    :fetchFavorite="fetchFavorite"
                     isFavor />
             </main>
              
