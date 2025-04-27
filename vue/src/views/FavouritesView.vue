@@ -5,7 +5,7 @@
 
 
         <section 
-        v-if="games.length != 0"
+        v-if="games.length > 0"
         class="text-white">
             
             <main class="flex flex-wrap justify-around ">
@@ -63,22 +63,32 @@ export default {
     },
     methods: {
         async fetchFavorite() {
-            const respounse = await fetch('/gamestore/favourites/games',{
-                headers: {
-                    'Authorization': `Bearer ${this.gameStore.token}`,
+
+            try {
+                this.isLoader = false; // стартуем лоадер
+                const respounse = await fetch('/gamestore/favourites/games',{
+                    headers: {
+                        'Authorization': `Bearer ${this.gameStore.token}`,
+                    }
+                });
+
+                const data = await respounse.json();
+
+                if(respounse.ok) {
+                    this.games = data;
+                    this.isLoader = true;
+                    return;
                 }
-            });
+                else {
+                    this.gameStore.showError(data.error);
+                }
+            }   catch(error) {
+                this.isLoader = true;
+                console.error('Ошибка при получении избранного:', error);
 
-            const data = await respounse.json();
-
-            if(respounse.ok) {
-                this.games = data;
-                this.isLoader = !this.isLoader;
-                return;
             }
-            else {
-                this.gameStore.showError(data.error);
-            }
+            
+            
         },
     },
     async created() {
