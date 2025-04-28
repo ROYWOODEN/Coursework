@@ -137,7 +137,11 @@
   }
   </script>
   
-  <style>
+  <style lang="scss">
+
+  @use '../assets/scss/main.scss' as*;
+
+
   .pagination {
     margin: 40px auto;
     display: flex;
@@ -150,7 +154,7 @@
   .page-btn {
     padding: 8px 16px;
     cursor: pointer;
-    border: 2px solid #A100ED;
+    border: 2px solid $color-purple;
     background: transparent;
     color: white;
     border-radius: 6px;
