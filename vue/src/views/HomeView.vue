@@ -9,7 +9,7 @@
         </div>
         
         <main v-else-if="gameStore.games.length > 0" class="">
-            <div class="grid grid-cols-3 2xl:grid-cols-4 gap-5 !px-8 !py-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-4 md:grid-cols-3 gap-5 !px-8 !py-3">
                     <GamesItem
                     v-for="game in paginationGames"
                     :key="game.id_game"
