@@ -20,7 +20,8 @@
           
   
           
-          <div class="pagination">
+          <div class="pagination flex flex-row items-center gap-2">
+
             <button 
               @click="prevPage" 
               :disabled="currentPage === 1"
@@ -29,7 +30,8 @@
               Назад
             </button>
             
-            <button 
+            <div class="flex flex-wrap gap-2">
+              <button 
               v-for="page in pages" 
               :key="page"
               @click="goToPage(page)"
@@ -37,6 +39,7 @@
             >
               {{ page }}
             </button>
+            </div>
             
             <button 
               @click="nextPage" 
@@ -76,7 +79,7 @@
       return {
         gameStore: useGameStore(),
         currentPage: 1,
-        itemsPerPage: 3,
+        itemsPerPage: 1,
       }
     },
   
@@ -144,11 +147,7 @@
 
   .pagination {
     margin: 40px auto;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    max-width: 90%;
+    max-width: 80%;
   }
   
   .page-btn {
