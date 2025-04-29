@@ -28,7 +28,7 @@
                 <div class="game-card__price text-2xl font-medium">${{ game.price }}</div>
                 <div class="flex flex-row items-center">
                 <div 
-                @click="FavouritesGames(game.id_game)" 
+                @click="DelFavouritesGames(game.id_game)" 
                 class="svg__padding !me-3">
                     <svg v-if="isFavorLocal" class="svg__fon" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16">
                     <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2z"/>
@@ -92,7 +92,7 @@ export default {
         toggleExpand() {
             this.expanded = !this.expanded;
         },
-        async FavouritesGames(id) {
+        async DelFavouritesGames(id) {
             if(!this.gameStore.token) {
                 this.gameStore.showError('Пожалуйста авторизуйтесь');
                 this.gameStore.loginDialog = !this.gameStore.loginDialog;
@@ -155,7 +155,6 @@ export default {
                 });
 
                 const data = await respounse.json();
-                // console.log(data);
 
                 if(respounse.ok) {
                     this.isFavorLocal = data.isFavor;

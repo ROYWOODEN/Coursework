@@ -87,12 +87,12 @@ exports.GetGamesFovorite = (req, res) => {
             }
 
 
-            const updateGames = games.map(game => ({
-                ...game,
-                isFavor: true,
-            }));
+            // const updateGames = games.map(game => ({
+            //     ...game,
+            //     isFavor: true,
+            // }));
 
-            return res.status(200).json(updateGames);
+            return res.status(200).json(games);
         });
     });
 }

@@ -5,13 +5,13 @@
 
 
         <section 
-        v-if="games.length > 0"
+        v-if="games.length > 0 && isTag"
         class="text-white">
             
             <main class="flex flex-wrap justify-around ">
                 <games-item 
                     v-for="game in games" 
-                    :key="game.id_game" 
+                    :key="game.id_game"
                     :game="game"
                     :fetchFavorite="fetchFavorite"
                     isFavor />
@@ -58,6 +58,7 @@ export default {
             gameStore: useGameStore(),
             router: useRouter(),
             games: [],
+            isTag: false, // переменая для того чтобы задать условие прогрузки когда теги тоже уже будут загружены
             isLoader: false,
         }
     },
@@ -73,9 +74,19 @@ export default {
                 });
 
                 const data = await respounse.json();
+                this.games = data;
 
+                const tagPromises = this.games.map(game => 
+                    fetch(`/gamestore/games/${game.id_game}/tags`)
+                        .then(response => response.json())
+                        .then(tags => {
+                            game.tags = tags; // Без .slice(0, 3), так как БД уже возвращает ровно 3 тега
+                        })
+                );
+                
+                await Promise.allSettled(tagPromises);
+                this.isTag = true;
                 if(respounse.ok) {
-                    this.games = data;
                     this.isLoader = true;
                     return;
                 }
