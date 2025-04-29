@@ -109,7 +109,7 @@ import LoginForm from './LoginForm.vue';
       border: none;
       border-radius: 40px;
       padding-left: 50px; /* Оставляем место под иконку слева */
-      background-image: url('../assets/IconSearch.svg'); /* Путь к изображению */
+      background-image: url('/Header/IconSearch.svg'); /* Путь к изображению */
       background-repeat: no-repeat; /* Изображение не должно повторяться */
       background-position: 20px center; /* Позиционирование иконки внутри инпута */
       background-size: 20px; /* Размер иконки */

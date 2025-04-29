@@ -8,14 +8,17 @@
         v-if="games.length > 0 && isTag"
         class="text-white">
             
-            <main class="flex flex-wrap justify-around ">
-                <games-item 
+            <main class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-3 gap-5 !px-8 !py-3">
+                <transition-group name="list" >
+
+                    <games-item 
                     v-for="game in games" 
                     :key="game.id_game"
                     :game="game"
                     :fetchFavorite="fetchFavorite"
                     isFavor />
-            </main>
+                </transition-group>
+                </main>
              
         </section>
 
@@ -118,5 +121,24 @@ export default {
 </script>
 
 <style>
+
+
+.list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.3s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.list-move {
+    transition: transform 0.4s ease;
+}
+
 
 </style>

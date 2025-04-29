@@ -2,7 +2,7 @@
   <section>
     <aside class="flex flex-col fixed justify-between">
     <div class="flex justify-center">
-      <a href="/"><img class="aside__logo-img" src="../assets/logo.svg" alt=""></a>
+      <a href="/"><img class="aside__logo-img" src="/Sitebar/logo.svg" alt=""></a>
     </div>
     
 
