@@ -9,7 +9,7 @@
         </div>
         
         <main v-else-if="gameStore.games.length > 0" class="">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-3 gap-5 !px-8 !py-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 xl:gap-1 !px-8 !py-3">
                     <GamesItem
                     v-for="game in paginationGames"
                     :key="game.id_game"
@@ -20,7 +20,9 @@
           
   
           
-          <div class="pagination flex flex-row items-center gap-2">
+          <div class="flex flex-row justify-center !my-20 items-center gap-2"
+          v-if="totalPages > 1"
+          >
 
             <button
             @click="prevGroup"
@@ -91,8 +93,8 @@
       return {
         gameStore: useGameStore(),
         currentPage: 1,
-        itemsPerPage: 1,
-        buttonsPerGroup: 3,
+        itemsPerPage: 6,
+        buttonsPerGroup: 5,
       }
     },
   
@@ -123,7 +125,7 @@
   
       pages() {
         const pages = [];
-        for(let i = this.startPage; i <= this.endPage - 1; i++) {
+        for(let i = this.startPage; i <= this.endPage; i++) {
           pages.push(i);
         }
         return pages;
@@ -162,7 +164,7 @@
 
       nextGroup() {
         if(this.endPage < this.totalPages) {
-          this.currentPage = this.startPage + 1;
+          this.currentPage = this.endPage + 1;
         }
       },
   
@@ -178,10 +180,6 @@
   @use '../assets/scss/main.scss' as*;
 
 
-  .pagination {
-    margin: 40px auto;
-    max-width: 80%;
-  }
   
   .page-btn {
     padding: 8px 16px;
@@ -190,7 +188,6 @@
     background: transparent;
     color: white;
     border-radius: 6px;
-    font-size: 16px;
     transition: all 0.3s ease;
   }
   
