@@ -75,13 +75,38 @@ import LoginForm from './LoginForm.vue';
 
       async searchQuery(search) {
 
-        if(search.length == 0) {
+        const trimSearch = search.trim();
+
+        if(trimSearch.length == 0) {
           this.gameStore.fetchGames();
           return
         }
-        const response = await fetch(`/gamestore/search/${search}`);
-        const data = await response.json();
-        this.gameStore.games = data;
+        if(trimSearch.length <= 2) {
+          return;
+        }
+
+
+        try {
+          // encodeURIComponent - кодирует спец символы чтобы с кьери параметрами сервер не путал
+          const response = await fetch(`/gamestore/search/${encodeURIComponent(trimSearch)}`);
+          const data = await response.json();
+          if(data.length === 0) {
+            this.gameStore.showError('Ничего не найдено');
+            this.gameStore.isSearch = true;
+          }
+
+          this.gameStore.games = data;
+          this.gameStore.games.map(async game => {
+            await fetch(`/gamestore/games/${game.id_game}/tags`)
+                    .then(response => response.json())
+                    .then(tags => {
+                        game.tags = tags; // Без .slice(0, 3), так как БД уже возвращает ровно 3 тега
+                    })
+          });
+        }   catch(error) {
+          console.log( error,'что-то с поиском не так глянь суда судак');
+          this.gameStore.showError('Ошибка сети что-то с поиском');
+        }
         
       }
     },

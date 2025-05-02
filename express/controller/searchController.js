@@ -6,7 +6,7 @@ exports.searchItems = (req, res)  => {
 
     const { title } = req.params;
 
-    const titleTerm = `%${title}%`;
+    const titleTerm = `%${title.trim()}%`;
 
     const query = "SELECT * FROM games WHERE title LIKE ?";
 
@@ -17,7 +17,6 @@ exports.searchItems = (req, res)  => {
                 error: 'хз'
             });
         }
-        console.log(result);
 
         res.json(result);
     });
