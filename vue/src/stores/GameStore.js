@@ -31,22 +31,32 @@ export const useGameStore = defineStore('GameStore', {
                 const response = await fetch("/gamestore/games");
                 this.games = await response.json();
 
-                  // Параллельно загружаем теги для всех игр
-                const tagPromises = this.games.map(game => 
-                    fetch(`/gamestore/games/${game.id_game}/tags`)
-                        .then(response => response.json())
-                        .then(tags => {
-                            game.tags = tags; // Без .slice(0, 3), так как БД уже возвращает ровно 3 тега
-                        })
-                );
-                
-                await Promise.allSettled(tagPromises);
+
+                // Параллельно загружаем теги для всех игр
+                this.fetchtagPromises();
+                 
                 
             } catch (error) {
                 console.error("Ошибка при получении игр:", error);
             } finally {
                 this.loader = false; // Скрываем лоадер после загрузки
             }
+        },
+        async fetchtagPromises() {
+             
+             const tagPromises = this.games.map(game => 
+                fetch(`/gamestore/games/${game.id_game}/tags`)
+                    .then(response => response.json())
+                    .then(tags => {
+                        game.tags = tags; // Без .slice(0, 3), так как БД уже возвращает ровно 3 тега
+                    })
+            );
+            
+            await Promise.allSettled(tagPromises);
+
+
+            
+            
         },
         async DelGames(id) {
             try {

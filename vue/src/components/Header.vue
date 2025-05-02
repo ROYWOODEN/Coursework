@@ -9,6 +9,7 @@
         <input
           class="header__search-input"
           type="search"
+          v-model="search"
           id="search"
           placeholder="Введите что-то для поиска..."
           list="Search"
@@ -66,9 +67,32 @@ import LoginForm from './LoginForm.vue';
     data() {
       return {
         gameStore: useGameStore(),
+        search: '',
+      }
+    },
+
+    methods: {
+
+      async searchQuery(search) {
+
+        if(search.length == 0) {
+          this.gameStore.fetchGames();
+          return
+        }
+        const response = await fetch(`/gamestore/search/${search}`);
+        const data = await response.json();
+        this.gameStore.games = data;
+        
+      }
+    },
+
+    watch: {
+      search(newVal) {
+        this.searchQuery(newVal);
       }
     }
-  };
+
+  }
   </script>
   
   <style lang="scss">
