@@ -70,6 +70,7 @@ export default {
 
             try {
                 this.isLoader = false; // стартуем лоадер
+                
                 const respounse = await fetch('/gamestore/favourites/games',{
                     headers: {
                         'Authorization': `Bearer ${this.gameStore.token}`,
@@ -120,8 +121,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 
+@use '../assets/scss/main.scss' as*;
 
 .list-item {
   display: inline-block;

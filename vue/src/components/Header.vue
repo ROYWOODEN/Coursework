@@ -33,7 +33,7 @@
           <div class="w-13">
             <img
             :src="gameStore.user.avatar" alt=""
-            class="w-full rounded-full">
+            class="w-full rounded-full object-cover">
           </div>
           <p
           class="text-white !ps-5"

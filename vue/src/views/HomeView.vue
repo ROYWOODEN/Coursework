@@ -22,6 +22,12 @@
           
           <div class="pagination flex flex-row items-center gap-2">
 
+            <button
+            @click="prevGroup"
+            :disabled="currentPage === 1"
+            class="page-btn">
+              «
+            </button>
             <button 
               @click="prevPage" 
               :disabled="currentPage === 1"
@@ -47,6 +53,12 @@
               class="page-btn"
             >
               Вперед
+            </button>
+            <button
+            @click="nextGroup"
+            :disabled="endPage === totalPages"
+            class="page-btn">
+              »
             </button>
           </div>
         </main>
@@ -80,6 +92,7 @@
         gameStore: useGameStore(),
         currentPage: 1,
         itemsPerPage: 1,
+        buttonsPerGroup: 3,
       }
     },
   
@@ -92,7 +105,15 @@
         }
         return [];
       },
-  
+      
+      startPage() {
+        return Math.floor((this.currentPage - 1) / this.buttonsPerGroup) * this.buttonsPerGroup + 1;
+      },
+
+      endPage() {
+        return Math.min(this.startPage + this.buttonsPerGroup - 1, this.totalPages);
+      },
+
       totalPages() {
         if(this.gameStore.games && this.gameStore.games.length > 0) {
           return Math.ceil(this.gameStore.games.length / this.itemsPerPage);
@@ -102,7 +123,7 @@
   
       pages() {
         const pages = [];
-        for(let i = 1; i <= this.totalPages; i++) {
+        for(let i = this.startPage; i <= this.endPage - 1; i++) {
           pages.push(i);
         }
         return pages;
@@ -130,6 +151,18 @@
       nextPage() {
         if(this.currentPage < this.totalPages) {
           this.currentPage++;
+        }
+      },
+
+      prevGroup() {
+        if(this.startPage > 1) {
+          this.currentPage = this.startPage - 1;
+        }
+      },
+
+      nextGroup() {
+        if(this.endPage < this.totalPages) {
+          this.currentPage = this.startPage + 1;
         }
       },
   

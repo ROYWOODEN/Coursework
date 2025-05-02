@@ -1,6 +1,6 @@
 <template>
     <div>
-        <transition-group name="list">
+    <transition-group name="list">
         <DeleteGames
         v-for="game in gameStore.games"
         :key="game.id_game"
