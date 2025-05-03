@@ -65,7 +65,7 @@
           </div>
         </main>
         
-        <main v-else-if="gameStore.isSearch">
+        <main v-else-if="searchStore.isSearch">
           <h1 class="text-center !mt-40 text-3xl text-purple-600 font-serif">
             Ничего не найдено по вашему запросу
           </h1>
@@ -82,7 +82,7 @@
   
   <script>
   import { useGameStore } from '@/stores/GameStore'
-  import { useSearchStore } from '@/stores/SearchStore '
+  import { useSearchStore } from '@/stores/SearchStore' 
 
   import Header from '@/components/Header.vue'
   import Sidebar from '@/components/Sidebar.vue'
@@ -144,7 +144,6 @@
     
     mounted() {
       this.fetchGamesOnce();
-      this.searchStore.setScope('home');
     },
   
     methods: {
@@ -181,7 +180,7 @@
   
       goToPage(page) {
         this.currentPage = page;
-      }
+      },
     }
   }
   </script>

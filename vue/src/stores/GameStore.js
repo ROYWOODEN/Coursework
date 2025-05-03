@@ -15,7 +15,6 @@ export const useGameStore = defineStore('GameStore', {
         settingDialog: true,
         EditGameModal: true,
         loader: false,
-        isSearch: false,
 
         
         message: '',

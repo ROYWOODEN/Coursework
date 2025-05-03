@@ -43,7 +43,7 @@
 <script>
 
 import { useGameStore } from '@/stores/GameStore';
-import { useSearchStore } from '@/stores/SearchStore ';
+import { useSearchStore } from '@/stores/SearchStore';
 import { useRouter } from 'vue-router';
 
 import Header from '@/components/Header.vue';
@@ -109,7 +109,7 @@ export default {
         },
     },
     mounted() {
-        this.searchStore.setScope('favourites');
+        this.searchStore.setScope();
     },
     async created() {
         // if (!this.gameStore.token) {
