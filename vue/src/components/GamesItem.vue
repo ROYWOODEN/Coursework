@@ -62,10 +62,6 @@ export default {
             type: Boolean,
             required: true,
         },
-        fetchFavorite: {
-            type: Function,
-            reqiured: true,
-        }
     },
 
     data() {
@@ -81,7 +77,7 @@ export default {
         }
     },
     async mounted() {
-        if(this.isFavor != null) {
+        if(this.isFavor != false) {
             this.isFavorLocal = true;
         }  else {
             await this.fetchFavoritCheck();
@@ -111,8 +107,7 @@ export default {
 
                 if(res.ok) {
                     this.gameStore.showError(data.message);
-                    this.isFavorLocal = !this.isFavorLocal;
-                    this.fetchFavorite();
+                    this.isFavorLocal = !this.isFavorLocal; 
                     return;
                 } else {
                     this.gameStore.showError(data.error);
@@ -155,7 +150,6 @@ export default {
                 });
 
                 const data = await respounse.json();
-
                 if(respounse.ok) {
                     this.isFavorLocal = data.isFavor;
                 }

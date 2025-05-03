@@ -43,6 +43,7 @@
 <script>
 
 import { useGameStore } from '@/stores/GameStore';
+import { useSearchStore } from '@/stores/SearchStore ';
 import { useRouter } from 'vue-router';
 
 import Header from '@/components/Header.vue';
@@ -59,6 +60,7 @@ export default {
     data() {
         return {
             gameStore: useGameStore(),
+            searchStore: useSearchStore(),
             router: useRouter(),
             games: [],
             isTag: false, // переменая для того чтобы задать условие прогрузки когда теги тоже уже будут загружены
@@ -105,6 +107,9 @@ export default {
             
             
         },
+    },
+    mounted() {
+        this.searchStore.setScope('favourites');
     },
     async created() {
         // if (!this.gameStore.token) {

@@ -14,7 +14,7 @@
                     v-for="game in paginationGames"
                     :key="game.id_game"
                     :game="game"
-                    :isFavor="null"
+                    :isFavor="false"
                 />
             </div>
           
@@ -82,6 +82,8 @@
   
   <script>
   import { useGameStore } from '@/stores/GameStore'
+  import { useSearchStore } from '@/stores/SearchStore '
+
   import Header from '@/components/Header.vue'
   import Sidebar from '@/components/Sidebar.vue'
   import GamesItem from '@/components/GamesItem.vue'
@@ -98,6 +100,7 @@
     data() {
       return {
         gameStore: useGameStore(),
+        searchStore: useSearchStore(),
         currentPage: 1,
         itemsPerPage: 6,
         buttonsPerGroup: 5,
@@ -135,11 +138,13 @@
           pages.push(i);
         }
         return pages;
-      }
+      },
+      
     },
     
     mounted() {
       this.fetchGamesOnce();
+      this.searchStore.setScope('home');
     },
   
     methods: {
