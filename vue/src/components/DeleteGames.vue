@@ -29,7 +29,7 @@
               </div>
               
   
-              <div class="flex flex-wrap justify-between">
+              <div class="flex flex-wrap justify-between items-center">
                   <span
                   v-for="(tag, idx) in game.tags" :key="idx"
                   class="game-card__tag rounded-lg !px-3 !py-1 !my-2 text-sm font-semibold"
@@ -77,14 +77,6 @@ import { useGameStore } from '@/stores/GameStore';
           }
       },
   
-    //   computed: {
-    //       isExpanded() {
-    //           return this.expanded;
-    //       }
-    //   },
-//       created() {
-//     console.log("Полученная игра:", this.game);
-// },
       methods: {
           toggleExpand() {
               this.expanded = !this.expanded;
@@ -117,6 +109,7 @@ import { useGameStore } from '@/stores/GameStore';
 
       &-img {
           width: 38%;
+          min-width: 38%;
           & img {
             border-radius: 35px 0 0 35px;
             height: 100%;

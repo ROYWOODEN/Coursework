@@ -42,10 +42,6 @@
 
 
                 <div class="flex flex-col">
-                    <!-- <select name="" id="">
-                        <option value=""></option>
-                        <option value=""></option>
-                    </select> -->
 
                     <div class="!px-6 !pt-2 !pb-10 text-white">
                       <span 
@@ -174,7 +170,7 @@ export default {
         },
         async fetchGameUpdate(id) {
 
-            if (this.title === this.OrigTitle && this.description === this.OrigDescription && this.price === this.OrigPrice) {
+            if (this.title === this.OrigTitle && this.description === this.OrigDescription && this.price === this.OrigPrice && (this.selectTag[0] === this.OrigTag[0] && this.selectTag[1] === this.OrigTag[1] && this.selectTag[2] === this.OrigTag[2])) {
                 console.log("Данные не изменены, запрос не отправляется!");
                 this.gameStore.showError('Вы не внесли изменений!');
                 return;
@@ -210,11 +206,9 @@ export default {
                 this.gameStore.showError('Кажется - что-то пошло не так :(');
             };
             
+            
+            this.fetchTagsEdit(id);
 
-            if(this.selectTag[0] != this.OrigTag[0] || this.selectTag[1] != this.OrigTag[1] || this.selectTag[2] != this.OrigTag[2]) {
-
-                this.fetchTagsEdit(id);
-            }
         },
         async fetchTagsEdit(id_game) {
             try {
@@ -254,7 +248,7 @@ export default {
         }
 
     },
-    mounted() {
+    created() {
         this.fetchEdit();
         this.toggleBodyScroll();
         this.gameStore.fetchTags();

@@ -45,7 +45,6 @@
                         v-model="gamePrice"
                         min="1"
                         type="number"
-                        required
                         placeholder="Укажите цену"
                         class="add-game-panel__input">
                     </div>
@@ -137,10 +136,14 @@ export default {
     },
     methods: {
         async fetchAddGame() {
-            if (
-            !this.gameTitle || !this.gameDescription || !this.gameImage || !this.gamePrice || !this.gameTags[0] || !this.gameTags[1] || !this.gameTags[2]) {
-            this.gameStore.showError("Пожалуйста, заполните все поля!");
-            return;
+            if (!this.gameTitle || !this.gameDescription || !this.gameImage || !this.gamePrice || !this.gameTags[0] || !this.gameTags[1] || !this.gameTags[2]) {
+
+                this.gameStore.showError("Пожалуйста, заполните все поля!");
+                return;
+
+            }   else if (this.gameTags[0] === this.gameTags[1] || this.gameTags[1] === this.gameTags[2] || this.gameTags[0] === this.gameTags[2]) {
+                this.gameStore.showError('Вы выбрали однинаковые теги для игры выберите разные пж');
+                return;
             }
 
         // Отправка данных на сервер

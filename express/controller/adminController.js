@@ -73,7 +73,7 @@ exports.EditTagsDel = (req, res) => {
     db.query(query, [ id_game], (err, result) => {
         if(err) {
             console.error('Ошибка при удаление тегов:', err);
-            return res.status(500).json({ message: 'Ошибка сервера при удаление тегов' });
+            return res.status(500).json({ error: 'Ошибка сервера при удаление тегов' });
         }
 
         res.status(200).json({ message: 'Данные об игре успешно обновлены' });
@@ -85,14 +85,14 @@ exports.EditTagsDel = (req, res) => {
 exports.EditTagsAdd = async (req, res) => {
     const { id_game, id_tags } = req.body;
 
+    const query = "INSERT INTO game_tags (id_game, id_tags) VALUES (?, ?)";
+
     try {
         // Вставляем каждый тег по очереди с ожиданием выполнения
         for (const tag of id_tags) {
             await new Promise((resolve, reject) => {
-                db.query(
-                    "INSERT INTO game_tags (id_game, id_tags) VALUES (?, ?)", 
-                    [id_game, tag],
-                    (err, result) => {
+                db.query(query, [id_game, tag], (err, result) => {
+                    
                         if (err) {
                             console.error('Ошибка при добавлении тега:', err);
                             return reject(err);
