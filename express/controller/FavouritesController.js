@@ -63,7 +63,7 @@ exports.GetGamesFovorite = (req, res) => {
                 error: 'Пусто... Скорее добавьте что-нибудь в избранные!!!'
             });
         }
-        console.log("Результат запроса избранного:", result);
+        // console.log("Результат запроса избранного:", result);
 
         if(result.length === 0) {
             return res.status(200).json([]);

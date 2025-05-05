@@ -5,24 +5,38 @@
 
 
         <section 
-        v-if="games.length > 0 && isTag"
+        v-if="userStore.MyGames.length > 0 && userStore.isTag"
         class="text-white">
             
-            <main class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-3 gap-5 !px-8 !py-3">
+            <main v-if="searchStore.isSearch" class="">
+                <h1 class="text-center !mt-40 text-3xl text-purple-600 font-serif">
+                Ничего не найдено по вашему запросу
+            </h1>
+            </main>
+            <main v-else-if="searchStore.searchResults.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-3 gap-5 !px-8 !py-3">
                 <transition-group name="list" >
 
                     <games-item 
-                    v-for="game in games" 
+                    v-for="game in searchStore.searchResults" 
                     :key="game.id_game"
                     :game="game"
-                    :fetchFavorite="fetchFavorite"
                     isFavor />
                 </transition-group>
-                </main>
+            </main>
+            <main v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-3 gap-5 !px-8 !py-3">
+                <transition-group name="list" >
+
+                    <games-item 
+                    v-for="game in userStore.MyGames" 
+                    :key="game.id_game"
+                    :game="game"
+                    isFavor />
+                </transition-group>
+            </main>
              
         </section>
 
-        <section v-else-if="isLoader">
+        <section v-else-if="userStore.isLoader">
                 <h1 class="text-2xl text-center !py-50 font-semibold">
                     Упс.. тут кажется пусто надо что-то добавить
                     <p class="text-purple-600 underline cursor-pointer"
@@ -44,11 +58,12 @@
 
 import { useGameStore } from '@/stores/GameStore';
 import { useSearchStore } from '@/stores/SearchStore';
+import { useUserStore } from '@/stores/UserStore';
 import { useRouter } from 'vue-router';
 
 import Header from '@/components/Header.vue';
 import Sidebar from '@/components/Sidebar.vue';
-import GamesItem from '../components/GamesItem.vue';
+import GamesItem from '@/components/GamesItem.vue';
 
 
 export default {
@@ -61,65 +76,21 @@ export default {
         return {
             gameStore: useGameStore(),
             searchStore: useSearchStore(),
+            userStore: useUserStore(),
             router: useRouter(),
-            games: [],
-            isTag: false, // переменая для того чтобы задать условие прогрузки когда теги тоже уже будут загружены
-            isLoader: false,
         }
     },
     methods: {
-        async fetchFavorite() {
-
-            try {
-                this.isLoader = false; // стартуем лоадер
-                
-                const respounse = await fetch('/gamestore/favourites/games',{
-                    headers: {
-                        'Authorization': `Bearer ${this.gameStore.token}`,
-                    }
-                });
-
-                const data = await respounse.json();
-                this.games = data;
-
-                const tagPromises = this.games.map(game => 
-                    fetch(`/gamestore/games/${game.id_game}/tags`)
-                        .then(response => response.json())
-                        .then(tags => {
-                            game.tags = tags; // Без .slice(0, 3), так как БД уже возвращает ровно 3 тега
-                        })
-                );
-                
-                await Promise.allSettled(tagPromises);
-                this.isTag = true;
-                if(respounse.ok) {
-                    this.isLoader = true;
-                    return;
-                }
-                else {
-                    this.gameStore.showError(data.error);
-                }
-            }   catch(error) {
-                this.isLoader = true;
-                console.error('Ошибка при получении избранного:', error);
-
-            }
-            
-            
-        },
+        
     },
     mounted() {
         this.searchStore.setScope();
     },
     async created() {
-        // if (!this.gameStore.token) {
-        // this.router.push('/');
-        // return;
-        // } 
-
-    if(this.games.length === 0) {
-        await this.fetchFavorite();
-    }
+        
+        if(this.userStore.MyGames.length === 0) {
+            await this.userStore.fetchFavorite();
+        }
 
     },
 

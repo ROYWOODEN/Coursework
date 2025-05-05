@@ -8,7 +8,7 @@
 
             <div class="flex !ms-20 !mb-15 text-xl">
                 <router-link to="/admin/add" class="admin-panel__title-text !pe-20" active-class="active">Добавление игр:</router-link>
-                <router-link to="/admin/del" class="admin-panel__title-text" active-class="active">Удаление игр:</router-link>
+                <router-link to="/admin/del" class="admin-panel__title-text" active-class="active">Редактирование игр:</router-link>
             </div>
 
             <router-view />

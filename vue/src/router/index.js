@@ -3,9 +3,12 @@ import AdminPanelVeiw from '@/views/AdminPanelVeiw.vue'
 import DeleteGameView from '@/views/DeleteGameView.vue'
 import HomeView from '@/views/HomeView.vue'
 import RegView from '@/views/RegView.vue'
+import FavouritesView from '@/views/FavouritesView.vue'
+
+
 import { createRouter, createWebHistory } from 'vue-router'
 import { useGameStore } from '@/stores/GameStore'
-import FavouritesView from '@/views/FavouritesView.vue'
+import { useSearchStore } from '@/stores/SearchStore'
 
 
 
@@ -132,6 +135,8 @@ router.beforeEach( async (to, from, next) => {
     }
   }
 
+
+
   if(to.matched.length === 0) {
     gameStore.showError('Страница не найдена');
     return next(from);
@@ -141,6 +146,16 @@ router.beforeEach( async (to, from, next) => {
     return next();
   }
 
-})
+});
+
+
+router.afterEach((to, from) => {
+  const searchStore = useSearchStore();
+
+  searchStore.searchQuery = '';
+  searchStore.routeName = to.name;
+});
+
+
 
 export default router

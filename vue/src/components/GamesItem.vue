@@ -51,6 +51,9 @@
 <script>
 
 import { useGameStore } from '@/stores/GameStore';
+import { useUserStore } from '@/stores/UserStore';
+
+
 export default {
 
     props: {
@@ -67,6 +70,7 @@ export default {
     data() {
         return {
             gameStore: useGameStore(),
+            userStore: useUserStore(),
             expanded: false,
             isFavorLocal: false,
         }
@@ -107,7 +111,8 @@ export default {
 
                 if(res.ok) {
                     this.gameStore.showError(data.message);
-                    this.isFavorLocal = !this.isFavorLocal; 
+                    this.isFavorLocal = !this.isFavorLocal;
+                    this.userStore.fetchFavorite() ;
                     return;
                 } else {
                     this.gameStore.showError(data.error);

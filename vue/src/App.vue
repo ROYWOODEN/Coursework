@@ -30,10 +30,13 @@ export default {
   },
 
   watch: {
-    'searchStore.searchQuery'(newVal) {
-      this.searchStore.routeName = router.currentRoute.value.name;
-      this.searchStore.setScope();
-    }
+    'searchStore.searchQuery'() {
+
+      //перенес логику отслеживания название страницы на которую я перешел в маршрутизатор 
+      // this.searchStore.routeName = router.currentRoute.value.name;
+      this.searchStore.setScope(); // это тоже можно туда но пока оставим тут хочу так
+    },
+    
   }
 
 }
