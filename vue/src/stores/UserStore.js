@@ -5,7 +5,7 @@ export const useUserStore = defineStore('UserStore', {
     state: () => ({
         MyGames: [],
 
-        isLoader: false,
+        hasGames: false, // переменая которая 
         isTag: false, // переменая для того чтобы задать условие прогрузки когда теги тоже уже будут загружены
 
 
@@ -22,7 +22,7 @@ export const useUserStore = defineStore('UserStore', {
             const gameStore = useGameStore();
 
             try {
-                this.isLoader = false; // стартуем лоадер
+                this.hasGames = false; // стартуем лоадер
                 
                 const respounse = await fetch('/gamestore/favourites/games',{
                     headers: {
@@ -44,7 +44,7 @@ export const useUserStore = defineStore('UserStore', {
                 await Promise.allSettled(tagPromises);
                 this.isTag = true;
                 if(respounse.ok) {
-                    this.isLoader = true;
+                    this.hasGames = true;
                     return;
                 }
                 else {

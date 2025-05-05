@@ -134,9 +134,6 @@ export const useGameStore = defineStore('GameStore', {
             this.token = null;
             this.fetchGames();
         },
-        updateToken() {
-            this.token = localStorage.getItem('token');
-          },
 
         showMessage(mess) {
             this.message = mess; // Устанавливаем сообщение об ошибке

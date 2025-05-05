@@ -13,7 +13,7 @@
                 Ничего не найдено по вашему запросу
             </h1>
             </main>
-            <main v-else-if="searchStore.searchResults.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-3 gap-5 !px-8 !py-3">
+            <main v-else-if="searchStore.searchResults.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-5 xl:gap-1 !px-8 !py-3">
                 <transition-group name="list" >
 
                     <games-item 
@@ -23,7 +23,9 @@
                     isFavor />
                 </transition-group>
             </main>
-            <main v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-3 gap-5 !px-8 !py-3">
+
+
+            <main v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-5 xl:gap-1 !px-8 !py-3">
                 <transition-group name="list" >
 
                     <games-item 
@@ -36,7 +38,7 @@
              
         </section>
 
-        <section v-else-if="userStore.isLoader">
+        <section v-else-if="userStore.hasGames">
                 <h1 class="text-2xl text-center !py-50 font-semibold">
                     Упс.. тут кажется пусто надо что-то добавить
                     <p class="text-purple-600 underline cursor-pointer"

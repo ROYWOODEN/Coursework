@@ -151,9 +151,11 @@ router.beforeEach( async (to, from, next) => {
 
 router.afterEach((to, from) => {
   const searchStore = useSearchStore();
+  const gameStore = useGameStore();
 
   searchStore.searchQuery = '';
   searchStore.routeName = to.name;
+  // gameStore.fetchGames(); // для дебага когда ввожу на главной в поиске что-то и там видно каточки потом перехожу на другую страницу и возращаюсь там строка поиска пуста а результат поиска есть 
 });
 
 

@@ -181,7 +181,18 @@
       goToPage(page) {
         this.currentPage = page;
       },
+    },
+
+    watch: {
+
+      // этот наблюдатель следить за строкой поиска если она изменилась тогда тригерит начальную страницу и сбрасывает её до 1
+      'searchStore.searchQuery': {
+            handler() {
+                this.currentPage = 1; 
+            }
+        },
     }
+    
   }
   </script>
   
