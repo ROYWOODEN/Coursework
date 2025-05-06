@@ -217,7 +217,7 @@ export default {
 }
 </script>
     
-<style scored lang="scss">
+<style scoped lang="scss">
 
 @use '../assets/scss/main.scss' as*;
 
