@@ -11,8 +11,8 @@ export const useGameStore = defineStore('GameStore', {
         tagsSelect: {},
 
 
-        loginDialog: true,
-        settingDialog: true,
+        loginDialog: false,
+        settingDialog: false,
         EditGameModal: true,
         loader: false,
 

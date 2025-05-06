@@ -2,17 +2,18 @@
   <section>
     <div class="dialog"
     @click="DelDialog">
-        <div class="dialog__content"
+        <div class="dialog__content text-white"
         @click.stop="">
         <div>
             <button
-        class="dialog__close-btn"
-        @click="DelDialog"
-        >
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#8A8A8A" class="bi bi-x-lg" viewBox="0 0 16 16">
-            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-            </svg>
-        </button>
+            class="dialog__close-btn"
+            @click="DelDialog"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#8A8A8A" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+            </button>
+
         <h4 class="setting__title text-white text-xl font-semibold">Настройки</h4>
         </div>
             
@@ -36,9 +37,20 @@ export default {
     },
     methods: {
         DelDialog() {
-            this.gameStore.settingDialog = !this.gameStore.settingDialog
-        }
-    }
+            this.gameStore.settingDialog = !this.gameStore.settingDialog;
+            // this.toggleBodyScroll();
+        },
+
+        toggleBodyScroll() {
+            document.body.style.overflow = this.gameStore.settingDialog ? 'hidden' : '';
+        },
+    },
+    mounted() {
+        this.toggleBodyScroll(); // Учитываем, если окно уже было открыто при монтировании
+    },
+    beforeUnmount() {
+        document.body.style.overflow = ''; // Возвращаем скролл при удалении компонента
+    },
 }
 </script>
 

@@ -94,7 +94,7 @@
     </div>
     
   </aside>
-<setting v-if="!gameStore.settingDialog" />
+    <setting v-if="gameStore.settingDialog" />
   </section>
   
   

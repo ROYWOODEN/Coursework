@@ -50,7 +50,7 @@
           class="header__auth-button text-white"
           @click="gameStore.loginDialog = !gameStore.loginDialog"
           >Войти</button>
-          <login-form v-if="!gameStore.loginDialog" />
+          <login-form v-if="gameStore.loginDialog" />
         
       </div>
 

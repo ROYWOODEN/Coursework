@@ -65,7 +65,7 @@ export default {
             this.toggleBodyScroll();
         },
         toggleBodyScroll() {
-            document.body.style.overflow = this.gameStore.loginDialog ? '' : 'hidden';
+            document.body.style.overflow = this.gameStore.loginDialog ? 'hidden' : '';
         },
         addLogUser() {
             if(!this.loginUser || !this.passUser) {
