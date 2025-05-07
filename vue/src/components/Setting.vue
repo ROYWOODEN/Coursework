@@ -128,7 +128,9 @@
   }
   </script>
   
-  <style scoped>
+  <style scoped lang="scss">
+
+  @use '../assets/scss/main.scss' as*;
   /* Базовые стили */
   .dialog {
     position: fixed;
@@ -254,7 +256,7 @@
     transform: translateY(-50%);
     width: 3px;
     height: 60%;
-    background: #8a2be2;
+    background: $color-purple;
     border-radius: 3px;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -274,7 +276,7 @@
   }
   
   .admin-link {
-    color: #8a2be2;
+    color: $color-purple;
     text-align: center;
     margin: 40px 0;
     font-size: 1.25rem;
@@ -288,7 +290,7 @@
   }
   
   .admin-link:hover {
-    color: #a45bf1;
+    color: $color-purple;
     transform: scale(1.02);
   }
   
