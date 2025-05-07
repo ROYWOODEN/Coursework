@@ -1,7 +1,5 @@
 <template>
-    <transition name="modal">
       <div 
-        v-if="gameStore.settingDialog" 
         class="dialog" 
         @click.self="DelDialog"
       >
@@ -78,7 +76,6 @@
           </div>
         </main>
       </div>
-    </transition>
   </template>
   
   <script>
@@ -141,103 +138,119 @@
     align-items: center;
     z-index: 1000;
     backdrop-filter: blur(4px);
+
+
+        &__content {
+        position: relative;
+        background-color: #242424;
+        border-radius: 12px;
+        width: 55%;
+        max-height: 80vh;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        
+        &__close-btn {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.3s ease;
+
+            &:hover {
+                transform: rotate(90deg);
+            }
+            &:hover svg {
+                fill: #fff;
+            }
+        }
   }
   
-  .dialog__content {
-    position: relative;
-    background-color: #242424;
-    border-radius: 12px;
-    width: 55%;
-    max-height: 80vh;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-  }
+
   
-  .dialog__close-btn {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.3s ease;
-  }
-  
-  .dialog__close-btn:hover {
-    transform: rotate(90deg);
-  }
-  
-  .dialog__close-btn:hover svg {
-    fill: #fff;
-  }
   
   /* Стили контента */
-  .setting__header {
-    padding: 20px 24px 0;
+
+  .setting {
+
+
+        &__header {
+        padding: 20px 24px 0;
+    }
+
+    &__title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: white;
+        margin: 0;
+    }
+
+    &__container {
+        display: flex;
+        height: 100%;
+        padding: 50px 0;
+    }
+
+    &__sidebar {
+        width: 220px;
+        padding: 0 16px;
+    }
+
+
+    &__content {
+        flex: 1;
+        padding: 0 24px 24px;
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Пункты меню */
+
+    &__menu-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        color: rgba(255, 255, 255, 0.7);
+
+
+
+            &:hover {
+                background-color: rgba(138, 138, 138, 0.1);
+                color: white;
+                transform: translateX(5px);
+
+                    & .menu-icon {
+                        transform: scale(1.1);
+                    }
+            }
+
+            &.active {
+                background-color: rgba(138, 138, 138, 0.2);
+                color: white;
+                font-weight: 500;
+
+                & .menu-icon {
+                    filter: brightness(0) saturate(100%) invert(50%) sepia(51%) saturate(2878%) hue-rotate(226deg) brightness(104%) contrast(97%);
+                }
+
+                .active-indicator {
+                    opacity: 1;
+                }
+            }
+    }
   }
   
-  .setting__title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: white;
-    margin: 0;
-  }
   
-  .setting__container {
-    display: flex;
-    height: 100%;
-    padding: 20px 0;
-  }
-  
-  .setting__sidebar {
-    width: 220px;
-    padding: 0 16px;
-  }
-  
-  .setting__content {
-    flex: 1;
-    padding: 0 24px 24px;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  /* Пункты меню */
-  .setting__menu-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 16px;
-    margin-bottom: 8px;
-    border-radius: 8px;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    color: rgba(255, 255, 255, 0.7);
-  }
-  
-  .setting__menu-item:hover {
-    background-color: rgba(138, 138, 138, 0.1);
-    color: white;
-    transform: translateX(5px);
-  }
-  
-  .setting__menu-item:hover .menu-icon {
-    transform: scale(1.1);
-  }
-  
-  .setting__menu-item.active {
-    background-color: rgba(138, 138, 138, 0.2);
-    color: white;
-    font-weight: 500;
-  }
-  
-  .setting__menu-item.active .menu-icon {
-    filter: brightness(0) saturate(100%) invert(50%) sepia(51%) saturate(2878%) hue-rotate(226deg) brightness(104%) contrast(97%);
-  }
-  
-  .setting__menu-item.active .active-indicator {
-    opacity: 1;
-  }
-  
+
+
+
   .menu-icon {
     width: 24px;
     height: 24px;
@@ -266,14 +279,16 @@
   .tab-content {
     padding: 16px 0;
     min-height: 300px;
+
+        & h5 {
+            font-size: 1.25rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: white;
+        }
   }
   
-  .tab-content h5 {
-    font-size: 1.25rem;
-    margin-top: 0;
-    margin-bottom: 20px;
-    color: white;
-  }
+
   
   .admin-link {
     color: $color-purple;
@@ -287,29 +302,15 @@
     background: none;
     border: none;
     padding: 0;
+
+        &:hover {
+            transform: scale(1.02);
+        }
   }
   
-  .admin-link:hover {
-    color: $color-purple;
-    transform: scale(1.02);
-  }
+
   
   /* Анимации */
-  .modal-enter-active,
-  .modal-leave-active {
-    transition: all 0.3s ease;
-  }
-  
-  .modal-enter-from,
-  .modal-leave-to {
-    opacity: 0;
-  }
-  
-  .modal-enter-from .dialog__content,
-  .modal-leave-to .dialog__content {
-    transform: scale(0.95);
-    opacity: 0;
-  }
   
   .fade-slide-enter-active,
   .fade-slide-leave-active {
