@@ -95,7 +95,7 @@
               menuItems: [
                   { title: 'Тема', svg: '/SVG/brilliance.svg' },
                   { title: 'Язык', svg: '/SVG/translate.svg' },
-                  { title: 'Безопасность', svg: '/SVG/shield-shaded.svg' },
+                  { title: 'Безопасноть', svg: '/SVG/shield-shaded.svg' },
               ],
           }
       },
