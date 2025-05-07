@@ -127,7 +127,7 @@ export default {
     top: 0;
     left: 0;
     width: 20%;
-    background-color: rgba(138, 138, 138, 8%);
+    background-color: $color-grey-aside-fon;
     height: 100%;
   }
 
