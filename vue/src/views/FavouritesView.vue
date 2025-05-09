@@ -86,7 +86,7 @@ export default {
         
     },
     mounted() {
-        this.searchStore.setScope();
+
     },
     async created() {
         

@@ -2,6 +2,8 @@
   <section>
     <router-view />
     <Notification ></Notification>
+    <loginForm v-if="gameStore.loginDialog" />
+    <setting v-if="gameStore.settingDialog" />
   </section>
  
 </template>
@@ -10,12 +12,14 @@
 import HomeView from '@/views/HomeView.vue'
 import Notification from './components/Notification.vue';
 
+
 import { useGameStore } from '@/stores/GameStore';
 import { useSearchStore } from './stores/SearchStore';
-import router from './router';
+import LoginForm from './components/LoginForm.vue';
+import Setting from './components/Setting.vue';
  
 export default {
-  components: { HomeView, Notification },
+  components: { HomeView, Notification, LoginForm, Setting },
   data() {
     return {
       gameStore: useGameStore(),

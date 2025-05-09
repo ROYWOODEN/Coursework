@@ -94,7 +94,8 @@
     </div>
     
   </aside>
-    <setting v-if="gameStore.settingDialog" />
+
+
   </section>
   
   
@@ -180,6 +181,14 @@ export default {
       &:hover {
         background-color: $color-red-exit-hover;
       }
+  }
+
+
+
+  @media (width <= 768px) {
+    aside {
+      display: none;
+    }
   }
 
 </style>
