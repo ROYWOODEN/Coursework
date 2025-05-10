@@ -5,18 +5,20 @@
 
 
 
-    <button class="flex justify-center !ps-3">
-        <svg class="w-10" xmlns="http://www.w3.org/2000/svg" height="50px" viewBox="0 -960 960 960" width="50px" fill="#A100ED"><path d="M120-240v-60h720v60H120Zm0-210v-60h720v60H120Zm0-210v-60h720v60H120Z"/></svg>
-      </button>
+    <!-- <button class="flex justify-center !ps-3">
+        
+      </button> -->
+
+      <div @click="OpenMenu" class="burger">
+        <span :class="{'active' : isActive}"></span>
+      </div>
 
       <div class="flex justify-center w-20">
         <img class="" src="/Sitebar/logo.svg" alt="">
-
       </div>
 
 
 
-      <main>
                 <div 
             v-if="gameStore.user"
             class=" flex flex-row justify-around items-center">
@@ -39,7 +41,6 @@
                 >Войти</button>
                 
             </div>
-      </main>
 
   </header>
 </template>
@@ -52,7 +53,14 @@ export default {
     data() {
         return {
             gameStore: useGameStore(),
+            isActive: false,
         }
+    },
+
+    methods: {
+      OpenMenu() {
+        this.isActive = !this.isActive;
+      }
     }
 }
 </script>
@@ -111,6 +119,62 @@ export default {
 
 
 
+    .burger {
+      position: relative;
+      width: 30px;
+      height: 28px;
+      cursor: pointer;
+
+          & span, 
+          & span::before, 
+          & span::after {
+            width: 100%;
+            position: absolute;
+            height: 5px;
+            background: $color-purple;
+            display: block;
+            transition: all 300ms ease;
+            border-radius: 2px;
+          }
+
+
+          & span {
+            top: 10px;
+            
+            &::before {
+              content: '';
+              top: -10px;
+              transition: top 200ms 200ms, transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
+            }
+            &::after {
+              content: "";
+              bottom: -10px;
+              transition: bottom 200ms 200ms, transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
+            }
+          }
+
+        
+      
+        & span.active {
+          background: transparent;
+
+
+            &::before {
+              content: '';
+              top: 0;
+              transform: rotate(45deg);
+              background: $color-red-exit;
+              transition: top 200ms, transform 200ms 200ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+            &::after {
+              content: "";
+              bottom: 0;
+              transform: rotate(-45deg);
+              background: $color-red-exit;
+              transition: bottom 200ms, transform 200ms 200ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+        }
+    }
     
 
     
