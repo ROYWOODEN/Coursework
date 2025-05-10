@@ -5,12 +5,8 @@
 
 
 
-    <!-- <button class="flex justify-center !ps-3">
-        
-      </button> -->
-
-      <div @click="OpenMenu" class="burger">
-        <span :class="{'active' : isActive}"></span>
+      <div @click="UIStore.toggleMobileMenu" class="burger">
+        <span :class="{'active' : UIStore.isMobileMenuOpen}"></span>
       </div>
 
       <div class="flex justify-center w-20">
@@ -34,7 +30,7 @@
 
             <div 
             v-else
-            class="flex justify-center mobile-header__auth-login">
+            class="flex justify-center mobile-header__auth-login text-sm">
                 <button
                 class="text-white mobile-header__auth-login-btn"
                 @click="gameStore.loginDialog = !gameStore.loginDialog"
@@ -48,19 +44,19 @@
 <script>
 
 import { useGameStore } from '@/stores/GameStore';
+import { useUIStore } from '@/stores/UIStore';
 
 export default {
     data() {
         return {
             gameStore: useGameStore(),
+            UIStore: useUIStore(),
             isActive: false,
         }
     },
 
     methods: {
-      OpenMenu() {
-        this.isActive = !this.isActive;
-      }
+      
     }
 }
 </script>
