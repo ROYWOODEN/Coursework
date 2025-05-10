@@ -1,6 +1,11 @@
 <template>
-  <section>
-    <aside class="flex flex-col fixed justify-between">
+
+
+<section>
+    <mobile-sitebar v-if="UIstore.isMobile" />
+
+
+    <aside v-else class="aside flex flex-col fixed justify-between">
     <div class="flex justify-center">
       <a href="/"><img class="aside__logo-img" src="/Sitebar/logo.svg" alt=""></a>
     </div>
@@ -94,9 +99,9 @@
     </div>
     
   </aside>
+</section>
+    
 
-
-  </section>
   
   
 </template>
@@ -104,13 +109,17 @@
 <script>
 
 import { useGameStore } from '@/stores/GameStore';
+import { useUIStore } from '@/stores/UIStore';
+
 import Setting from './Setting.vue';
+import MobileSitebar from './MobileSitebar.vue';
 
 export default {
-  components: { Setting },
+  components: { Setting, MobileSitebar },
     data() {
       return {
         gameStore: useGameStore(),
+        UIstore: useUIStore(),
       }
     },
     methods: {
@@ -123,7 +132,7 @@ export default {
   @use '../assets/scss/main.scss' as*;
 
 
-  aside {
+  .aside {
     padding-top: 10px;
     top: 0;
     left: 0;
@@ -185,10 +194,5 @@ export default {
 
 
 
-  @media (width <= 768px) {
-    aside {
-      display: none;
-    }
-  }
 
 </style>

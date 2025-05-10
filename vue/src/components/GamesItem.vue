@@ -1,5 +1,5 @@
 <template>
-    <div class="flex !px-3 !py-3">
+    <div class="flex !px-1 !py-1 md:!px-3 md:!py-3">
         <div class="w-full md:max-w-90 xl:max-w-150 hover:-translate-y-2 rounded-xl overflow-hidden game-card flex flex-col justify-between">
             <img class="w-full" :src="game.image" alt="Упс.. Кажется что-то пошло не так :(">
             <div class="!px-6 !py-4">

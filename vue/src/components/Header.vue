@@ -125,7 +125,6 @@ import MobileHeader from './MobileHeader.vue';
     }
     &__search-input {
       background-color: $color-black-fon-panel;
-      /* font-size: 16px; */
       width: 400px;
       padding: 15px;
       border: none;
@@ -183,13 +182,6 @@ import MobileHeader from './MobileHeader.vue';
     }
   }
 
-
-  @media (width <= 768px) {
-
-
-
-
-  }
   
 
 

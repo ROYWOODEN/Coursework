@@ -22,6 +22,7 @@ export const useUIStore = defineStore('UIStore', {
         // эта функция открывает и закрывает бургер меню
         toggleMobileMenu() {
             this.isMobileMenuOpen = !this.isMobileMenuOpen;
+            document.body.style.overflow = this.isMobileMenuOpen ? 'hidden' : '';
         }
     },
 
