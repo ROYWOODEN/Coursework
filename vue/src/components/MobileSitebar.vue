@@ -11,6 +11,7 @@
 
     <div class="mobile-sitebar__search flex flex-row justify-center !py-3 text-sm text-white">
         <input
+        @keyup.enter="UIStore.toggleMobileMenu"
           class="mobile-sitebar__search-input"
           type="search"
           v-model="searchStore.searchQuery"
