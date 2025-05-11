@@ -4,6 +4,7 @@ import DeleteGameView from '@/views/DeleteGameView.vue'
 import HomeView from '@/views/HomeView.vue'
 import RegView from '@/views/RegView.vue'
 import FavouritesView from '@/views/FavouritesView.vue'
+import BasketView from '@/views/BasketView.vue'
 
 
 import { createRouter, createWebHistory } from 'vue-router'
@@ -54,6 +55,11 @@ const router = createRouter({
           component: DeleteGameView,
         }
       ]
+    },
+    {
+      path: '/basket',
+      name: 'basket',
+      component: BasketView,
     },
 
     {

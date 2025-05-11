@@ -52,6 +52,7 @@
 
 import { useGameStore } from '@/stores/GameStore';
 import { useUserStore } from '@/stores/UserStore';
+import { useRoute } from 'vue-router';
 
 
 export default {
@@ -71,6 +72,7 @@ export default {
         return {
             gameStore: useGameStore(),
             userStore: useUserStore(),
+            route: useRoute(),
             expanded: false,
             isFavorLocal: false,
         }
@@ -166,7 +168,9 @@ export default {
         'gameStore.token': {
             immediate: true,
             handler() {
-            this.fetchFavoritCheck();
+            if (this.route.name !== 'favourites') {
+                this.fetchFavoritCheck();
+            }
             }
         }
     },

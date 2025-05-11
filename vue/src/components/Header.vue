@@ -33,7 +33,9 @@
       <div 
       v-if="gameStore.user"
       class="header__auth-log flex flex-row justify-around items-center">
-      <div class="!p-3 rounded-full header__auth-svg-fon">
+      <div 
+      @click="router.push('/basket')"
+      class="!p-3 rounded-full header__auth-svg-fon">
         <basket-icon :classSVG="'header__auth-svg'" />
       </div>
       
@@ -70,6 +72,8 @@
 import { useGameStore } from '@/stores/GameStore';
 import { useSearchStore } from '@/stores/SearchStore';
 import { useUIStore } from '@/stores/UIStore';
+import { useRouter } from 'vue-router';
+
 import MobileHeader from './MobileHeader.vue';
 import BasketIcon from './icons/BasketIcon.vue';
 
@@ -81,6 +85,7 @@ import BasketIcon from './icons/BasketIcon.vue';
         gameStore: useGameStore(),
         searchStore: useSearchStore(),
         UIStore: useUIStore(),
+        router: useRouter(),
         }
     },
 
