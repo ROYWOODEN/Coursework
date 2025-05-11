@@ -144,7 +144,7 @@ export default {
   &.active-overlay {
     opacity: 1;
     visibility: visible;
-    z-index: 1; // Можно оставить 0, если нужно чтобы сайдбар был поверх
+    z-index: 1; 
   }
 }
 
@@ -152,7 +152,6 @@ export default {
 
 
 .mobile-sitebar {
-  position: fixed;
   top: 60px;
   left: -100%;
   width: 75%;
