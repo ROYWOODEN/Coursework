@@ -1,7 +1,7 @@
 <template>
 
     
-  <header class="mobile-header flex flex-row w-full justify-between items-center !px-8">
+  <header class="mobile-header flex flex-row w-full justify-around items-center ">
 
 
 
@@ -81,7 +81,7 @@ export default {
             
             &-btn {
                 background-color: $color-purple;
-                padding: 10px 15px;
+                padding: 8px 10px;
                 border: none;
                 border-radius: 8px;
                 cursor: pointer;
