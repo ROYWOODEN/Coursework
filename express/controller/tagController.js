@@ -22,6 +22,6 @@ exports.addTag = (req, res) => {
             console.error('Ошибка добавления тега');
             return res.status(500).json({ error: 'Ошибка добавления тега' });
         }
-        res.json({ message: "Тег были успешно добавлены!" });
+        res.json({ message: "Тег был успешно добавлен!" });
     });
 }

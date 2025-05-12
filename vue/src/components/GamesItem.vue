@@ -38,8 +38,14 @@
                     </svg>
                 </div>
                     
-                    <button type="button" class="game-card__button"
-                    >В корзину</button>
+                    <button
+                    @click="toggleBasket"
+                    type="button" 
+                    class="game-card__button"
+                    :class="{'ActiveBtn' : isBasketLocal}"
+                    >
+                    {{ isBasketLocal ? 'В корзине' : 'В корзину' }}
+                    </button>
                 </div>
             </div>
         </div>
@@ -66,6 +72,11 @@ export default {
             type: Boolean,
             required: true,
         },
+        isBasket: {
+            type: Boolean,
+            default: false,
+            // required: true,
+        },
     },
 
     data() {
@@ -75,6 +86,7 @@ export default {
             route: useRoute(),
             expanded: false,
             isFavorLocal: false,
+            isBasketLocal: false,
         }
     },
     computed: {
@@ -83,10 +95,21 @@ export default {
         }
     },
     async mounted() {
-        if(this.isFavor != false) {
+
+        if(!this.gameStore.token) {
+            return;
+        }
+
+        if(this.isFavor) {
             this.isFavorLocal = true;
         }  else {
             await this.fetchFavoritCheck();
+        }
+        if(this.isBasket) {
+            this.isBasketLocal = this.isBasket;
+        } else {
+            await  this.fetchBasketCheck();
+            
         }
         
     },
@@ -161,7 +184,46 @@ export default {
                     this.isFavorLocal = data.isFavor;
                 }
 
+            },
+            async fetchBasketCheck() {
+
+            try{
+                const response = await fetch(`/gamestore/basket/check/${this.game.id_game}`, {
+                    headers: {
+                        'Authorization': `Bearer ${this.gameStore.token}`,
+                    }
+                });
+                const data = await response.json();
+                
+                if(response.ok) {
+                    this.isBasketLocal = data.isBasket;
+                }
+
+
+            }   catch(err) {
+
             }
+        },
+
+            async toggleBasket() {
+                if(!this.gameStore.token) {
+                    this.gameStore.showError('Пожалуйста авторизуйтесь');
+                    this.gameStore.loginDialog = true;
+                    return;
+                }
+
+                if(this.isBasketLocal) {
+                    await this.userStore.fetchDelBasket(this.game.id_game);
+                    this.userStore.fetchBasket();
+                    this.isBasketLocal = false;
+                }   else {
+                    await this.userStore.fetchAddBasket(this.game.id_game);
+                    this.isBasketLocal = true;
+                }
+
+
+            },
+
     },
 
     watch: {
@@ -246,6 +308,15 @@ export default {
     padding: 10px 10px 10px 10px;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.ActiveBtn {
+    background-color: $color-red-exit;
+    
+    &:hover {
+        background-color: $color-red-btn-hover;
+        
+        }
 }
 
 

@@ -16,6 +16,7 @@ const tagRoutes = require('./routes/tags');
 const userRoutes = require('./routes/user');
 const adminRoutes = require('./routes/admin');
 const searchRoutes = require('./routes/search');
+const basketRoutes = require('./routes/basket');
 
 
 app.use('/gamestore', gameRoutes);
@@ -23,6 +24,7 @@ app.use('/gamestore', tagRoutes);
 app.use('/gamestore', adminRoutes);
 app.use('/gamestore', userRoutes);
 app.use('/gamestore', searchRoutes);
+app.use('/gamestore', basketRoutes);
 
 
 

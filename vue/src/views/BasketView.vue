@@ -2,13 +2,13 @@
     <section class="content text-white">
         <Header />
         <Sidebar />
-        <Basket />
+        <Basket class="!mb-24" />
 
         <main class="basket-content fixed bottom-0 left-[20%] right-0 !p-7 flex flex-row justify-between items-center">
 
                 <div class="flex justify-start">
-                    <h2 class="text-3xl font-serif">
-                        Итого: {{ totalPrice }}
+                    <h2 class="text-3xl font-mono">
+                        Итого: ${{ totalPrice }}
                     </h2>
                 </div>
     
@@ -49,6 +49,10 @@ export default {
             userStore: useUserStore(),
         }
     },
+    mounted() {
+        this.userStore.fetchBasket();
+
+    },
 
     methods: {
 
@@ -56,9 +60,9 @@ export default {
 
     computed: {
         totalPrice() {
-            if (!this.gameStore.games?.length) return '0.00';
+            if (!this.userStore.BasketGames.length) return '0.00';
 
-            const sum = this.gameStore.games.reduce((total, game) => {
+            const sum = this.userStore.BasketGames.reduce((total, game) => {
                 const price = parseFloat(game.price);
                 return total + price;
             }, 0);
