@@ -18,7 +18,37 @@
             
         <main v-if="gameStore.editGames && Object.keys(gameStore.editGames).length > 0">
             <div class="flex flex-row" >
-                <img :src="gameStore.editGames.image" alt="Game Image" class="w-100 rounded-3xl !me-3" />
+                
+
+
+
+                <!-- Обертка для изображения с hover эффектом -->
+                <div class="relative image-wrapper !me-4">
+                <img 
+                    :src="gameStore.editGames.image" 
+                    alt="Game Image" 
+                    class="w-100 rounded-3xl !me-3"
+                />
+                <div class="image-overlay rounded-3xl">
+                    <button 
+                    class="change-image-btn"
+                    @click="triggerFileInput"
+                    >
+                    Изменить изображение
+                    </button>
+                </div>
+                <input 
+                    type="file" 
+                    ref="fileInput"
+                    accept="image/*"
+                    @change="handleImageChange"
+                    class="hidden"
+                />
+                </div>
+
+
+
+                
                 <textarea
                 class="text-white" 
                 name="" 
@@ -131,6 +161,7 @@ export default {
             OrigPrice: '',
             OrigTag: [],
             selectTag: ['', '', ''],
+            newImage: null,
         }
     },
     methods: {
@@ -145,7 +176,6 @@ export default {
             this.toggleBodyScroll();
         },
         async fetchEdit() {
-            // this.fetchGameEdit(this.gameStore.EditID);
             if (this.gameStore.EditID) {
             await this.gameStore.fetchGameEdit(this.gameStore.EditID);
 
@@ -170,7 +200,7 @@ export default {
         },
         async fetchGameUpdate(id) {
 
-            if (this.title === this.OrigTitle && this.description === this.OrigDescription && this.price === this.OrigPrice && (this.selectTag[0] === this.OrigTag[0] && this.selectTag[1] === this.OrigTag[1] && this.selectTag[2] === this.OrigTag[2])) {
+            if (this.title === this.OrigTitle && this.description === this.OrigDescription && this.price === this.OrigPrice && !this.newImage && (this.selectTag[0] === this.OrigTag[0] && this.selectTag[1] === this.OrigTag[1] && this.selectTag[2] === this.OrigTag[2])) {
                 console.log("Данные не изменены, запрос не отправляется!");
                 this.gameStore.showError('Вы не внесли изменений!');
                 return;
@@ -185,16 +215,21 @@ export default {
             } 
 
 
+
+
+            const formData = new FormData();
+
+            formData.append('title', this.title);
+            formData.append('description', this.description);
+            formData.append('price', this.price);
+            if (this.newImage) {
+            formData.append('image', this.newImage);
+            }
+
+
             const response = await fetch(`/gamestore/admin/edit/${id}`,{
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify({
-                    title: this.title,
-                    description: this.description,
-                    price: this.price,
-                }),
+                body: formData,
             });
             if (response.ok) {
             const result = await response.json();
@@ -206,7 +241,9 @@ export default {
                 this.gameStore.showError('Кажется - что-то пошло не так :(');
             };
             
-            
+            if(this.selectTag[0] === this.OrigTag[0] && this.selectTag[1] === this.OrigTag[1] && this.selectTag[2] === this.OrigTag[2]) {
+                return;
+            }
             this.fetchTagsEdit(id);
 
         },
@@ -245,7 +282,22 @@ export default {
                 this.gameStore.showError('Ошибка при обновлении тегов');
                 console.error('Ошибка при обновлении тегов:', error);
             }
-        }
+        },
+
+        handleImageChange(event) {
+            this.newImage = event.target.files[0];
+
+            if(this.newImage) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.querySelector('.image-wrapper img').src = e.target.result;
+                }
+                reader.readAsDataURL(this.newImage);
+            }
+        },
+         triggerFileInput() {
+            this.$refs.fileInput.click();
+        },
 
     },
     created() {
@@ -338,6 +390,59 @@ export default {
     padding: 2%;
     /* margin-top: 20px; */
     border-radius: 30px;
+}
+
+
+
+
+
+
+
+
+/* Стили для обертки изображения */
+.image-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  
+  &:hover .image-overlay {
+    opacity: 1;
+  }
+}
+
+/* Стили для оверлея */
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Стили для кнопки изменения изображения */
+.change-image-btn {
+  background-color: $color-purple;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  font-family: Inter-Medium;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: $color-purple-hover;
+  }
+}
+
+.hidden {
+  display: none;
 }
 
 

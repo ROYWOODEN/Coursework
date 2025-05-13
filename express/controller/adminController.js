@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const path = require('path');
 
 
 // Запрос на получения конкретной игры для редактирования
@@ -47,9 +48,18 @@ exports.EditGames = (req, res) => {
 
     const { title, description, price } = req.body;
 
-    const query = "UPDATE games SET title = ?, description = ?, price = ? WHERE id_game = ?";
 
-    db.query(query, [title, description, price, id_game], (err, result) => {
+    const file = req.file;
+
+
+
+    const imagePath = file.path.replace(/^.*?(images)/, '/$1').replace(/\\/g, '/');
+
+
+
+    const query = "UPDATE games SET title = ?, description = ?, price = ?, image = ? WHERE id_game = ?";
+
+    db.query(query, [title, description, price, imagePath, id_game], (err, result) => {
         if (err) {
             console.error('Ошибка при обновлении игры:', err);
             return res.status(500).json({ message: 'Ошибка сервера при обновлении данных' });
