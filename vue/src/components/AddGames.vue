@@ -32,8 +32,10 @@
                         <label for="game-img" class="add-game-panel__label text-lg">Путь к фото:</label>
                         <input 
                         id="game-img"
-                        v-model="gameImage"
-                        type="text"
+                        accept="image/*"
+                        @change="handleFileUpload"
+                        type="file"
+                        ref="fileInput"
                         required
                         placeholder="Укажите путь к изображению"
                         class="add-game-panel__input">
@@ -127,7 +129,7 @@ export default {
         return {
             gameTitle: '',
             gameDescription: '',
-            gameImage: '',
+            gameImage: null,
             gamePrice: '',
             gameTags: ['','', ''],
             NewTag: '',
@@ -146,19 +148,24 @@ export default {
                 return;
             }
 
+
+
+
+            const formData = new FormData();
+
+
+            formData.append('title', this.gameTitle);
+            formData.append('description', this.gameDescription);
+            formData.append('price', this.gamePrice);
+            formData.append('image', this.gameImage);
+            this.gameTags.forEach((tag) => {
+                if (tag) formData.append('tags[]', tag);
+            });
+
         // Отправка данных на сервер
             const response = await fetch("/gamestore/addGame", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json;charset=utf-8",
-            },
-            body: JSON.stringify({
-                title: this.gameTitle,
-                description: this.gameDescription,
-                image: this.gameImage,
-                price: this.gamePrice,
-                tags: this.gameTags,
-            }),
+            body: formData,
             });
 
             const result = await response.json();
@@ -168,7 +175,8 @@ export default {
         this.gameStore.showMessage(result.message);
         this.gameTitle = "";
         this.gameDescription = "";
-        this.gameImage = "";
+        this.$refs.fileInput.value = null;
+        this.gameImage = null;
         this.gamePrice = "";
         this.gameTags = ['', '', ''];
 
@@ -210,6 +218,10 @@ export default {
             }
             
         },
+        handleFileUpload(event) {
+            this.gameImage = event.target.files[0];
+            console.log(this.gameImage);
+        }
     },
     async mounted() {
         this.gameStore.fetchTags();

@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const path = require('path');
 
 exports.getAllGames = (req, res) => {
     db.query("SELECT * FROM games", (err, results) => {
@@ -12,11 +13,23 @@ exports.getAllGames = (req, res) => {
 },
 
 exports.AddGames = (req, res) => {
-    const { title, description, price, image, tags } = req.body;
+    const { title, description, price, tags } = req.body;
+
+    const file = req.file;
+
+    if(!file) {
+         return res.status(400).json({ error: "Файл не был загружен" });
+    }
+
+//    const imagePath = path.relative(__dirname, file.path);
+
+const imagePath = file.path.replace(/^.*?(images)/, '/$1').replace(/\\/g, '/');
+
+    console.log(imagePath);
 
     const query = "INSERT INTO games (title, description, price, image) VALUES (?, ?, ?, ?)";
 
-    db.query(query, [title, description, price, image], (err, result) => {
+    db.query(query, [title, description, price, imagePath], (err, result) => {
         if (err) {
             console.error("Ошибка при добавлении Игр:", err);
             return res.status(500).json({ error: "Ошибка сервера" });
