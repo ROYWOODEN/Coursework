@@ -108,7 +108,7 @@ export default {
         if(this.isBasket) {
             this.isBasketLocal = this.isBasket;
         } else {
-            await  this.fetchBasketCheck();
+            await this.fetchBasketCheck();
             
         }
         
@@ -197,11 +197,15 @@ export default {
                 
                 if(response.ok) {
                     this.isBasketLocal = data.isBasket;
+                }   else {
+                    console.error('Ошибка от сервера:', data);
+                    this.gameStore.showError(data.error);
                 }
-
-
+                
+                
             }   catch(err) {
-
+                console.error('Ошибка сети или запроса:', err);
+                this.gameStore.showError(data.error);
             }
         },
 

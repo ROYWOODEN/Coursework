@@ -82,7 +82,8 @@ export const useUserStore = defineStore('UserStore', {
                 }
 
             }   catch(error) {
-
+                console.error('Ошибка от сервера при получении корзины:', error);
+                gameStore.showError('Ошибка сети или сервера. Попробуй позже.');
             }
         },
 
@@ -106,7 +107,8 @@ export const useUserStore = defineStore('UserStore', {
                 }
 
             }   catch(error) {
-
+                console.error('Ошибка от сервера при получении корзины:', error);
+                gameStore.showError('Ошибка сети или сервера. Попробуй позже.');
             }
         },
 
@@ -142,8 +144,9 @@ export const useUserStore = defineStore('UserStore', {
                 }
 
 
-            }   catch(err) {
-
+            }   catch(error) {
+                console.error('Ошибка от сервера при получении корзины:', error);
+                gameStore.showError('Ошибка сети или сервера. Попробуй позже.');
             }
         },
 
