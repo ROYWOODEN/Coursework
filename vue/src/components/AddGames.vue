@@ -188,7 +188,7 @@ export default {
         },
         async fetchAddTags() {
             try {
-                if(this.NewTag === ''){
+                if(this.NewTag.trim(this.NewTag) === ''){
                 this.gameStore.showError('Прошу введите название тега!');
                 return;
             }
