@@ -17,12 +17,16 @@
               </transition-group>
     </div>
 
-    <main v-else-if="userStore.BasketGames == 0">
+    <main v-else-if="userStore.isLoading">
         <h1 class="text-xl md:text-2xl text-center !py-50 font-semibold">
                     Упс.. тут кажется пусто надо что-то добавить
               <p class="text-purple-600 underline cursor-pointer"
               @click="router.push('/')">Перейти на главную</p>
         </h1>
+    </main>
+
+    <main v-else>
+      <div class="loader"></div>
     </main>
 
   </section>

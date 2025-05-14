@@ -3,12 +3,13 @@ import { useGameStore } from './GameStore';
 
 export const useUserStore = defineStore('UserStore', {
     state: () => ({
-        MyGames: [],
-        BasketGames: [],
+        MyGames: [], // массив игр в избранных
+        BasketGames: [], // массив игр в корзине
 
-        hasGames: false, // переменая которая 
+        hasGames: false, // переменая тоже самое что и isLoading ниже
         isTag: false, // переменая для того чтобы задать условие прогрузки когда теги тоже уже будут загружены
 
+        isLoading: false, // хз как пояснить но она пока она отрицательна (фолс) будет крутить лоадер в корзине когда тру (при условии что корзина пуста) будет показывать блок нужный если же не пуста то там игры покажутся
 
     }),
 
@@ -116,6 +117,8 @@ export const useUserStore = defineStore('UserStore', {
 
             const gameStore = useGameStore();
 
+            this.isLoading = false;
+
             try {
 
                 const response = await fetch('/gamestore/basket', {
@@ -139,6 +142,8 @@ export const useUserStore = defineStore('UserStore', {
                 );
                 
                 await Promise.allSettled(tagPromises);
+                this.isLoading = true;
+
                 }   else {
                     gameStore.showError(data.error);
                 }

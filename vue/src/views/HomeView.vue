@@ -20,7 +20,7 @@
           
   
           
-          <div class="flex flex-row justify-center !my-20 items-center gap-2"
+          <div class="flex flex-wrap justify-center !my-20 items-center gap-2"
           v-if="totalPages > 1"
           >
 
