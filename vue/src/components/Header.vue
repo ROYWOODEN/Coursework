@@ -3,7 +3,7 @@
   <section>
     <mobile-header v-if="UIStore.isMobile" />
 
-    <header v-else class="header flex flex-row justify-around items-center text-xl">
+    <header v-else class="header flex flex-row justify-around items-center text-base lg:text-xl">
 
       
       
@@ -14,9 +14,9 @@
         <router-link class="header__nav-link" to="/popular" active-class="header-active">Популярное</router-link>
         <router-link class="header__nav-link" to="/new" active-class="header-active">Новинки</router-link>
       </nav>
-      <div class="header__search text-base text-white">
+      <div class="header__search text-sm lg:text-base text-white">
         <input
-          class="header__search-input"
+          class="header__search-input w-full xl:w-100"
           type="search"
           v-model="searchStore.searchQuery"
           id="search"
@@ -35,18 +35,18 @@
       class="header__auth-log flex flex-row justify-around items-center">
       <div 
       @click="router.push('/basket')"
-      class="!p-3 rounded-full header__auth-svg-fon">
+      class="!p-3 rounded-full header__auth-svg-fon !me-2 lg:!me-1">
         <basket-icon :classSVG="'header__auth-svg'" />
       </div>
       
         <div class="flex flex-row items-center">
-          <div class="w-13">
+          <div class="w-10 lg:w-13">
             <img
             :src="gameStore.user.avatar" alt=""
             class="w-full rounded-full object-cover">
           </div>
           <p
-          class="text-white !ps-5"
+          class="text-white font-bold !ps-3 lg:!ps-5"
           >{{ gameStore.user.name }}</p>
         </div>
         
@@ -130,7 +130,7 @@ import BasketIcon from './icons/BasketIcon.vue';
     }
     &__search-input {
       background-color: $color-black-fon-panel;
-      width: 400px;
+      // width: 400px;
       padding: 15px;
       border: none;
       border-radius: 40px;

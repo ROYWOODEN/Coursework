@@ -6,7 +6,7 @@
             <div :class="{ 'is-loaded': isLoadet }" class="game_card w-full md:max-w-90 xl:max-w-150 hover:-translate-y-2 rounded-xl overflow-hidden game-card flex flex-col justify-between">
                 <img class="w-full" @load="onImageLoad" :src="game.image" alt="Упс.. Кажется что-то пошло не так :(">
                 <div class="!px-6 !py-4">
-                    <div class="text-xl mb-2 game-card__title">{{ game.title }} </div>
+                    <div class="text-lg lg:text-xl mb-2 game-card__title">{{ game.title }} </div>
 
                     <p class="game-card__info text-base"
                     :class="{ 'game-card__info-active': expanded}">
@@ -28,7 +28,7 @@
                     class="inline-block game-card__tag rounded-lg !px-3 !py-1 text-sm font-semibold !mr-2 !mt-2"># {{ tag.name }}</span>
                 </div>
                 <div class="flex justify-between items-center !px-10 !py-5">
-                    <div class="game-card__price text-2xl font-medium">${{ game.price }}</div>
+                    <div class="game-card__price text-lg lg:text-2xl font-medium">${{ game.price }}</div>
                     <div class="flex flex-row items-center">
                     <div 
                     @click="DelFavouritesGames(game.id_game)" 

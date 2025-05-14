@@ -18,7 +18,7 @@
     </div>
 
     <main v-else-if="userStore.BasketGames == 0">
-        <h1 class="text-2xl text-center !py-50 font-semibold">
+        <h1 class="text-xl md:text-2xl text-center !py-50 font-semibold">
                     Упс.. тут кажется пусто надо что-то добавить
               <p class="text-purple-600 underline cursor-pointer"
               @click="router.push('/')">Перейти на главную</p>

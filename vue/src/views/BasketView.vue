@@ -4,17 +4,17 @@
         <Sidebar />
         <Basket class="!mb-24" />
 
-        <main class="basket-content fixed bottom-0 left-[20%] right-0 !p-7 flex flex-row justify-between items-center">
+        <main class="basket-content fixed bottom-0 left-0 lg:left-[20%] right-0 !p-7 flex flex-row justify-between items-center">
 
                 <div class="flex justify-start">
-                    <h2 class="text-3xl font-mono">
+                    <h2 class="text-xl md:text-3xl font-mono">
                         Итого: ${{ totalPrice }}
                     </h2>
                 </div>
     
     
                 <div class="flex justify-end">
-                    <button class="basket-content__btn text-2xl !px-4 !py-3 rounded-xl">
+                    <button class="basket-content__btn text-xl md:text-2xl !px-2 md:!px-4 !py-3 rounded-xl">
                         Перейти к оплате
                     </button>
                 </div>

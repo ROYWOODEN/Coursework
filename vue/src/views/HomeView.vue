@@ -66,12 +66,12 @@
         </main>
         
         <main v-else-if="searchStore.isSearch">
-          <h1 class="text-center !mt-40 text-3xl text-purple-600 font-serif">
+          <h1 class="text-center !mt-40 text-xl md:text-3xl text-purple-600 font-serif">
             Ничего не найдено по вашему запросу
           </h1>
         </main>
 
-        <div v-else class="text-center !mt-40 text-3xl text-purple-600 font-serif">
+        <div v-else class="text-center !mt-40 text-xl md:text-3xl text-purple-600 font-serif">
           Упс... Кажется что-то пошло не так
           <br>
           <div class="loader"></div>

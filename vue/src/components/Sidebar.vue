@@ -11,9 +11,22 @@
     </div>
     
 
-    <nav class="flex flex-col justify-center text-xl font-medium !mt-14 w-full !mb-auto">
+    <nav class="flex flex-col justify-center text-base lg:text-xl font-medium !mt-14 w-full !mb-auto">
+
+
+
+      <router-link 
+        v-for="item in menuItemsBar"
+        :key="item.to"
+        :to="item.to"
+        class="flex flex-row items-center sitebar__nav-item !ps-5"
+        active-class="active-sitebar"
+        >
+        <component :is="item.icon" />
+        <span class="sitebar__nav-link !ms-4">{{ item.title }}</span>
+      </router-link>
       
-        <router-link 
+        <!-- <router-link 
         to="/"
         class="flex flex-row items-center sitebar__nav-item !ps-5"
         active-class="active-sitebar"
@@ -22,7 +35,7 @@
             <path d="M13.5967 0.6524C14.1052 0.257334 14.7243 0.0302891 15.3679 0.00282334C16.0115 -0.0246424 16.6477 0.148836 17.188 0.499145L17.4035 0.653948L30.3984 10.7471C31.516 11.6156 30.9719 13.3664 29.625 13.5104L29.4452 13.5197H27.8999V25.9039C27.9001 26.685 27.6048 27.4374 27.073 28.0101C26.5412 28.5829 25.8123 28.9337 25.0324 28.9923L24.7999 29H6.20027C5.41845 28.9999 4.66557 28.7047 4.09244 28.1736C3.5193 27.6425 3.16826 26.9148 3.10962 26.1361L3.10032 25.9039V13.5197H1.555C0.139873 13.5197 -0.509565 11.8044 0.465367 10.8648L0.601765 10.7471L13.5967 0.6524ZM15.5001 3.09675L5.61903 10.7719C5.97397 11.0583 6.20027 11.4964 6.20027 11.9871V25.9039H10.8502V18.1638C10.8502 16.9321 11.3401 15.7508 12.2121 14.8799C13.0841 14.0089 14.2669 13.5197 15.5001 13.5197C16.7333 13.5197 17.9161 14.0089 18.7881 14.8799C19.6601 15.7508 20.15 16.9321 20.15 18.1638V25.9039H24.7999V11.9871C24.7999 11.4964 25.0262 11.0583 25.3812 10.7719L15.5001 3.09675ZM15.5001 16.6157C15.089 16.6157 14.6948 16.7788 14.4041 17.0691C14.1134 17.3594 13.9501 17.7532 13.9501 18.1638V25.9039H17.0501V18.1638C17.0501 17.7532 16.8868 17.3594 16.5961 17.0691C16.3054 16.7788 15.9112 16.6157 15.5001 16.6157Z" fill="currentColor"/>
       </svg>
         <span class="sitebar__nav-link !ms-4">Главная</span>
-      </router-link>
+      </router-link> -->
       
       
         <!-- <router-link
@@ -37,7 +50,7 @@
         </router-link> -->
       
       
-        <router-link
+        <!-- <router-link
         to="/games" 
         class="flex flex-row items-center sitebar__nav-item !ps-5"
         active-class="active-sitebar"
@@ -74,7 +87,7 @@
           <path d="M8.235 1.559a.5.5 0 0 0-.47 0l-7.5 4a.5.5 0 0 0 0 .882L3.188 8 .264 9.559a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882L12.813 8l2.922-1.559a.5.5 0 0 0 0-.882l-7.5-4zM8 9.433 1.562 6 8 2.567 14.438 6 8 9.433z"/>
         </svg> 
         <span class="sitebar__nav-link !ps-4">История покупок</span>
-        </router-link>
+        </router-link> -->
       
     </nav>
 
@@ -114,12 +127,44 @@ import { useUIStore } from '@/stores/UIStore';
 import Setting from './Setting.vue';
 import MobileSitebar from './MobileSitebar.vue';
 
+import HomeIcon from './icons/HomeIcon.vue';
+import GamesIcon from './icons/GamesIcon.vue';
+import FavoritesIcon from './icons/FavoritesIcon.vue';
+import HistoryIcon from './icons/HistoryIcon.vue';
+import ExitIcon from './icons/ExitIcon.vue';
+import SettingIcon from './icons/SettingIcon.vue';
+
 export default {
-  components: { Setting, MobileSitebar },
+  components: { Setting, MobileSitebar,
+    HomeIcon, GamesIcon, FavoritesIcon, HistoryIcon, ExitIcon, SettingIcon
+   },
     data() {
       return {
         gameStore: useGameStore(),
         UIstore: useUIStore(),
+        menuItemsBar: [
+        {
+           to: '/',
+          title: 'Главная',
+          icon: 'HomeIcon'
+        },
+        {
+          to: '/games',
+          title: 'Мои игры',
+          icon: 'GamesIcon'
+        },
+        {
+          to: '/favourites',
+          title: 'Избранное',
+          icon: 'FavoritesIcon'
+        },
+        {
+          to: '/popup',
+          title: 'История покупок',
+          icon: 'HistoryIcon'
+        }
+      ]
+
       }
     },
     methods: {

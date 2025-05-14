@@ -82,11 +82,13 @@
   
   import { useGameStore } from '@/stores/GameStore';
   import { useRouter } from 'vue-router';
+  import { useUIStore } from '@/stores/UIStore';
   
   export default {
       data() {
           return {
               gameStore: useGameStore(),
+              UIStore: useUIStore(),
               router: useRouter(),
               activeTab: 0,
               menuItems: [
@@ -108,6 +110,8 @@
           nextAdminView() {
             this.router.push('/admin');
             this.gameStore.settingDialog = !this.gameStore.settingDialog;
+            this.UIStore.toggleMobileMenu();
+            
           }
       },
       mounted() {
@@ -128,7 +132,8 @@
   <style scoped lang="scss">
 
   @use '../assets/scss/main.scss' as*;
-  /* Базовые стили */
+
+
   .dialog {
     position: fixed;
     inset: 0;
@@ -205,6 +210,10 @@
         padding: 0 24px 24px;
         border-left: 1px solid rgba(255, 255, 255, 0.1);
     }
+
+
+
+    
     
     /* Пункты меню */
 
@@ -348,4 +357,116 @@
   .menu-icon:nth-child(2) { animation-delay: 0.2s; }
   .menu-icon:nth-child(3) { animation-delay: 0.3s; }
   .menu-icon:nth-child(4) { animation-delay: 0.4s; }
+
+
+
+  @media (width <= 990px) {
+
+      .dialog {
+
+
+        &__content {
+        width: 80%;
+        height: 100vh;
+        }
+         
+  }
+
+  }
+
+
+  @media (max-width: 768px) {
+  .dialog {
+    align-items: flex-end;
+    
+    &__content {
+      width: 100%;
+      max-height: 90vh;
+      border-radius: 12px 12px 0 0;
+    }
+
+    &__close-btn {
+      top: 12px;
+      right: 12px;
+      
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+
+  .setting {
+    &__header {
+      padding: 16px 16px 0;
+    }
+
+    &__title {
+      font-size: 1.3rem;
+    }
+
+    &__container {
+      flex-direction: column;
+      padding: 20px 0;
+      height: auto;
+    }
+
+    &__sidebar {
+      width: 100%;
+      display: flex;
+      overflow-x: auto;
+      padding: 0 8px;
+      margin-bottom: 15px;
+      scrollbar-width: none; /* Firefox */
+      &::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+      }
+    }
+
+    &__menu-item {
+      flex: 0 0 auto;
+      margin: 0 8px 0 0;
+      padding: 10px 14px;
+      white-space: nowrap;
+      
+      &:hover {
+        transform: translateY(3px) !important;
+      }
+    }
+
+    &__content {
+      border-left: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0 16px 16px;
+      min-height: 50vh;
+    }
+  }
+
+  .active-indicator {
+    right: auto;
+    bottom: -4px;
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 3px;
+  }
+
+  .tab-content {
+    min-height: 200px;
+    padding: 12px 0;
+    
+    h5 {
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+    }
+  }
+
+  .admin-link {
+    margin: 30px 0;
+    font-size: 1.1rem;
+  }
+}
+
+
   </style>
