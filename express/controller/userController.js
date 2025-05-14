@@ -8,7 +8,12 @@ const SECRET_KEY = require('../SECRET_KEY');
 
 // Добавление юзеров
 exports.registerUser = async (req, res) => {
-    const { name, login, password, avatar } = req.body;
+    const { name, login, password } = req.body;
+
+    const file = req.file;
+    console.log(file);
+
+    const imagePath = file.path.replace(/^.*?(images)/, '/$1').replace(/\\/g, '/');
 
     try {
 
@@ -34,7 +39,7 @@ exports.registerUser = async (req, res) => {
 
 
         
-            db.query(query, [name, login, hashedPassword, avatar], (err, result) => {
+            db.query(query, [name, login, hashedPassword, imagePath], (err, result) => {
                     if (err) {
                         console.error("Ошибка при добавлении данных:", err);
                         return res.status(500).json({ error: "Ошибка сервера" });

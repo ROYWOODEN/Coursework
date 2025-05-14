@@ -4,12 +4,13 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controller/userController');
 const authMiddleware = require('../middleware/authMiddleware');
+const upload = require('../middleware/uploadMiddleware');
 
 const FavouritesControllet = require('../controller/FavouritesController');
 
 
 
-router.post('/reg', userController.registerUser);
+router.post('/reg', upload.single('avatar'), userController.registerUser);
 router.post('/login', userController.loginUser);
 router.get('/user', authMiddleware.authMiddleware, userController.getUserData);
 

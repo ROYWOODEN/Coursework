@@ -37,11 +37,13 @@
         <div class="flex flex-col w-150">
           <label for="ava" class="!mb-2">Аватар:</label>
           <input 
-          type="text" 
-          id="ava" 
+          type="file" 
+          id="image" 
+          accept="image/*"
+          @change="handleFileUpload"
           class="form__input"
           placeholder="Укажите путь для фото" 
-          v-model="UserAva" required>
+          required>
         </div>
         <div class="flex flex-row justify-center !mt-10 !mb-10">
             <button 
@@ -68,7 +70,7 @@ export default {
         UserName: '',
         UserLogin: '',
         UserPass: '',
-        UserAva: '',
+        UserAva: null,
       }
     },
 
@@ -81,17 +83,19 @@ export default {
       }
 
       try {
+
+
+        const formData = new FormData();
+
+        formData.append('name', this.UserName);
+        formData.append('login', this.UserLogin);
+        formData.append('password', this.UserPass);
+        formData.append('avatar', this.UserAva);
+
+
         const response = await fetch('/gamestore/reg', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-          },
-          body: JSON.stringify({
-            name: this.UserName,
-            login: this.UserLogin,
-            password: this.UserPass,
-            avatar: this.UserAva,
-          }),
+          body: formData,
         });
         const result = await response.json();
         
@@ -127,7 +131,7 @@ export default {
           this.UserName = '';
           this.UserLogin = '';
           this.UserPass = '';
-          this.UserAva = '';
+          this.$refs.fileInput.value = null;
 
         } else {
           console.error("Ошибка при регистрации");
@@ -137,7 +141,14 @@ export default {
         console.error("Ошибка сети:", error);
         this.gameStore.showError('Ошибка сети, попробуйте позже');
       }
-    }
+    },
+
+
+
+    handleFileUpload(event) {
+            this.UserAva = event.target.files[0];
+            console.log(this.UserAva);
+        }
   }
 
 }
