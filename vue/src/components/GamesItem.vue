@@ -21,7 +21,7 @@
                     </button>
                     
                 </div>
-                <div class="!px-6 !pt-2 !pb-10">
+                <div class=" !mb-10 !px-6 !pt-2 !pb-10 flex flex-wrap h-16">
 
                     <span 
                     v-for="(tag, idx) in game.tags" :key="idx"
@@ -122,7 +122,7 @@
             onImageLoad() {
                 setTimeout(() => {
                     this.isLoadet = true;
-                }, 100);
+                }, 900);
             },
 
 

@@ -21,8 +21,10 @@ exports.AddGames = (req, res) => {
          return res.status(400).json({ error: "Файл не был загружен" });
     }
 
+    const host = `http://localhost:5000`;
 
-    const imagePath = file.path.replace(/^.*?(images)/, '/$1').replace(/\\/g, '/');
+
+    const imagePath = host+file.path.replace(/^.*?(uploads)/, '/$1').replace(/\\/g, '/');
 
     console.log(imagePath);
 

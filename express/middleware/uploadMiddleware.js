@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs')
 
 // Создание директории, если она не существует
-const uploadDir = path.join(__dirname, '../../vue/public/images/games')
+const uploadDir = path.join(__dirname, '../uploads')
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true })
 }

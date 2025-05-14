@@ -50,10 +50,11 @@ exports.EditGames = (req, res) => {
 
 
     const file = req.file;
+    const host = `http://localhost:5000`;
 
 
 
-    const imagePath = file.path.replace(/^.*?(images)/, '/$1').replace(/\\/g, '/');
+    const imagePath = host+file.path.replace(/^.*?(uploads)/, '/$1').replace(/\\/g, '/');
 
 
 

@@ -13,7 +13,9 @@ exports.registerUser = async (req, res) => {
     const file = req.file;
     console.log(file);
 
-    const imagePath = file.path.replace(/^.*?(images)/, '/$1').replace(/\\/g, '/');
+    const host = `http://localhost:5000`;
+
+    const imagePath = host+file.path.replace(/^.*?(uploads)/, '/$1').replace(/\\/g, '/');
 
     try {
 
