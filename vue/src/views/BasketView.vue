@@ -4,7 +4,7 @@
         <Sidebar />
         <Basket class="!mb-24" />
 
-        <main class="basket-content fixed bottom-0 left-0 lg:left-[20%] right-0 !p-7 flex flex-row justify-between items-center">
+        <main class="basket-content fixed bottom-0 left-0 lg:left-[20%] right-0 !p-7 h-22 flex flex-row justify-between items-center">
 
                 <div class="flex justify-start">
                     <h2 class="text-xl md:text-3xl font-mono">

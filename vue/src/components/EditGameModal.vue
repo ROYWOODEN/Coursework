@@ -299,7 +299,7 @@ export default {
   right: 0;
   bottom: 0;
   display: flex;
-  z-index: 1000;
+  z-index: 1;
   padding: 16px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
