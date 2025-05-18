@@ -52,26 +52,51 @@ exports.EditGames = (req, res) => {
     const file = req.file;
     const host = `http://localhost:5000`;
 
+    let imagePath;
+
+    if(file) {
+
+        imagePath = host+file.path.replace(/^.*?(uploads)/, '/$1').replace(/\\/g, '/');
 
 
-    const imagePath = host+file.path.replace(/^.*?(uploads)/, '/$1').replace(/\\/g, '/');
-
-
-
-    const query = "UPDATE games SET title = ?, description = ?, price = ?, image = ? WHERE id_game = ?";
+        const query = "UPDATE games SET title = ?, description = ?, price = ?, image = ? WHERE id_game = ?";
 
     db.query(query, [title, description, price, imagePath, id_game], (err, result) => {
         if (err) {
             console.error('Ошибка при обновлении игры:', err);
-            return res.status(500).json({ message: 'Ошибка сервера при обновлении данных' });
+            return res.status(500).json({ error: 'Ошибка сервера при обновлении данных' });
         }
 
         if (result.affectedRows === 0) {
-            return res.status(404).json({ message: 'Игра с таким ID не найдена' });
+            return res.status(404).json({ error: 'Игра с таким ID не найдена' });
         }
 
         res.status(200).json({ message: 'Данные об игре успешно обновлены' });
     });
+
+    }   else {
+
+        const query = "UPDATE games SET title = ?, description = ?, price = ? WHERE id_game = ?";
+
+    db.query(query, [title, description, price,  id_game], (err, result) => {
+        if (err) {
+            console.error('Ошибка при обновлении игры:', err);
+            return res.status(500).json({ error: 'Ошибка сервера при обновлении данных' });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Игра с таким ID не найдена' });
+        }
+
+        res.status(200).json({ message: 'Данные об игре успешно обновлены' });
+    });
+
+    }
+
+
+
+
+    
 },
 
 
