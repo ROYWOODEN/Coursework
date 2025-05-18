@@ -6,8 +6,8 @@
 
             <h1 class="text-center text-white !mt-15 text-2xl admin-panel__title !mb-15">АДМИН-ПАНЕЛЬ</h1>
 
-            <div class="flex !ms-20 !mb-15 text-xl">
-                <router-link to="/admin/add" class="admin-panel__title-text !pe-20" active-class="active">Добавление игр:</router-link>
+            <div class="flex flex-col items-center md:flex-row gap-5 md:!ms-20 !mb-15 text-base md:text-xl">
+                <router-link to="/admin/add" class="admin-panel__title-text md:!pe-20" active-class="active">Добавление игр:</router-link>
                 <router-link to="/admin/del" class="admin-panel__title-text" active-class="active">Редактирование игр:</router-link>
             </div>
 

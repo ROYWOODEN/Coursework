@@ -27,7 +27,7 @@
                     v-for="(tag, idx) in game.tags" :key="idx"
                     class="inline-block game-card__tag rounded-lg !px-3 !py-1 text-sm font-semibold !mr-2 !mt-2"># {{ tag.name }}</span>
                 </div>
-                <div class="flex justify-between items-center !px-10 !py-5">
+                <div class="flex justify-between items-center !px-10 !py-5 !mt-4 md:!mt-1">
                     <div class="game-card__price text-lg lg:text-2xl font-medium">${{ game.price }}</div>
                     <div class="flex flex-row items-center">
                     <div 
@@ -44,7 +44,7 @@
                         <button
                         @click="toggleBasket"
                         type="button" 
-                        class="game-card__button"
+                        class="game-card__button text-sm md:text-base"
                         :class="{'ActiveBtn' : isBasketLocal}"
                         >
                         {{ isBasketLocal ? 'В корзине' : 'В корзину' }}
@@ -93,11 +93,6 @@
                 isFavorLocal: false,
                 isBasketLocal: false,
                 isLoadet: false,
-            }
-        },
-        computed: {
-            isExpanded() {
-                return this.expanded;
             }
         },
         async mounted() {
@@ -311,6 +306,17 @@
                 }
         }
 
+
+
+        & .ActiveBtn {
+        background-color: $color-red-exit;
+        
+        &:hover {
+            background-color: $color-red-btn-hover;
+            
+            }
+        }
+
     }
 
     .svg__fon {
@@ -323,14 +329,7 @@
         cursor: pointer;
     }
 
-    .ActiveBtn {
-        background-color: $color-red-exit;
-        
-        &:hover {
-            background-color: $color-red-btn-hover;
-            
-            }
-    }
+    
 
 
     .game_card {
@@ -340,6 +339,42 @@
     &.is-loaded {
         opacity: 1;
     }
+    }
+
+
+    @media (width <= 768px) {
+        
+        .game-card {
+        background-color: $color-grey-card-fon;
+        box-shadow: 4px 4px 6px 0px rgba(0, 0, 0, 25%);
+        transition: 0.5s;
+
+        &__price {
+            color: $color-purple;
+        }
+        &__button {
+            background-color: $color-purple;
+            // padding: 10px 12px 10px 12px;
+            padding: 8px 10px 8px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition:  0.5s;
+
+        }
+
+    }
+
+    .svg__fon {
+        fill: $color-purple-favirute-icon;
+    }
+    .svg__padding {
+        background-color: $color-purple-favorite-fon;
+        padding: 7px 7px 7px 7px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+
     }
 
 

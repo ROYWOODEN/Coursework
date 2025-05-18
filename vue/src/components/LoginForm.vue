@@ -12,7 +12,7 @@
             </svg>
         </button>
 
-        <h2 class="text-white lg:text-3xl md:text-base text-sm text-center lg:!-mt-18 !-mt-10 !mb-10">Авторизация</h2>
+        <h2 class="text-white lg:text-3xl text-xl text-center lg:!-mt-18 !-mt-10 !mb-10">Авторизация</h2>
             <form class="form flex flex-col w-full text-xl" @submit.prevent="submitForm">
                 <label class="!mb-2" for="">Логин:</label>
                 <input 
@@ -217,6 +217,73 @@ h2 {
 u {
     color: $color-purple;
     cursor: pointer;
+}
+
+
+
+
+
+@media (width <=768px) {
+
+    .dialog {
+    background-color: rgba(0, 0, 0, 0.8);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    display: flex;
+    z-index: 2;
+
+
+        &__content {
+            position: relative;
+            margin: auto;
+            background-color: #242424;
+            border-radius: 12px;
+            // padding: 26% 6%;
+            padding: 20% 6% 0 5%;
+            width: 100%;
+            height: 70%;
+        }
+
+        &__close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+}
+
+
+.form {
+    color: $color-grey-card-text;
+
+    &__input {
+        padding: 3%;
+        width: 100%;
+    }
+
+
+    &__button {
+        padding: 3%;
+        width: 100%;
+
+    }
+
+}
+
+u {
+    color: $color-purple;
+    cursor: pointer;
+}
+
+
+
+
+
 }
 
 </style>

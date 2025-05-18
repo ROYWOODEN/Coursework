@@ -10,7 +10,7 @@ app.use('/uploads', express.static('uploads'));
 
 console.log("Подключение к MySQL настроено!");
 
-const db = require("../express/config/db");
+// const db = require("../express/config/db");
 
 const gameRoutes = require('./routes/games');
 const tagRoutes = require('./routes/tags');

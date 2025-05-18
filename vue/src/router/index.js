@@ -10,6 +10,7 @@ import BasketView from '@/views/BasketView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { useGameStore } from '@/stores/GameStore'
 import { useSearchStore } from '@/stores/SearchStore'
+import NotFound from '@/components/NotFound.vue'
 
 
 
@@ -60,6 +61,22 @@ const router = createRouter({
       path: '/basket',
       name: 'basket',
       component: BasketView,
+    },
+    {
+      path: '/popular',
+      component: NotFound,
+    },
+    {
+      path: '/new',
+      component: NotFound,
+    },
+    {
+      path: '/games',
+      component: NotFound,
+    },
+    {
+      path: '/popup',
+      component: NotFound,
     },
 
     {
@@ -134,10 +151,10 @@ router.beforeEach( async (to, from, next) => {
     if(!token) {
       gameStore.showError('Вы не авторизваны');
       gameStore.loginDialog = !gameStore.loginDialog;
-      next(from);
+      return next(from);
     }
     else {
-      next();
+      return next();
     }
   }
 

@@ -6,8 +6,8 @@
                 Добавление игр:
             </h1>
     
-            <main class="add-game-panel__content flex flex-row justify-center !mt-16 text-white">
-                <form class="add-game-panel__form" @submit.prevent="submitForm">
+            <main class="add-game-panel__content flex flex-row justify-center items-center !mt-16 text-white">
+                <form class="add-game-panel__form !ms-10 md:!ms-0" @submit.prevent="submitForm">
                     <div class="add-game-panel__form-group">
                         <label for="game-title" class="add-game-panel__label text-lg">Название игры:</label>
                         <input
@@ -326,5 +326,124 @@ export default {
         border-radius: 40px;
     }
 }
+
+
+
+
+
+@media (width <=768px) {
+    
+    .add-game-panel {
+
+
+    &__background {
+        width: 90%;
+    }
+
+
+    &__form-group {
+        margin: 5% auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__input {
+        padding: 4%;
+        width: 90%;
+        min-width: 0;
+
+            &-tag {
+                padding: 3%;
+                margin-top: 20px;
+                border-radius: 40px;
+                width: 50%;
+                min-width: 0;
+            }
+    }
+
+    &__button {
+        background-color: $color-purple;
+        padding: 20px 40px;
+        border-radius: 40px;
+        font-family: Inter-Bold;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &-tag {
+            background-color: $color-purple;
+            padding: 3% 40px;
+            border-radius: 40px;
+            font-family: Inter-Bold;
+            cursor: pointer;
+            transition: 0.3s;
+
+                &:hover {
+                    background-color: $color-purple-hover;
+                }
+        }
+    }
+
+    &__select {
+        padding: 4%;
+        width: 90%;
+    }
+}
+
+}
+
+
+
+
+@media (width <=390px) {
+    
+    .add-game-panel {
+
+
+    &__background {
+        width: 100%;
+    }
+
+
+    &__form-group {
+        margin: 5% auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__input {
+        padding: 4%;
+        width: 96%;
+        min-width: 0;
+
+            &-tag {
+                padding: 3%;
+                margin-top: 20px;
+                border-radius: 40px;
+                width: 60%;
+                min-width: 0;
+            }
+    }
+
+    &__button {
+        padding: 10px 30px;
+        border-radius: 40px;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &-tag {
+            background-color: $color-purple;
+            padding: 3% 20px;
+            border-radius: 40px;
+            font-family: Inter-Bold;
+            cursor: pointer;
+            transition: 0.3s;
+
+        }
+    }
+}
+
+}
+
+
 
 </style>

@@ -1,11 +1,11 @@
 <template>
   <section class="content flex flex-row justify-center">
     <div>
-        <h2 class="lg:text-3xl md:text-base text-sm text-center text-white !mt-6 !mb-12">Регистрация</h2>
+        <h2 class="lg:text-3xl text-xl text-center text-white !mt-6 !mb-12">Регистрация</h2>
 
 
-      <form class="form flex flex-col w-full text-lg" @submit.prevent="submitForm">
-        <div class="flex flex-col w-150 !mb-6">
+      <form class="form flex flex-col w-full text-base md:text-lg !ms-2" @submit.prevent="submitForm">
+        <div class="flex flex-col w-full md:w-150 !mb-6">
           <label for="username" class="!mb-2">Имя пользователя:</label>
           <input 
           type="text" 
@@ -15,7 +15,7 @@
           placeholder="Придумайте имя пользователя" 
           v-model="UserName" required>
         </div>
-        <div class="flex flex-col w-150 !mb-6">
+        <div class="flex flex-col w-full md:w-150 !mb-6">
           <label for="login" class="!mb-2">Логин:</label>
           <input 
           type="login" 
@@ -25,7 +25,7 @@
           placeholder="Придумайте логин" 
           v-model="UserLogin" required>
         </div>
-        <div class="flex flex-col w-150 !mb-6">
+        <div class="flex flex-col w-full md:w-150 !mb-6">
           <label for="password" class="!mb-2">Пароль:</label>
           <input 
           type="password" 
@@ -34,7 +34,7 @@
           placeholder="Придумайте пароль" 
           v-model="UserPass" required>
         </div>
-        <div class="flex flex-col w-150">
+        <div class="flex flex-col w-full md:w-150">
           <label for="ava" class="!mb-2">Аватар:</label>
           <input 
           type="file" 
@@ -48,7 +48,7 @@
         <div class="flex flex-row justify-center !mt-10 !mb-10">
             <button 
             type="submit" 
-            class="text-xl form__button text-white"
+            class="text-base md:text-xl form__button text-white"
             @click="addRegForm"
             >Зарегистрироваться</button>
         </div>
@@ -195,6 +195,26 @@ export default {
 }
 h2 {
     font-family: Inter-Bold;
+}
+
+
+
+@media (width <= 768px) {
+
+      .form {
+
+      &__input {
+          width: 100%;
+
+      }
+    
+    &__button {
+        padding: 10px 20px;
+        width: 70%;
+
+    }
+}
+
 }
 
 
