@@ -1,20 +1,20 @@
 <template>
     <section class="flex justify-center">
-      <div class="game-panel-del__fon flex flex-row !my-5 text-white">
-          <div class="game-panel-img !me-8">
+      <div class="game-panel-del__fon flex flex-col lg:flex-row !my-5 text-white">
+          <div class="game-panel-img lg:!me-8">
               <img
-              class="w-full" 
+              class="w-full object-cover" 
               :src="game.image" 
               alt="Упс.. Кажется что-то пошло не так :(">
           </div>
   
-          <div class="flex flex-col justify-around">
+          <div class="flex flex-col gap-6 justify-around">
               <span
-              class="text-xl font-medium"
+              class="text-lg lg:text-xl font-medium"
               >{{ game.title }}</span>
               <div class="">
               <p 
-              class="game-panel__info max-w-100"
+              class="game-panel__info max-w-100 text-sm lg:text-base"
               :class="{ 'game-panel__info-active': expanded}"
               >
               {{ game.description }}
@@ -29,7 +29,7 @@
               </div>
               
   
-              <div class="flex flex-wrap justify-between items-center">
+              <div class="flex flex-wrap justify-between items-center !m-2 lg:!m-0">
                   <span
                   v-for="(tag, idx) in game.tags" :key="idx"
                   class="game-card__tag rounded-lg !px-3 !py-1 !my-2 text-sm font-semibold"
@@ -41,7 +41,7 @@
               
           </div>
   
-          <div class="flex flex-col justify-evenly game-panel-btns items-center">
+          <div class="flex lg:flex-col flex-row !mb-4 lg:justify-evenly justify-around game-panel-btns items-center">
             <button 
             @click="EditGames(game.id_game)"
             class="game-panel-btn-1">
@@ -103,7 +103,7 @@ import { useGameStore } from '@/stores/GameStore';
       &-del__fon {
           background-color: $color-black-fon-panel;
           width: 92%;
-          min-height: 280px;
+          min-height: 330px;
           border-radius: 35px;
       }
 
@@ -158,6 +158,51 @@ import { useGameStore } from '@/stores/GameStore';
             background-color: $color-red-btn-hover;
           }
       }
+
+  }
+
+  @media (width <= 1400px) {
+      .game-panel {
+
+      &-del__fon {
+          width: 100%;
+      }
+
+      &-img {
+          width: 30%;
+          min-width: 0;
+      }
+    }
+  }
+
+
+  @media (width <= 1024px) {
+    
+    .game-panel {
+
+      &-del__fon {
+          background-color: $color-black-fon-panel;
+          width: 92%;
+      }
+
+      &-img {
+          width: 100%;
+          min-width: 0;
+          & img {
+            border-radius: 35px 35px 0 0;
+        }
+      }
+      &-btns {
+        width: 100%;
+          
+          & button {
+            width: 40%;
+          }
+      }
+
+
+  }
+
 
   }
   
