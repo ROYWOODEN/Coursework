@@ -6,9 +6,9 @@ export const useGameStore = defineStore('GameStore', {
         user: null,
         token: localStorage.getItem('token') || null,
         EditID: [],
-        editGames: {},
-        editGamesTags: {},
-        tagsSelect: {},
+        editGames: [],
+        editGamesTags: [],
+        tagsSelect: [],
 
 
         loginDialog: false,
