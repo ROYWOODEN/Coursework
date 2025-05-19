@@ -158,7 +158,6 @@ export default {
       this.toggleBodyScroll();
     },
     
-    // Остальные методы остаются без изменений
     async fetchEdit() {
       if (this.gameStore.EditID) {
         await this.gameStore.fetchGameEdit(this.gameStore.EditID);

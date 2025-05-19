@@ -60,7 +60,7 @@ export default {
 
     computed: {
         totalPrice() {
-            if (!this.userStore.BasketGames.length) return '0.00';
+            if (this.userStore.BasketGames.length === 0) return '0.00';
 
             const sum = this.userStore.BasketGames.reduce((total, game) => {
                 const price = parseFloat(game.price);

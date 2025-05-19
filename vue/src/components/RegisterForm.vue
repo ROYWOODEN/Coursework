@@ -62,11 +62,13 @@
 <script>
 
 import { useGameStore } from '@/stores/GameStore';
+import { useRouter } from 'vue-router';
 
 export default {
     data() {
       return {
         gameStore: useGameStore(),
+        router: useRouter(),
         UserName: '',
         UserLogin: '',
         UserPass: '',
@@ -119,6 +121,7 @@ export default {
         console.log(data.token);
         
         await this.gameStore.fetchUser();
+          this.router.push('/');
         }, 500);
 
         
