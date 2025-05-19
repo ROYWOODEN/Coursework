@@ -44,6 +44,7 @@
         v-for="item in menuItemsBar"
         :key="item.to"
         :to="item.to"
+        @click="UIStore.toggleMobileMenu"
         class="flex flex-row items-center mobile-sitebar__nav-item !ps-5"
         active-class="mobile-active-sitebar"
         >
