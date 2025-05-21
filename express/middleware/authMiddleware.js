@@ -1,5 +1,3 @@
-require('dotenv').config();
-const db = require('../config/db');
 const jwt = require('jsonwebtoken');
 
 const SECRET_KEY = require('../SECRET_KEY');

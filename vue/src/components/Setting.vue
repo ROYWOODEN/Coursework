@@ -14,13 +14,15 @@
             </svg>
           </button>
   
-          <!-- Заголовок -->
+
           <div class="setting__header">
             <h4 class="setting__title">Настройки</h4>
           </div>
           
-          <!-- Основной контейнер -->
+
+
           <div class="setting__container">
+
             <!-- Боковое меню -->
             <aside class="setting__sidebar">
               <div
@@ -33,7 +35,7 @@
                 <img 
                   :src="item.svg" 
                   class="menu-icon" 
-                  :alt="`Иконка ${item.title}`"
+                  alt=""
                 >
                 <span class="menu-text">{{ item.title }}</span>
                 <div class="active-indicator"></div>
@@ -46,19 +48,19 @@
                 <!-- Тема -->
                 <div v-if="activeTab === 0" key="theme" class="tab-content">
                   <h5>Настройки темы</h5>
-                  <!-- Ваш контент здесь -->
+                  <!--  контент  -->
                 </div>
                 
                 <!-- Язык -->
                 <div v-else-if="activeTab === 1" key="lang" class="tab-content">
                   <h5>Настройки языка</h5>
-                  <!-- Ваш контент здесь -->
+                  <!--  контент  -->
                 </div>
                 
                 <!-- Безопасность -->
                 <div v-else-if="activeTab === 2" key="security" class="tab-content">
                   <h5>Безопасность</h5>
-                  <!-- Ваш контент здесь -->
+                  <!-- контент  -->
                 </div>
                 
                 <!-- Админ-панель -->

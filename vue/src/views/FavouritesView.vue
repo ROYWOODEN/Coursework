@@ -90,8 +90,8 @@ export default {
     },
     async created() {
         
+        await this.userStore.fetchFavorite();
         if(this.userStore.MyGames.length === 0) {
-            await this.userStore.fetchFavorite();
         }
 
     },

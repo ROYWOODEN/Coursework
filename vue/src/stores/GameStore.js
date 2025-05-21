@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia';
+import { useRouter } from 'vue-router';
 
 export const useGameStore = defineStore('GameStore', {
     state: () => ({
+        router: useRouter(),
         games: [],
         user: null,
         token: localStorage.getItem('token') || null,
@@ -16,7 +18,6 @@ export const useGameStore = defineStore('GameStore', {
         EditGameModal: true,
         loader: false,
 
-        
         message: '',
         messageError: '',
     }),
@@ -129,10 +130,14 @@ export const useGameStore = defineStore('GameStore', {
         },
 
         logout() {
+
+            // const router = useRouter();
+            
             localStorage.removeItem('token');
             this.user = null;
             this.token = null;
             this.fetchGames();
+            this.router.push('/');
         },
 
         showMessage(mess) {

@@ -11,7 +11,7 @@
           <h4 class="setting__title">Изменение игры:</h4>
         </div>
             
-        <main v-if="gameStore.editGames && Object.keys(gameStore.editGames).length > 0">
+        <main v-if="gameStore.editGames.length != 0">
           <div class="edit-container">
             <!-- Обертка для изображения -->
             <div class="image-wrapper">

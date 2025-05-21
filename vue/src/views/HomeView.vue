@@ -43,7 +43,8 @@
               v-for="page in pages" 
               :key="page"
               @click="goToPage(page)"
-              :class="{ 'active-page': currentPage === page, 'page-btn': true }"
+              class="page-btn"
+              :class="{ 'active-page': currentPage === page }"
             >
               {{ page }}
             </button>
