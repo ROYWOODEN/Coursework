@@ -22,7 +22,7 @@ export const useUserStore = defineStore('UserStore', {
             try {
                 this.hasGames = false; // стартуем лоадер
                 
-                const respounse = await fetch('/gamestore/favourites/games',{
+                const respounse = await fetch(`${gameStore.apiURL}/favourites/games`,{
                     headers: {
                         'Authorization': `Bearer ${gameStore.token}`,
                     }
@@ -64,7 +64,7 @@ export const useUserStore = defineStore('UserStore', {
 
             try {
 
-                const response = await fetch('/gamestore/basket/add', {
+                const response = await fetch(`${gameStore.apiURL}/basket/add`, {
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json;charset=utf-8",
@@ -93,7 +93,7 @@ export const useUserStore = defineStore('UserStore', {
             const gameStore = useGameStore();
 
             try {
-                const response = await fetch(`/gamestore/basket/del/${id_game}`, {
+                const response = await fetch(`${gameStore.apiURL}/basket/del/${id_game}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${gameStore.token}`,
@@ -121,7 +121,7 @@ export const useUserStore = defineStore('UserStore', {
 
             try {
 
-                const response = await fetch('/gamestore/basket', {
+                const response = await fetch(`${gameStore.apiURL}/basket`, {
                     headers: {
                         'Authorization': `Bearer ${gameStore.token}`,
                     }
@@ -134,7 +134,7 @@ export const useUserStore = defineStore('UserStore', {
                     this.BasketGames = data;
 
                 const tagPromises = this.BasketGames.map(game => 
-                    fetch(`/gamestore/games/${game.id_game}/tags`)
+                    fetch(`${gameStore.apiURL}/games/${game.id_game}/tags`)
                         .then(response => response.json())
                         .then(tags => {
                             game.tags = tags; // Без .slice(0, 3), так как БД уже возвращает ровно 3 тега

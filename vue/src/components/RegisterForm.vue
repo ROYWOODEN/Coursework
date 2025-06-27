@@ -95,13 +95,13 @@ export default {
         formData.append('avatar', this.UserAva);
 
 
-        const response = await fetch('/gamestore/reg', {
+        const response = await fetch(`${this.gameStore.apiURL}/reg`, {
           method: 'POST',
           body: formData,
         });
         const result = await response.json();
         
-        const autoLogin = await fetch('/gamestore/login', {
+        const autoLogin = await fetch(`${this.gameStore.apiURL}/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json;charset=utf-8'

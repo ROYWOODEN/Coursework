@@ -77,7 +77,7 @@ export default {
         async login() {
 
             try {
-                const response = await fetch('/gamestore/login', {
+                const response = await fetch(`${this.gameStore.apiURL}/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json;charset=utf-8'

@@ -7,6 +7,6 @@ const upload = require('../middleware/uploadMiddleware');
 router.get('/games', gameController.getAllGames);
 router.post('/addGame', upload.single('image'), gameController.AddGames);
 router.delete('/admin/del/:id_game', gameController.delGames);
-router.get('/games/:id/tags', gameController.getGameTags);
+// router.get('/games/:id/tags', gameController.getGameTags);
 
 module.exports = router;

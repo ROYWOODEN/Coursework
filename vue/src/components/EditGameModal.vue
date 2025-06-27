@@ -206,7 +206,7 @@ export default {
         formData.append('image', this.newImage);
       }
 
-      const response = await fetch(`/gamestore/admin/edit/${id}`,{
+      const response = await fetch(`${this.gameStore.apiURL}/admin/edit/${id}`,{
         method: 'PUT',
         body: formData,
       });
@@ -230,7 +230,7 @@ export default {
     async fetchTagsEdit(id_game) {
       try {
         console.log('Удаляем старые теги для игры с id:', id_game);
-        const deleteResponse = await fetch(`/gamestore/admin/edit/tags/${id_game}`, {
+        const deleteResponse = await fetch(`${this.gameStore.apiURL}/admin/edit/tags/${id_game}`, {
           method: 'DELETE'
         });
 
@@ -239,7 +239,7 @@ export default {
         }
 
         console.log('Добавляем новые теги для игры с id:', id_game);
-        const addResponse = await fetch('/gamestore/admin/edit/tags', {
+        const addResponse = await fetch(`${this.gameStore.apiURL}/admin/edit/tags`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json;charset=utf-8'

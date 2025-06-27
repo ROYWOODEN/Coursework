@@ -163,7 +163,7 @@ export default {
             });
 
         // Отправка данных на сервер
-            const response = await fetch("/gamestore/addGame", {
+            const response = await fetch(`${this.gameStore.apiURL}/addGame`, {
             method: "POST",
             body: formData,
             });
@@ -192,7 +192,7 @@ export default {
                 this.gameStore.showError('Прошу введите название тега!');
                 return;
             }
-            const response = await fetch('/gamestore/addTag', {
+            const response = await fetch(`${this.gameStore.apiURL}/addTag`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json;charset=utf-8",

@@ -9,18 +9,9 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [
     vue(),
-    // vueDevTools(),
+    vueDevTools(),
     tailwindcss(),
   ],
-  server: {
-    proxy: {
-      '/gamestore': {
-        target: 'http://localhost:5000', // Адрес твоего сервера Express
-        changeOrigin: true,
-        secure: false, // Нужно, если у сервера HTTP, а не HTTPS
-      }
-    }
-  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

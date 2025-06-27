@@ -39,7 +39,7 @@ export const useSearchStore = defineStore('SearchStore', {
 
         try {
           // encodeURIComponent - кодирует спец символы чтобы с кьери параметрами сервер не путал
-          const response = await fetch(`/gamestore/search/${encodeURIComponent(trimSearch)}`);
+          const response = await fetch(`${gameStore.apiURL}/search/${encodeURIComponent(trimSearch)}`);
           const data = await response.json();
 
           gameStore.games = data;
@@ -52,7 +52,7 @@ export const useSearchStore = defineStore('SearchStore', {
 
 
             gameStore.games.map(async game => {
-              await fetch(`/gamestore/games/${game.id_game}/tags`)
+              await fetch(`${gameStore.apiURL}/games/${game.id_game}/tags`)
                       .then(response => response.json())
                       .then(tags => {
                           game.tags = tags; // Без .slice(0, 3), так как БД уже возвращает ровно 3 тега
@@ -87,7 +87,7 @@ export const useSearchStore = defineStore('SearchStore', {
 
           try {
 
-          const response = await fetch(`/gamestore/search/favourites/${encodeURIComponent(trimSearch)}`, {
+          const response = await fetch(`${apiURL}/search/favourites/${encodeURIComponent(trimSearch)}`, {
             method: 'POST',
             headers: {
               "Content-Type": "application/json;charset=utf-8",
@@ -108,7 +108,7 @@ export const useSearchStore = defineStore('SearchStore', {
 
 
             this.searchResults.map(async game => {
-              await fetch(`/gamestore/games/${game.id_game}/tags`)
+              await fetch(`${apiURL}/games/${game.id_game}/tags`)
                       .then(response => response.json())
                       .then(tags => {
                           game.tags = tags; // Без .slice(0, 3), так как БД уже возвращает ровно 3 тега

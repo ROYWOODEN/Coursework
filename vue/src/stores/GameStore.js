@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 export const useGameStore = defineStore('GameStore', {
     state: () => ({
         router: useRouter(),
+        apiURL: import.meta.env.VITE_API_URL,
         games: [],
         user: null,
         token: localStorage.getItem('token') || null,
@@ -29,7 +30,7 @@ export const useGameStore = defineStore('GameStore', {
             
             // await new Promise(resolve => setTimeout(resolve, 1000));
             try {
-                const response = await fetch("/gamestore/games");
+                const response = await fetch(`${this.apiURL}/games`);
                 this.games = await response.json();
 
 
@@ -46,7 +47,7 @@ export const useGameStore = defineStore('GameStore', {
         async fetchtagPromises() {
              
              const tagPromises = this.games.map(game => 
-                fetch(`/gamestore/games/${game.id_game}/tags`)
+                fetch(`${this.apiURL}/games/${game.id_game}/tags`)
                     .then(response => response.json())
                     .then(tags => {
                         game.tags = tags; // Без .slice(0, 3), так как БД уже возвращает ровно 3 тега
@@ -61,7 +62,7 @@ export const useGameStore = defineStore('GameStore', {
         },
         async DelGames(id) {
             try {
-                const response = await fetch(`/gamestore/admin/del/${id}`, {
+                const response = await fetch(`${this.apiURL}/admin/del/${id}`, {
                     method: 'DELETE',
                 });
 
@@ -85,7 +86,7 @@ export const useGameStore = defineStore('GameStore', {
         },
         async fetchTags() {
             try {
-                const response = await fetch('/gamestore/tags');
+                const response = await fetch(`${this.apiURL}/tags`);
                 this.tagsSelect = await response.json();
             } catch {
                 console.error('Ошибка получения тегов');
@@ -93,7 +94,7 @@ export const useGameStore = defineStore('GameStore', {
         },
         async fetchGameEdit(id) {
             try {
-                const response = await fetch(`/gamestore/admin/edit/${id}`);
+                const response = await fetch(`${this.apiURL}/admin/edit/${id}`);
                 if (!response.ok) throw new Error("Ошибка загрузки данных");
 
                 const data = await response.json();
@@ -113,7 +114,7 @@ export const useGameStore = defineStore('GameStore', {
 
 
             try {
-                const response = await fetch('/gamestore/user', {
+                const response = await fetch(`${this.apiURL}/user`, {
                     headers: {
                         'Authorization': `Bearer ${this.token}`
                     }

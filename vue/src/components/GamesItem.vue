@@ -24,7 +24,7 @@
                 <div class=" !mb-10 !px-6 !pt-2 !pb-10 flex flex-wrap h-16">
 
                     <span 
-                    v-for="(tag, idx) in game.tags" :key="idx"
+                    v-for="(tag, idx) in game.tagss" :key="idx"
                     class="inline-block game-card__tag rounded-lg !px-3 !py-1 text-sm font-semibold !mr-2 !mt-2"># {{ tag.name }}</span>
                 </div>
                 <div class="flex justify-between items-center !px-10 !py-5 !mt-4 md:!mt-1">
@@ -130,7 +130,7 @@
 
                 if(this.isFavorLocal == true) {
 
-                    const res = await fetch(`/gamestore/favourites/del/${id}`, {
+                    const res = await fetch(`${this.gameStore.apiURL}/favourites/del/${id}`, {
                         method: 'DELETE',
                         headers: {
                             'Authorization': `Bearer ${this.gameStore.token}`,
@@ -150,7 +150,7 @@
                     
                 }
 
-                const respounse = await fetch('/gamestore/favourites', {
+                const respounse = await fetch(`${this.gameStore.apiURL}/favourites`, {
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json;charset=utf-8",
@@ -177,7 +177,7 @@
                 }
 
                 
-                    const respounse = await fetch(`/gamestore/favourites/check/${this.game.id_game}`,{
+                    const respounse = await fetch(`${this.gameStore.apiURL}/favourites/check/${this.game.id_game}`,{
                     headers: {
                         'Authorization': `Bearer ${this.gameStore.token}`,
                     }
@@ -192,7 +192,7 @@
                 async fetchBasketCheck() {
 
                 try{
-                    const response = await fetch(`/gamestore/basket/check/${this.game.id_game}`, {
+                    const response = await fetch(`${this.gameStore.apiURL}/basket/check/${this.game.id_game}`, {
                         headers: {
                             'Authorization': `Bearer ${this.gameStore.token}`,
                         }
