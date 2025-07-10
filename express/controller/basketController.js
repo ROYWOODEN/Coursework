@@ -48,9 +48,9 @@ exports.GetBasketGames = (req, res) => {
 
     const id_user = req.user.id;
 
-    const query = "SELECT * FROM basket WHERE id_user = ?";
+    const query = "SELECT games.*, GROUP_CONCAT(DISTINCT tags.name SEPARATOR ', ') AS tags FROM games JOIN game_tags ON game_tags.id_game = games.id_game JOIN tags ON tags.id_tags = game_tags.id_tags WHERE games.id_game IN ( SELECT basket.id_game FROM basket WHERE basket.id_user = ?) GROUP BY games.id_game";
 
-    db.query(query, [id_user], (err, result) => {
+    db.query(query, id_user, (err, result) => {
 
         if(err) {
             console.log("Ошибка при добавлении в корзину", err);
@@ -61,22 +61,19 @@ exports.GetBasketGames = (req, res) => {
         return res.status(200).json([]);
     }
 
-    const gameIds = result.map(item => item.id_game);
-    
-    const placeholders = gameIds.map(() => '?').join(',');
-    
-    const gameBasket = `SELECT * FROM games WHERE id_game IN (${placeholders})`;
+    const resultGame = result.map(game => {
+            const tagsArr =  game.tags.split(',');
 
-    db.query(gameBasket, gameIds, (err, games) => {
-        if(err) {
-            console.error('Ошибка при получении игр');
-                return res.status(500).json({
-                    error: 'Ошибка сервера'
-                });
-        }
+             const tagsObjects = tagsArr.map(name => ({ name }));
 
-        return res.status(200).json(games);
-    });
+
+            return {
+                ...game,
+                tags: tagsObjects
+            };
+        })
+
+        res.json(resultGame);
 
     });
 

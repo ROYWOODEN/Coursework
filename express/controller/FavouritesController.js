@@ -53,9 +53,9 @@ exports.DelGamesFavorite = (req, res) => {
 exports.GetGamesFovorite = (req, res) => {
     const id_user = req.user.id;
 
-    const query = "SELECT * FROM favourites WHERE id_user = ?";
+    const query = "SELECT games.*, GROUP_CONCAT(DISTINCT tags.name SEPARATOR ', ') AS tags FROM games JOIN game_tags ON game_tags.id_game = games.id_game JOIN tags ON tags.id_tags = game_tags.id_tags WHERE games.id_game IN ( SELECT favourites.id_games FROM favourites WHERE favourites.id_user = ? ) GROUP BY games.id_game";
 
-    db.query(query, [id_user], (err, result) => {
+    db.query(query, id_user, (err, result) => {
 
         if(err) {
             console.error('Нет данных в избраных');
@@ -63,37 +63,25 @@ exports.GetGamesFovorite = (req, res) => {
                 error: 'Пусто... Скорее добавьте что-нибудь в избранные!!!'
             });
         }
-        // console.log("Результат запроса избранного:", result);
 
         if(result.length === 0) {
             return res.status(200).json([]);
         }
+        
+
+        const resultGame = result.map(game => {
+            const tagsArr =  game.tags.split(',');
+
+             const tagsObjects = tagsArr.map(name => ({ name }));
 
 
-        const gameIds = result.map(item => item.id_games);
+            return {
+                ...game,
+                tags: tagsObjects
+            };
+        })
 
-        const placeholders = gameIds.map(() => '?').join(',');
-
-
-
-        const queryGame = `SELECT * FROM games WHERE id_game IN (${placeholders})`;
-
-        db.query(queryGame, gameIds, (err, games) => {
-            if(err) {
-                console.error('Ошибка при получении игр');
-                return res.status(500).json({
-                    error: 'Ошибка сервера'
-                });
-            }
-
-
-            // const updateGames = games.map(game => ({
-            //     ...game,
-            //     isFavor: true,
-            // }));
-
-            return res.status(200).json(games);
-        });
+        res.json(resultGame);
     });
 }
 

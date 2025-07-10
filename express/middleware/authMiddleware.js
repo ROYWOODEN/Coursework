@@ -15,6 +15,7 @@ exports.authMiddleware = (req, res, next) => {
 
     jwt.verify(token, SECRET_KEY, (err, decoded) => {
         if (err) {
+            console.log(token);
             return res.status(403).json({
                 error: 'Неверный токен'
             });

@@ -30,16 +30,7 @@ export const useUserStore = defineStore('UserStore', {
 
                 const data = await respounse.json();
                 this.MyGames = data;
-
-                const tagPromises = this.MyGames.map(game => 
-                    fetch(`/gamestore/games/${game.id_game}/tags`)
-                        .then(response => response.json())
-                        .then(tags => {
-                            game.tags = tags; // Без .slice(0, 3), так как БД уже возвращает ровно 3 тега
-                        })
-                );
                 
-                await Promise.allSettled(tagPromises);
                 this.isTag = true;
                 if(respounse.ok) {
                     this.hasGames = true;
@@ -133,15 +124,6 @@ export const useUserStore = defineStore('UserStore', {
                 if(response.ok) {
                     this.BasketGames = data;
 
-                const tagPromises = this.BasketGames.map(game => 
-                    fetch(`${gameStore.apiURL}/games/${game.id_game}/tags`)
-                        .then(response => response.json())
-                        .then(tags => {
-                            game.tags = tags; // Без .slice(0, 3), так как БД уже возвращает ровно 3 тега
-                        })
-                );
-                
-                await Promise.allSettled(tagPromises);
                 this.isLoading = true;
 
                 }   else {

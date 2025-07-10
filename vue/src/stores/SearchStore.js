@@ -51,13 +51,6 @@ export const useSearchStore = defineStore('SearchStore', {
             }
 
 
-            gameStore.games.map(async game => {
-              await fetch(`${gameStore.apiURL}/games/${game.id_game}/tags`)
-                      .then(response => response.json())
-                      .then(tags => {
-                          game.tags = tags; // Без .slice(0, 3), так как БД уже возвращает ровно 3 тега
-                      })
-            });
           }   else {
             console.log('сервер обвалился');
             gameStore.showError(data.error);
@@ -87,14 +80,10 @@ export const useSearchStore = defineStore('SearchStore', {
 
           try {
 
-          const response = await fetch(`${apiURL}/search/favourites/${encodeURIComponent(trimSearch)}`, {
-            method: 'POST',
+          const response = await fetch(`${gameStore.apiURL}/search/favourites/${encodeURIComponent(trimSearch)}`, {
             headers: {
-              "Content-Type": "application/json;charset=utf-8",
-          },
-            body: JSON.stringify({
-              arrFavor: userStore.MyGames,
-            })
+              'Authorization': `Bearer ${gameStore.token}`
+          }
           });
           const data = await response.json();
 
@@ -106,14 +95,6 @@ export const useSearchStore = defineStore('SearchStore', {
               this.isSearch = true;
             }
 
-
-            this.searchResults.map(async game => {
-              await fetch(`${apiURL}/games/${game.id_game}/tags`)
-                      .then(response => response.json())
-                      .then(tags => {
-                          game.tags = tags; // Без .slice(0, 3), так как БД уже возвращает ровно 3 тега
-                      })
-            });
           }   else {
             console.log('сервер обвалился');
             gameStore.showError(data.error);

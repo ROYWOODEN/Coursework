@@ -1,22 +1,23 @@
 const db = require('../config/db');
-const path = require('path');
 
 exports.getAllGames = (req, res) => {
-    db.query("SELECT games.*, GROUP_CONCAT(DISTINCT tags.name SEPARATOR ', ') AS tags_name FROM games JOIN game_tags ON game_tags.id_game = games.id_game JOIN tags ON tags.id_tags = game_tags.id_tags GROUP BY games.id_game", (err, results) => {
+    const query = "SELECT games.*, GROUP_CONCAT(DISTINCT tags.name SEPARATOR ', ') AS tags FROM games JOIN game_tags ON game_tags.id_game = games.id_game JOIN tags ON tags.id_tags = game_tags.id_tags GROUP BY games.id_game";
+
+    db.query(query, (err, result) => {
         if (err) {
             console.error("Ошибка при получении игр:", err);
             return res.status(500).json({ error: "Ошибка сервера" });
         }
 
-        const resultGame = results.map(game => {
-            const tagsArr =  game.tags_name.split(',');
+        const resultGame = result.map(game => {
+            const tagsArr =  game.tags.split(',');
 
              const tagsObjects = tagsArr.map(name => ({ name }));
 
 
             return {
                 ...game,
-                tagss: tagsObjects
+                tags: tagsObjects
             };
         })
 
@@ -68,26 +69,6 @@ exports.AddGames = (req, res) => {
         // res.status(201).json({ message: "Данные успешно добавлены" });
     });
 },
-
-    // exports.getGameTags = (req, res) => {
-    //     const gameID = req.params.id;
-
-    //     const query = `
-    //         SELECT tags.*
-    //         FROM tags
-    //         JOIN game_tags ON tags.id_tags = game_tags.id_tags
-    //         JOIN games ON game_tags.id_game = games.id_game
-    //         WHERE games.id_game = ?;
-    //     `;
-
-    //     db.query(query, [gameID], (err, results) => {
-    //         if (err) {
-    //             console.error("Ошибка при получении тегов:", err);
-    //             return res.status(500).json({ error: "Ошибка сервера" });
-    //         }
-    //         res.json(results);
-    //     });
-    // }, 
 
 exports.delGames = (req, res) => {
     const { id_game } = req.params;

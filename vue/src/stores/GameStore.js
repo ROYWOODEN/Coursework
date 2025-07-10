@@ -35,7 +35,6 @@ export const useGameStore = defineStore('GameStore', {
 
 
                 // Параллельно загружаем теги для всех игр
-                this.fetchtagPromises();
                  
                 
             } catch (error) {
@@ -44,22 +43,7 @@ export const useGameStore = defineStore('GameStore', {
                 this.loader = false; // Скрываем лоадер после загрузки
             }
         },
-        async fetchtagPromises() {
-             
-             const tagPromises = this.games.map(game => 
-                fetch(`${this.apiURL}/games/${game.id_game}/tags`)
-                    .then(response => response.json())
-                    .then(tags => {
-                        game.tags = tags; // Без .slice(0, 3), так как БД уже возвращает ровно 3 тега
-                    })
-            );
-            
-            await Promise.allSettled(tagPromises);
-
-
-            
-            
-        },
+        
         async DelGames(id) {
             try {
                 const response = await fetch(`${this.apiURL}/admin/del/${id}`, {
