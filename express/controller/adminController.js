@@ -6,39 +6,31 @@ const path = require('path');
 exports.GetEditGames = (req, res) => {
     const { id_game } = req.params;
 
-    const queryGame = 'SELECT * FROM games WHERE id_game = ?';
+    const queryGame = "SELECT games.*, GROUP_CONCAT(DISTINCT tags.name SEPARATOR ', ') AS tags FROM games JOIN game_tags ON game_tags.id_game = games.id_game JOIN tags ON tags.id_tags = game_tags.id_tags WHERE games.id_game = ? GROUP BY games.id_game";
 
-    const queryTags = `
-        SELECT tags.*
-        FROM tags
-        JOIN game_tags ON tags.id_tags = game_tags.id_tags
-        WHERE game_tags.id_game = ?;
-    `;
-
-    // Сначала получаем саму игру
-    db.query(queryGame, [id_game], (err, gameResults) => {
+    db.query(queryGame, id_game, (err, result) => {
         if (err) {
             console.error("Ошибка при получении игры:", err);
             return res.status(500).json({ error: "Ошибка сервера" });
         }
 
-        if (gameResults.length === 0) {
+        if (result.length === 0) {
             return res.status(404).json({ error: "Игра не найдена" });
         }
+        
+        const resultGame = result.map(game => {
+            const tagsArr =  game.tags.split(',');
 
-        // Потом получаем теги для этой игры
-        db.query(queryTags, [id_game], (err, tagResults) => {
-            if (err) {
-                console.error("Ошибка при получении тегов:", err);
-                return res.status(500).json({ error: "Ошибка сервера при получении тегов" });
-            }
+             const tagsObjects = tagsArr.map(name => ({ name }));
 
-            // Отправляем и игру, и теги в одном ответе
-            res.json({
-                game: gameResults[0],
-                tags: tagResults
-            });
-        });
+
+            return {
+                ...game,
+                tags: tagsObjects
+            };
+        })
+
+        res.json(resultGame);
     });
 },
 

@@ -26,9 +26,6 @@ export default {
             gameStore: useGameStore(),
         }
     },
-    async mounted() {
-        await this.gameStore.fetchGames();
-    },
     
 }
 </script>

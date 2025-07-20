@@ -66,9 +66,14 @@ exports.loginUser = (req, res) => {
     const query = "SELECT * FROM users WHERE login = ?";
 
     db.query(query, [login], async (err, result) => {
-        if(err || result.length === 0) {
+        if(err) {
             return res.status(401).json({
-                error: 'Неверные данные'
+                error: 'Ошибка сервера при авторизации'
+            })
+        }
+        else if(result.length === 0) {
+            return res.status(401).json({
+                error: 'Пользователь не найден'
             })
         }
 

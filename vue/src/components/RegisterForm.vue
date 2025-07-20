@@ -100,46 +100,52 @@ export default {
           body: formData,
         });
         const result = await response.json();
-        
-        const autoLogin = await fetch(`${this.gameStore.apiURL}/login`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-          },
-          body: JSON.stringify({
-            login: this.UserLogin,
-            password: this.UserPass,
-          }),
-        });
-        const data = await autoLogin.json();
-        setTimeout(async () => {
-          
-        
 
-        localStorage.setItem('token', data.token);
-        this.gameStore.token = data.token;
-        console.log(data.token);
-        
-        await this.gameStore.fetchUser();
-          this.router.push('/');
-        }, 500);
+        if(response.ok) {
+              const autoLogin = await fetch(`${this.gameStore.apiURL}/login`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              },
+              body: JSON.stringify({
+                login: this.UserLogin,
+                password: this.UserPass,
+              }),
+            });
+            const data = await autoLogin.json();
+            setTimeout(async () => {
+              
+            
 
-        
+            localStorage.setItem('token', data.token);
+            this.gameStore.token = data.token;
+            console.log(data.token);
+            
+            await this.gameStore.fetchUser();
+              this.router.push('/');
+            }, 500);
 
-        if (response.ok) {
-          console.log(result.message);
-          this.gameStore.showMessage(result.message);
+            
 
-          // Очищаем форму
-          this.UserName = '';
-          this.UserLogin = '';
-          this.UserPass = '';
-          this.$refs.fileInput.value = null;
+            if (response.ok) {
+              console.log(result.message);
+              this.gameStore.showMessage(result.message);
 
+              // Очищаем форму
+              this.UserName = '';
+              this.UserLogin = '';
+              this.UserPass = '';
+              this.$refs.fileInput.value = null;
+
+            } else {
+              console.error("Ошибка при регистрации");
+              this.gameStore.showError(result.error);
+            }
         } else {
-          console.error("Ошибка при регистрации");
           this.gameStore.showError(result.error);
         }
+        
+        
       } catch (error) {
         console.error("Ошибка сети:", error);
         this.gameStore.showError('Ошибка сети, попробуйте позже');

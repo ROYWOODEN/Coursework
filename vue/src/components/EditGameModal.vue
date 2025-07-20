@@ -135,7 +135,7 @@ export default {
   data() {
     return {
       gameStore: useGameStore(),
-      game: {},
+      game: [],
       title: '',
       description: '',
       price: '',
@@ -161,6 +161,8 @@ export default {
     async fetchEdit() {
       if (this.gameStore.EditID) {
         await this.gameStore.fetchGameEdit(this.gameStore.EditID);
+
+        console.log(this.gameStore.editGames);
 
         this.OrigTitle = this.gameStore.editGames.title;
         this.OrigDescription = this.gameStore.editGames.description;

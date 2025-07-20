@@ -28,17 +28,19 @@ export const useGameStore = defineStore('GameStore', {
     
             this.loader = true; // Показываем лоадер сразу, до задержки
             
-            // await new Promise(resolve => setTimeout(resolve, 1000));
             try {
                 const response = await fetch(`${this.apiURL}/games`);
-                this.games = await response.json();
-
-
-                // Параллельно загружаем теги для всех игр
-                 
                 
+                if(response.ok) {
+                    this.games = await response.json();
+                }   else {
+                    this.showError("Не удалось подключиться к серверу");
+                }
+
+
             } catch (error) {
                 console.error("Ошибка при получении игр:", error);
+                this.showError("Нет доступа к интернету");
             } finally {
                 this.loader = false; // Скрываем лоадер после загрузки
             }
@@ -54,8 +56,6 @@ export const useGameStore = defineStore('GameStore', {
                     const result = await response.json();
                     this.showError(result.message);
 
-                    // Локально делаем удаление либо можно просто делать запрос апи по новой
-                    // this.gameStore.fetchGames();
 
                     this.games = this.games.filter(game => game.id_game !== id); 
 
@@ -81,10 +81,8 @@ export const useGameStore = defineStore('GameStore', {
                 const response = await fetch(`${this.apiURL}/admin/edit/${id}`);
                 if (!response.ok) throw new Error("Ошибка загрузки данных");
 
-                const data = await response.json();
+                this.editGames = await response.json();
                 
-                this.editGames = data.game; // Заполняем массив с данными игры
-                this.editGamesTags = data.tags;
             } catch (error) {
                 console.error("Ошибка при загрузке данных игры:", error.message);
             }
